@@ -1,10 +1,15 @@
 import type { RouteLocationNormalized, NavigationGuardReturn } from "vue-router"
-import { useCookies } from "@vueuse/integrations/useCookies"
-import appConfig from "@mono-host/datas/config"
+import { monoCookie } from "mono-utils/runtime"
+import appConfig from "@nuxt-host/datas/config"
 
+/**
+ * The login page: already holding a session cookie => straight to /home,
+ * otherwise stay and let the user log in.
+ */
 export default (to: RouteLocationNormalized, from: RouteLocationNormalized): NavigationGuardReturn => {
-  const cookies = useCookies()
-  const token = cookies.get(appConfig.authCookie.jwt)
-  if (!token) return "/"
-  return true
+  const cookie = monoCookie()
+
+  const token = cookie.get(appConfig.authCookie.jwt, true)
+
+  return token ? "/home" : true
 }

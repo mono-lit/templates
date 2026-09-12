@@ -1,5 +1,5 @@
 import {
 
 
-} from '@mono-host/types'
+} from '@nuxt-host/types'
 import { type MonoOdataMapTypes } from 'mono-utils/runtime'

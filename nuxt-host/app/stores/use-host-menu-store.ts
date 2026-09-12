@@ -1,8 +1,8 @@
 import { useStorage } from "@vueuse/core";
-import staticDataSidebar  from "@mono-host/datas/menu";
+import staticDataSidebar  from "@nuxt-host/datas/menu";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { resolveExtendsAppNames, type SidebarMenu, type MonoConfig } from 'mono-utils/config'
-import hostMonoConfig from '@mono-host-root/mono.config'
+import hostMonoConfig from '@nuxt-host-root/mono.config'
 
 
 export const useHostMenuStore = defineStore("use-host-menu-store", () => {
@@ -68,7 +68,7 @@ export const useHostMenuStore = defineStore("use-host-menu-store", () => {
     }
 
     const modules = import.meta.glob<{ default: unknown }>(
-      "../../../.mono/apps/**/mono.config.ts",
+      "../../.mono/apps/**/mono.config.ts",
       { eager: false }
     )
 

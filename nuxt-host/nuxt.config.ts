@@ -107,12 +107,6 @@ export default defineNuxtConfig({
     // define are injected by the `mono-utils/nuxt` module; the monoSsr Vite
     // plugins are injected by the `mono-helper/nuxt` module.)
     envPrefix: ['VITE_', 'MONO_'],
-    optimizeDeps: {
-      include: [
-        '@odata2ts/odata-query-objects',
-        '@odata2ts/odata-service',
-      ],
-    },
   },
 
   hooks: {

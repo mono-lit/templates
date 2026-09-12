@@ -9,8 +9,8 @@ import { resolveEnv } from 'mono-utils/config'
 
 export const env = {
     default: {
-        MONO_HOST_API_BASE_URL: 'https://dev-ppl-project.phoenix-squad.eu.org',
-        MONO_HOST_ODATA_BASE_URL: 'https://dev-ppl-project.phoenix-squad.eu.org/odata',
+        MONO_HOST_API_BASE_URL: 'https://api.example.com',
+        MONO_HOST_ODATA_BASE_URL: 'https://api.example.com/odata',
     },
     // Override when dev/prod diverge (needs NODE_ENV set in the loaded .env):
     // production: { MONO_HOST_API_BASE_URL: 'https://…', MONO_HOST_ODATA_BASE_URL: 'https://…/odata' },

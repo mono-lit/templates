@@ -1,13 +1,8 @@
 //@unocss-include
 import { defineConfig, type MonoConfig } from 'mono-utils/config'
 import { DataSource, ODataStore, CustomStore } from 'mono-devextreme'
-// The generated OData service comes from the HOST's clone — no need to copy
-// ~830 KB of codegen into this repo just to type the same endpoint. Run
-// `pnpm odata:gen` and switch this to `@mono-nuxt/odata/DTO/DefaultService` the
-// day this remote talks to a different service than the host.
-import { DefaultService } from '@nuxt-host/odata/DTO/DefaultService'
 import monoHostConfig from '@nuxt-host-root/mono.config'
-import appConfig from '@mono-nuxt/datas/appConfig'
+import appConfig from '@nuxt-remote/datas/appConfig'
 import { env, appEnv } from './mono.env'
 
 export default defineConfig({
@@ -25,6 +20,10 @@ export default defineConfig({
     // render with no shell at all.
     template: 'remote',
     extends: [
+        // Pull the HOST's config in (cookies, jwt, fetching.api `monoHostRest` /
+        // `monoHostOData`, mock backend) so federated pages resolve the same
+        // endpoints. Thunk form — the host extends this config back, and the
+        // lazy call is what lets that intentional cycle resolve.
         (): MonoConfig => monoHostConfig,
     ],
     apps: [
@@ -33,7 +32,7 @@ export default defineConfig({
             url: 'https://github.com/mono-lit/templates/tree/main/nuxt-host',
             type: 'nuxt',
             template: 'host',
-          
+
         },
     ],
     env,
@@ -48,22 +47,6 @@ export default defineConfig({
             monoNuxtOData: {
                 type: 'odata',
                 url: String(appEnv.MONO_NUXT_REMOTE_ODATA_BASE_URL),
-                oDataService: DefaultService,
-            },
-        },
-        auth: {
-            // The refresh request itself (`requestRefreshTokenRequest`) is
-            // declared by the HOST and merges in via `extends` — restating it
-            // here would clobber the host's `/Auth/RefreshToken` wiring.
-            //
-            // Object form only. The legacy
-            // `{ token, tokenRefresh, use: 'tokenRefresh' }` string form cannot
-            // say which cookie goes on which request.
-            use: {
-                // sent on every API request
-                apiRequest: appConfig.jwtRefreshName,
-                // the login JWT — sent as the Bearer ON the refresh request itself
-                refreshTokenRequest: appConfig.jwtName,
             },
         },
         source: {
@@ -72,14 +55,13 @@ export default defineConfig({
             customStore: CustomStore,
         },
     },
-    // Same cookie names as the host: the two apps share one login.
+    // Same cookie as the host (also merged in via `extends`): the two apps
+    // share one login — the mock JWT the host's login page writes.
     cookie: [
         { name: appConfig.jwtName, split: true },
-        { name: appConfig.jwtRefreshName },
     ],
     jwt: {
         token: { name: appConfig.jwtName, split: true },
-        refreshToken: { name: appConfig.jwtRefreshName },
     },
     menu: [
         {

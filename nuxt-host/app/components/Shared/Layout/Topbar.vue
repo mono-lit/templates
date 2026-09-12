@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import 'mono-helper/ui/shadow/nav'
 import 'mono-helper/ui/input'
+import { monoState } from 'mono-utils/runtime'
+
 const menuStore = useHostMenuStore()
+
+// NAME from the mock-login JWT payload (hydrated by `createMono` at startup).
+interface MockJwtPayload { ID?: number | string; USERNAME?: string; NAME?: string }
+const sessionName = computed(() => String(monoState<{ jwt: { token: MockJwtPayload } }>().jwt?.token?.NAME ?? 'Administrator'))
 </script>
 
 <template>
@@ -16,7 +22,7 @@ const menuStore = useHostMenuStore()
 
             <div class="flex flex-col leading-tight">
                 <h1 class="m-0 text-[1.05rem] font-bold text-[#0f3060] leading-tight">Dashboard</h1>
-                <p class="m-0 mt-0.5 text-[.73rem] text-[#6a8098]">Selamat datang kembali, Administrator!</p>
+                <p class="m-0 mt-0.5 text-[.73rem] text-[#6a8098]">Selamat datang kembali, {{ sessionName }}!</p>
             </div>
         </div>
 

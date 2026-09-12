@@ -1,12 +1,12 @@
 import * as Sentry from '@sentry/nuxt'
 import { monoJwt } from 'mono-utils/runtime'
-import type { JWTCompleteTokenTypes } from 'mono-utils/config'
-import appConfig from '@mono-host/datas/config'
+import appConfig from '@nuxt-host/datas/config'
 
 // Sentry "extras" that need the app context: the Sentry-Pinia bridge (registered
-// on the pinia instance @pinia/nuxt created) and `setUser` from the JWT. The
-// `Sentry.init()` itself lives in `sentry.client.config.ts` (root) — this plugin
-// runs after init, so the integration + user enrichment apply to that client.
+// on the pinia instance @pinia/nuxt created) and `setUser` from the session
+// JWT. The `Sentry.init()` itself lives in `sentry.client.config.ts` (root) —
+// this plugin runs after init, so the integration + user enrichment apply to
+// that client.
 export default defineNuxtPlugin((nuxtApp) => {
   // Same gate as `sentry.client.config.ts`: an explicit flag, not `PROD` —
   // `build:dev` is still a production build, so `PROD` can't disable Sentry.
@@ -15,19 +15,18 @@ export default defineNuxtPlugin((nuxtApp) => {
   const pinia = nuxtApp.$pinia as any
   if (pinia?.use) pinia.use(Sentry.createSentryPiniaPlugin())
 
-  const jwt = monoJwt().cookieDecode<JWTCompleteTokenTypes>({
+  // The mock-login payload minted by `createMockJwtHost` — ID / USERNAME / NAME.
+  const jwt = monoJwt().cookieDecode<{ ID?: number | string; USERNAME?: string; NAME?: string }>({
     cookie: appConfig.authCookie.jwt,
     splitCookie: true,
   })
 
-  const id = jwt?.USER_ID
-  const username = jwt?.NAME
-  const email = jwt?.USER_NAME
+  const id = jwt?.ID
+  const username = jwt?.USERNAME || jwt?.NAME
 
-  if (id || username || email) {
+  if (id || username) {
     Sentry.setUser({
       id: id ? String(id) : undefined,
-      email: email || undefined,
       username: username || undefined,
       ip_address: '{{auto}}',
     })

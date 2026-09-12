@@ -1,23 +1,18 @@
 import type { RouteLocationNormalized, NavigationGuardReturn } from "vue-router"
-import appConfig from "@mono-host/datas/config"
-import { monoState } from "mono-utils/runtime"
+import appConfig from "@nuxt-host/datas/config"
+import { monoCookie } from "mono-utils/runtime"
 
+/**
+ * Protected pages. The mock session is just the fake JWT cookie written at
+ * login — there is no server to validate it against and no refresh: cookie
+ * present => allowed, cookie missing => back to the login page.
+ */
+export default (to: RouteLocationNormalized, from: RouteLocationNormalized): NavigationGuardReturn => {
+  const cookie = monoCookie()
 
-export default async (to: RouteLocationNormalized, from: RouteLocationNormalized): Promise<NavigationGuardReturn> => {
-  const authStore = useAuthStore()
-  const state = monoState()
+  const token = cookie.get(appConfig.authCookie.jwt, true)
 
-
-  const getJwt =  state.cookie[appConfig.authCookie.jwt]
-  const getJwtRefresh =  state.cookie[appConfig.authCookie.jwtRefresh]
-
-  const decodeJwt = state.jwt.token
-
-  if (!getJwt) return "/"
-
-  if (!getJwtRefresh && decodeJwt) {
-    await authStore.refetchRefreshToken({ token: String(getJwt) })
-  }
+  if (!token) return "/"
 
   return true
 }

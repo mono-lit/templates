@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized } from "vue-router"
-import { runGuards } from "@mono-host/middleware/run-guards"
+import { runGuards } from "@nuxt-host/middleware/run-guards"
 
 /**
  * Nuxt global middleware. Delegates the route→guard dispatch to the shared,
@@ -14,7 +14,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   // The guards read auth from `document.cookie` via mono-utils (monoToken /
   // monoCookie / monoState), which only exists in the browser. On the server —
   // including SSR and **prerendering** — that throws (`document is not defined`),
-  // which is why prerendering `/home` (→ accessGuard) 500s while `/` (→ the
+  // which is why prerendering `/home` (→ authGuard) 500s while `/` (→ the
   // SSR-safe loggedGuard) and `/error` (pure) prerender fine. Skip on the server;
   // auth runs client-side after hydration.
   if (import.meta.server) return

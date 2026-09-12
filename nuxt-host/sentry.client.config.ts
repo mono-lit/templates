@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/nuxt'
-import { appEnv } from './mono.env'
 
 // Client-side Sentry init for the @sentry/nuxt module. Runs very early in the
 // browser (before the Nuxt app). Gated on an explicit `VITE_SENTRY_ENABLED`
@@ -8,19 +7,17 @@ import { appEnv } from './mono.env'
 // The flag lives in `.env` (prod) and is absent from `.env.dev`, so `build:dev`
 // skips Sentry. `browserTracingIntegration` is added automatically by
 // @sentry/nuxt and wired to the Nuxt vue-router, so we don't pass one manually.
+// No API trace-propagation target: the mock backend lives in IndexedDB, no
+// request ever leaves the page.
 const dsn = import.meta.env.VITE_SENTRY_DSN
 
 if (import.meta.env.VITE_SENTRY_ENABLED === 'true' && dsn) {
-  const apiBaseUrl = String(appEnv.MONO_NUXT_HOST_API_BASE_URL ?? '')
-  const escape = (url: string) => url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
-
   Sentry.init({
     dsn,
     sendDefaultPii: true,
     integrations: [Sentry.replayIntegration()],
     tracePropagationTargets: [
       window.location.hostname,
-      ...(apiBaseUrl ? [new RegExp(`^${escape(apiBaseUrl)}`)] : []),
     ],
     // Performance Monitoring
     tracesSampleRate: 1.0,

@@ -1,8 +1,7 @@
 import type { RouteLocationNormalized, NavigationGuardReturn } from "vue-router"
-import authGuard from "@mono-host/middleware/guards/auth"
-import loggedGuard from "@mono-host/middleware/guards/logged"
-import errorGuard from "@mono-host/middleware/guards/error"
-import accessGuard from "@mono-host/middleware/guards/access"
+import authGuard from "@nuxt-host/middleware/guards/auth"
+import loggedGuard from "@nuxt-host/middleware/guards/logged"
+import errorGuard from "@nuxt-host/middleware/guards/error"
 
 /**
  * Shared, framework-agnostic route-guard dispatcher. Picks the guard for a route
@@ -14,7 +13,8 @@ import accessGuard from "@mono-host/middleware/guards/access"
  *  - The Vue/Vite host's `router.beforeEach` returns it as-is.
  *
  * Normalization: a guard may return the location you're ALREADY navigating to
- * (e.g. `loggedGuard` returns "/" while on "/"). Returned verbatim, vue-router
+ * (e.g. `loggedGuard` returns "/home" while navigating to "/home" after a
+ * session was found). Returned verbatim, vue-router
  * warns "infinite redirection" and Nuxt's `navigateTo()` would loop. When the
  * redirect target resolves to the current destination we return `true` (allow)
  * instead, so neither host redirects to where it's already going.
@@ -39,8 +39,6 @@ export async function runGuards(
     result = errorGuard(to, from)
   } else if (isLogin) {
     result = loggedGuard(to, from)
-  } else if (notLogin) {
-    result = await accessGuard(to, from)
   } else {
     result = await authGuard(to, from)
   }

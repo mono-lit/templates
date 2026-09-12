@@ -30,9 +30,7 @@ onMounted(() => requestAnimationFrame(hideLoader))
     <!-- <Transition name="app-loader-fade">
       <AppLoader v-if="appLoading" />
     </Transition> -->
-   <!--
-    <UtilsCookieExp />
-   -->
+
     <Notivue v-slot="item">
       <MonoNotifAction v-if="item.props.isAction" :item="item" />
       <Notifications v-else :item="item" :theme="pastelTheme" />

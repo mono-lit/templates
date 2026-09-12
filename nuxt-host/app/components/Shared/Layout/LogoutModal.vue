@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import 'mono-helper/ui/shadow/modal'
 import 'mono-helper/ui/shadow/button'
+
 const menuStore = useHostMenuStore()
+const fetchAuth = useAuthStore()
+
+function submitLogout() {
+    menuStore.logoutOpen = false
+    fetchAuth.fetching().postLogout()
+}
 </script>
 
 <template>
@@ -13,7 +20,8 @@ const menuStore = useHostMenuStore()
 
         <span slot="foot" class="flex justify-end gap-2">
             <mono-shadow-button variant="outline" @click="menuStore.logoutOpen = false">Batal</mono-shadow-button>
-            <mono-shadow-button variant="solid" color="danger" @click="menuStore.logoutOpen = false">Log Out</mono-shadow-button>
+            <mono-shadow-button variant="solid" color="danger" :loading.prop="fetchAuth.loading.logout"
+                @click="submitLogout">Log Out</mono-shadow-button>
         </span>
     </mono-shadow-modal>
 </template>

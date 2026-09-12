@@ -305,6 +305,34 @@ const submit = () => fetchAuth.fetching().postLogin()
               </button>
             </mono-shadow-input>
 
+            <!-- Mock login hint -->
+            <div
+              class="
+                flex
+                items-start
+                gap-2
+                rounded-lg
+                border border-blue-100
+                bg-blue-50
+                px-3
+                py-2
+                text-xs
+                text-blue-900
+              "
+            >
+              <span
+                class="i-mdi-information-outline mt-0.5 shrink-0"
+              />
+
+              <span>
+                Mock login — username
+                <code class="font-bold">admin</code>
+                atau
+                <code class="font-bold">demo</code>, password bebas.
+                Data disajikan dari IndexedDB (mock API mono).
+              </span>
+            </div>
+
             <!-- Submit -->
             <mono-shadow-button
               id="login-submit"

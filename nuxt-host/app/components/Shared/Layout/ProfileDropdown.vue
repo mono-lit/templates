@@ -1,6 +1,22 @@
 <script setup lang="ts">
 import 'mono-helper/ui/dropdown'
+import { monoState } from 'mono-utils/runtime'
+
 const menuStore = useHostMenuStore()
+
+// Session identity from the mock-login JWT payload (ID / USERNAME / NAME).
+interface MockJwtPayload { ID?: number | string; USERNAME?: string; NAME?: string }
+const session = monoState<{ jwt: { token: MockJwtPayload } }>()
+const sessionName = computed(() => String(session.jwt?.token?.NAME ?? 'Administrator'))
+const sessionUsername = computed(() => String(session.jwt?.token?.USERNAME ?? 'admin'))
+const sessionInitials = computed(() =>
+    sessionName.value
+        .split(/\s+/)
+        .map((word) => word.charAt(0))
+        .join('')
+        .slice(0, 2)
+        .toUpperCase(),
+)
 
 function openLogout() {
     menuStore.profileOpen = false
@@ -16,10 +32,10 @@ function openLogout() {
             class="ml-1 flex items-center gap-2 pl-1.3 pr-2.2 py-1.3 rounded-[10px] bg-transparent border border-transparent cursor-pointer transition-all hover:bg-[#eff6ff] hover:border-[#dbeafe]">
             <div
                 class="w-8 h-8 rounded-full bg-gradient-to-br from-[#2563a8] to-[#4a9fd4] text-white text-[.72rem] font-bold flex items-center justify-center flex-shrink-0">
-                AD</div>
+                {{ sessionInitials }}</div>
             <div class="leading-tight text-left hidden lg:block">
-                <div class="text-[.8rem] font-semibold text-[#1a2d42]">Administrator</div>
-                <div class="text-[.68rem] text-[#6a8098]">Super Admin</div>
+                <div class="text-[.8rem] font-semibold text-[#1a2d42]">{{ sessionName }}</div>
+                <div class="text-[.68rem] text-[#6a8098]">Mock Session</div>
             </div>
             <span class="i-mdi-chevron-down text-[.7rem] text-[#9ab0c0] ml-0.5"></span>
         </button>
@@ -28,11 +44,11 @@ function openLogout() {
             <div class="flex items-center gap-3 px-4 py-3.5 bg-[#eff6ff] border-b border-[#dbeafe]">
                 <div
                     class="w-10 h-10 rounded-full bg-gradient-to-br from-[#2563a8] to-[#4a9fd4] text-white text-[.85rem] font-bold flex items-center justify-center flex-shrink-0">
-                    AD</div>
+                    {{ sessionInitials }}</div>
                 <div class="leading-tight min-w-0">
-                    <div class="text-[.85rem] font-bold text-[#0f3060] truncate">Administrator</div>
-                    <div class="text-[.72rem] text-[#6a8098] truncate">Super Admin · EkaJaya</div>
-                    <div class="text-[.7rem] text-[#9ab0c0] mt-0.5 truncate">admin@ekajaya.co.id</div>
+                    <div class="text-[.85rem] font-bold text-[#0f3060] truncate">{{ sessionName }}</div>
+                    <div class="text-[.72rem] text-[#6a8098] truncate">Mock Session · mono</div>
+                    <div class="text-[.7rem] text-[#9ab0c0] mt-0.5 truncate">{{ sessionUsername }}</div>
                 </div>
             </div>
 
