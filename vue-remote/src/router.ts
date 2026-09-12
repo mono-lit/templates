@@ -1,3 +1,3 @@
-import router from '@mono-host/router'
+import router from '@vue-host/router'
 
 export default router

@@ -1,6 +1,6 @@
 import {
 
 
-} from '@mono-host/types'
+} from '@vue-host/types'
 import { type MonoOdataMapTypes } from 'mono-utils/runtime'
 

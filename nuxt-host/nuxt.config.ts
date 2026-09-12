@@ -18,9 +18,6 @@ export default defineNuxtConfig({
   // Shared `mono` key: `utils` -> mono-utils/nuxt, `helper` -> mono-helper/nuxt
   // (the latter registers monoSsr() + the base css + the `mono-` isCustomElement).
   mono: {
-    // `@mono-host` -> `app/` (and the federated `app/…` ecosystem dirs) are now
-    // derived from the top-level `type: 'nuxt'` in mono.config.ts, so the manual
-    // `alias: { '@mono-host': { dir: 'app' } }` override is no longer needed.
     utils: {},
     // SSR wrapping is now AUTOMATIC: `mono-helper/nuxt` auto-installs nuxt-ssr-lit
     // (optional peer) and wraps a `<mono-*>` in <LitWrapper> when the .vue file
@@ -113,7 +110,7 @@ export default defineNuxtConfig({
     // `mono.config.ts` is a root-level config file that isn't matched by any of
     // Nuxt's generated tsconfig `include` globs (they only pick up root `*.d.ts`),
     // so editors type-check it in an inferred project with no alias paths / Vite
-    // env types — hence 'Cannot find module '@mono-host/...'' and 'Property 'env'
+    // env types — hence 'Cannot find module '@nuxt-host/...'' and 'Property 'env'
     // does not exist on type 'ImportMeta''. Attach it to the app project, which
     // has the mono aliases + `import.meta.env` typing.
     'prepare:types'(opts: { tsConfig: { include?: string[] } }) {

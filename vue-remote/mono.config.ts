@@ -1,7 +1,13 @@
 //@unocss-include
 import { defineConfig, type MonoConfig } from 'mono-utils/config'
 import monoHostConfig from '@vue-host-root/mono.config'
-import appConfig from '@vue-remote/datas/appConfig'
+
+const appConfig = {
+    // The only auth cookie this template declares: the fake JWT minted at mock
+    // login. There is no refresh token — no server to refresh against.
+    jwtName: 'MONO_token',
+}
+
 
 export default defineConfig({
     name: 'vue-remote',
@@ -15,7 +21,7 @@ export default defineConfig({
     ],
     apps: [
         {
-            name: 'mono-host',
+            name: 'vue-host',
             // Deep-folder sync (mono-utils >= 0.0.2): the URL names the FOLDER
             // — `mono sync` resolves `main` + subdirectory `vue-host` and
             // clones just that folder into `.mono/apps/mono-host`.
