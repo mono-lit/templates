@@ -34,7 +34,7 @@ watch(
        just ride the page away. `clip` suppresses horizontal overflow the same way
        without creating a scroll container. -->
   <div class="bg-white relative overflow-x-clip w-full">
-    <SharedLayoutSidebar />
+    <LayoutSidebar />
 
     <!--
       `--mono-sidebar-left-width` is written by the sidebar element's client-side
@@ -47,13 +47,12 @@ watch(
       (268 when expanded, 0 for mobile temporary).
     -->
     <div class="flex flex-col min-h-screen" style="margin-left: var(--mono-sidebar-left-width, 64px);">
-      <SharedLayoutTopbar />
+      <LayoutTopbar />
 
       <main class="flex-1 px-3 py-6">
         <slot />
       </main>
     </div>
 
-    <!-- <SharedLayoutLogoutModal /> -->
   </div>
 </template>

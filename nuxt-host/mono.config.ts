@@ -12,14 +12,13 @@ const appConfig = {
 
 
 export default defineConfig({
-    // Activate the nuxt-remote: merges its config (menu `Module Nuxt`,
-    // fetching.api `monoNuxtRest` / `monoNuxtOData`) into this host — and it is
-    // also the switch that turns its sidebar menu on: `use-host-menu-store`
-    // gates every synced remote on this list (`resolveExtendsAppNames`).
-    // Commenting the entry out drops the menu but keeps the synced clone under
-    // `.mono/apps/`. Thunk form for c12's extends chain — the remote extends
-    // this config back, and the lazy call is what lets that intentional cycle
-    // resolve.
+    // Activate the nuxt-remote: merges its config (menu `Module Nuxt`) into
+    // this host — and it is also the switch that turns its sidebar menu on:
+    // `use-host-menu-store` gates every synced remote on this list
+    // (`resolveExtendsAppNames`). Commenting the entry out drops the menu but
+    // keeps the synced clone under `.mono/apps/`. Thunk form for c12's extends
+    // chain — the remote extends this config back, and the lazy call is what
+    // lets that intentional cycle resolve.
     extends: [
         (): MonoConfig => nuxtRemoteConfig,
     ],
@@ -38,9 +37,12 @@ export default defineConfig({
     apps: [
         {
             name: 'nuxt-remote',
+            // Deep-folder sync (mono-utils >= 0.0.2): the URL names the FOLDER
+            // — `mono sync` resolves `main` + subdirectory `nuxt-remote` and
+            // clones just that folder into `.mono/apps/nuxt-remote`.
+            url: 'https://github.com/mono-lit/templates/tree/main/nuxt-remote',
             type: 'nuxt',
             template: 'remote',
-            url: 'https://github.com/mono-lit/templates/tree/main/nuxt-remote'
         }
     ],
     // Mock backend: this template ships with NO server. The `users` entity is

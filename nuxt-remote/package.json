@@ -16,7 +16,6 @@
     "generate:dev": "pnpm run env:dev -- nuxt generate",
     "preview": "pnpm run env:prod -- nuxt preview",
     "preview:dev": "pnpm run env:dev -- nuxt preview",
-    "odata:gen": "pnpm run env:dev -- odata2ts",
     "mono:sync": "dotenv -e .env.dev -- mono sync && mono prepare"
   },
   "dependencies": {
@@ -24,7 +23,6 @@
     "@vueuse/core": "catalog:frontend",
     "@vueuse/integrations": "catalog:frontend",
     "dotenv": "catalog:dev",
-    "jwt-decode": "catalog:frontend",
     "mono-devextreme": "catalog:mono",
     "notivue": "catalog:frontend",
     "nuxt": "catalog:nuxt",
@@ -36,10 +34,6 @@
   },
   "devDependencies": {
     "@iconify/json": "catalog:dev",
-    "@odata2ts/http-client-api": "catalog:build",
-    "@odata2ts/odata-query-objects": "catalog:build",
-    "@odata2ts/odata-service": "catalog:build",
-    "@odata2ts/odata2ts": "catalog:build",
     "@pinia/nuxt": "catalog:nuxt",
     "@types/node": "catalog:types",
     "@unocss/nuxt": "catalog:nuxt",

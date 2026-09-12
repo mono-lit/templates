@@ -52,8 +52,10 @@ const sessionName = computed(() => String(monoState<{ jwt: { token: MockJwtPaylo
                 <span class="i-mdi-cog-outline text-[1.05rem]"></span>
             </button>
 
-            <SharedLayoutProfileDropdown />
-            <SharedLayoutLogoutModal />
+            <LayoutProfileDropdown />
+            <Teleport to="body">
+                <LayoutLogoutModal />
+            </Teleport>
         </div>
     </mono-shadow-nav>
 </template>

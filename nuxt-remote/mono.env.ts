@@ -5,8 +5,7 @@ import { resolveEnv } from 'mono-utils/config'
 
 export const env = {
     default: {
-        MONO_NUXT_REMOTE_API_BASE_URL: 'https://api.example.com',
-        MONO_NUXT_REMOTE_ODATA_BASE_URL: 'https://api.example.com/odata',
+
     },
     // Override when dev/prod diverge (needs NODE_ENV set in the loaded .env):
     // production: { MONO_NUXT_REMOTE_API_BASE_URL: 'https://…', MONO_NUXT_REMOTE_ODATA_BASE_URL: 'https://…/odata' },

@@ -1,4 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+declare module 'nuxt/schema' {
+  interface NuxtConfig {
+    'sentry'?: Record<string, unknown>
+  }
+}
 
 // Dev-server port. Hardcoded here (dev-only knob) rather than read from `.env`.
 // Deliberately NOT the host's 7100, so both can run side by side.
