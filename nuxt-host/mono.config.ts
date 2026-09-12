@@ -1,7 +1,7 @@
 //@unocss-include
 import { defineConfig } from 'mono-utils/config'
 import { DataSource, ODataStore, CustomStore } from 'mono-devextreme'
-import { DefaultService } from '@mono-host/odata/DTO/DefaultService'
+import { DefaultService } from '@nuxt-host/odata/DTO/DefaultService'
 import { env, appEnv } from './mono.env'
 
 const appConfig = {
@@ -17,7 +17,7 @@ export default defineConfig({
     extends: [
 
     ],
-    name: 'mono-host',
+    name: 'nuxt-host',
     // This host is a Nuxt app (source under `app/`). Declared above `apps` so
     // `monoAlias` can read it statically (before the config is loaded).
     type: 'nuxt',
@@ -30,9 +30,12 @@ export default defineConfig({
     // config is NOT told it is a host.
     template: 'host',
     apps: [
-
-        
-
+        {
+            name: 'nuxt-remote',
+            type: 'nuxt',
+            template: 'remote',
+            url: 'https://github.com/mono-lit/templates/tree/main/nuxt-remote'
+        }
     ],
     env,
     fetching: {
@@ -105,6 +108,6 @@ export default defineConfig({
         },
     },
     menu: [
-       
+
     ]
 });

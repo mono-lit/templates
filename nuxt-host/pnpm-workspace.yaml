@@ -15,7 +15,7 @@ catalogs:
   mono:
     mono-devextreme: ^0.0.1
     mono-helper: ^0.0.1
-    mono-utils: ^0.0.1
+    mono-utils: ^0.0.2
 
   # Nuxt framework + Nuxt modules
   nuxt:

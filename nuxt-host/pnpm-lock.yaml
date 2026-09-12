@@ -82,8 +82,8 @@ catalogs:
       specifier: ^0.0.1
       version: 0.0.1
     mono-utils:
-      specifier: ^0.0.1
-      version: 0.0.1
+      specifier: ^0.0.2
+      version: 0.0.2
   nuxt:
     '@pinia/nuxt':
       specifier: ^1.0.1
@@ -132,10 +132,10 @@ importers:
         version: 0.0.1
       mono-helper:
         specifier: catalog:mono
-        version: 0.0.1(@nuxt/kit@4.5.0(magic-string@1.3.1)(magicast@0.5.5)(oxc-parser@0.134.0)(rolldown@1.2.8)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.8)(rollup@4.63.1)(vite@8.3.0(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.28))))(magicast@0.5.5)(mono-utils@0.0.1(9fa8d9f6326f22b5964f53ed4b6cb1cc))(vite@8.3.0(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.24(typescript@6.0.3))
+        version: 0.0.1(@nuxt/kit@4.5.0(magic-string@1.3.1)(magicast@0.5.5)(oxc-parser@0.134.0)(rolldown@1.2.8)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.8)(rollup@4.63.1)(vite@8.3.0(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.28))))(magicast@0.5.5)(mono-utils@0.0.2(9fa8d9f6326f22b5964f53ed4b6cb1cc))(vite@8.3.0(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.24(typescript@6.0.3))
       mono-utils:
         specifier: catalog:mono
-        version: 0.0.1(9fa8d9f6326f22b5964f53ed4b6cb1cc)
+        version: 0.0.2(9fa8d9f6326f22b5964f53ed4b6cb1cc)
       notivue:
         specifier: catalog:frontend
         version: 2.4.5(@nuxt/kit@4.5.0(magic-string@1.3.1)(magicast@0.5.5)(oxc-parser@0.134.0)(rolldown@1.2.8)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.8)(rollup@4.63.1)(vite@8.3.0(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.28))))(@nuxt/schema@4.5.0)(defu@6.1.7)
@@ -3948,8 +3948,8 @@ packages:
       vue:
         optional: true
 
-  mono-utils@0.0.1:
-    resolution: {integrity: sha512-vciN9SbsGRs4Cq1LJuxn4ETtJm57lZwRua+gQu4xqPH48wyA05EaZPeB9zt9suIZbyEfamEVi6z6GB/y3oXqxQ==}
+  mono-utils@0.0.2:
+    resolution: {integrity: sha512-XNsDT1IQIWst5xNw14OyDIY2Upcz0qytPQsWvU8eTb/mtm85u6L1/VWluzneyO0tPg/uReQ6XLZkrRHvbJZYPQ==}
     hasBin: true
     peerDependencies:
       '@nuxt/kit': ^4.5.0
@@ -9835,7 +9835,7 @@ snapshots:
     dependencies:
       devextreme: 25.1.6
 
-  mono-helper@0.0.1(@nuxt/kit@4.5.0(magic-string@1.3.1)(magicast@0.5.5)(oxc-parser@0.134.0)(rolldown@1.2.8)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.8)(rollup@4.63.1)(vite@8.3.0(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.28))))(magicast@0.5.5)(mono-utils@0.0.1(9fa8d9f6326f22b5964f53ed4b6cb1cc))(vite@8.3.0(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.24(typescript@6.0.3)):
+  mono-helper@0.0.1(@nuxt/kit@4.5.0(magic-string@1.3.1)(magicast@0.5.5)(oxc-parser@0.134.0)(rolldown@1.2.8)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.8)(rollup@4.63.1)(vite@8.3.0(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.28))))(magicast@0.5.5)(mono-utils@0.0.2(9fa8d9f6326f22b5964f53ed4b6cb1cc))(vite@8.3.0(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.24(typescript@6.0.3)):
     dependencies:
       '@lit-labs/ssr': 3.2.2
       '@types/mdast': 4.0.4
@@ -9853,14 +9853,14 @@ snapshots:
       unist-util-visit: 5.1.0
     optionalDependencies:
       '@nuxt/kit': 4.5.0(magic-string@1.3.1)(magicast@0.5.5)(oxc-parser@0.134.0)(rolldown@1.2.8)(unplugin@3.3.0(esbuild@0.28.2)(rolldown@1.2.8)(rollup@4.63.1)(vite@8.3.0(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.28)))
-      mono-utils: 0.0.1(9fa8d9f6326f22b5964f53ed4b6cb1cc)
+      mono-utils: 0.0.2(9fa8d9f6326f22b5964f53ed4b6cb1cc)
       vite: 8.3.0(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)
       vue: 3.5.24(typescript@6.0.3)
     transitivePeerDependencies:
       - magicast
       - supports-color
 
-  mono-utils@0.0.1(9fa8d9f6326f22b5964f53ed4b6cb1cc):
+  mono-utils@0.0.2(9fa8d9f6326f22b5964f53ed4b6cb1cc):
     dependencies:
       '@unhead/vue': 3.1.3(@oxc-project/types@0.149.0)(crossws@0.4.12(srvx@0.11.22))(esbuild@0.28.2)(lightningcss@1.33.0)(rolldown@1.2.8)(rollup@4.63.1)(typescript@6.0.3)(vite@8.3.0(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.24(typescript@6.0.3))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.28))
       c12: 4.0.0-beta.5(chokidar@5.0.0)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magicast@0.5.5)

@@ -50,7 +50,7 @@ catalogs:
   mono:
     mono-devextreme: ^0.0.1
     mono-helper: ^0.0.1
-    mono-utils: ^0.0.1
+    mono-utils: ^0.0.2
   nuxt:
     '@pinia/nuxt': ^1.0.1
     '@unocss/nuxt': ^66.7.5
