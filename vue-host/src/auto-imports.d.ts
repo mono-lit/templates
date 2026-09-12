@@ -200,6 +200,7 @@ declare global {
   const useGeolocation: typeof import('@vueuse/core').useGeolocation
   const useHead: typeof import('@unhead/vue').useHead
   const useHeadSafe: typeof import('@unhead/vue').useHeadSafe
+  const useHelperMonoVue: typeof import('../.mono/apps/vue-remote/src/composables/use-helper').useHelperMonoVue
   const useHostHelper: typeof import('./composables/shared/use-helper').useHostHelper
   const useHostMenuStore: typeof import('./stores/shared/use-host-menu-store').useHostMenuStore
   const useId: typeof import('vue').useId
@@ -293,6 +294,7 @@ declare global {
   const useUrlSearchParams: typeof import('@vueuse/core').useUrlSearchParams
   const useUserMedia: typeof import('@vueuse/core').useUserMedia
   const useUtilsHost: typeof import('./composables/use-utils').useUtilsHost
+  const useUtilsMaster: typeof import('../.mono/apps/vue-remote/src/composables/use-utils').useUtilsMaster
   const useVModel: typeof import('@vueuse/core').useVModel
   const useVModels: typeof import('@vueuse/core').useVModels
   const useVibrate: typeof import('@vueuse/core').useVibrate
@@ -526,6 +528,7 @@ declare module 'vue' {
     readonly useGeolocation: UnwrapRef<typeof import('@vueuse/core')['useGeolocation']>
     readonly useHead: UnwrapRef<typeof import('@unhead/vue')['useHead']>
     readonly useHeadSafe: UnwrapRef<typeof import('@unhead/vue')['useHeadSafe']>
+    readonly useHelperMonoVue: UnwrapRef<typeof import('../.mono/apps/vue-remote/src/composables/use-helper')['useHelperMonoVue']>
     readonly useHostHelper: UnwrapRef<typeof import('./composables/shared/use-helper')['useHostHelper']>
     readonly useHostMenuStore: UnwrapRef<typeof import('./stores/shared/use-host-menu-store')['useHostMenuStore']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>
@@ -619,6 +622,7 @@ declare module 'vue' {
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>
     readonly useUserMedia: UnwrapRef<typeof import('@vueuse/core')['useUserMedia']>
     readonly useUtilsHost: UnwrapRef<typeof import('./composables/use-utils')['useUtilsHost']>
+    readonly useUtilsMaster: UnwrapRef<typeof import('../.mono/apps/vue-remote/src/composables/use-utils')['useUtilsMaster']>
     readonly useVModel: UnwrapRef<typeof import('@vueuse/core')['useVModel']>
     readonly useVModels: UnwrapRef<typeof import('@vueuse/core')['useVModels']>
     readonly useVibrate: UnwrapRef<typeof import('@vueuse/core')['useVibrate']>

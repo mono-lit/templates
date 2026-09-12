@@ -12,6 +12,7 @@ export default (to: RouteLocationNormalized, from: RouteLocationNormalized): Nav
 
   const token = state.cookie[String(state.config?.jwt?.token?.name)]
 
+
   if (!token) return "/"
 
   return true

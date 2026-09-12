@@ -48,6 +48,13 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
+    '/module-one/example': RouteRecordInfo<
+      '/module-one/example',
+      '/module-one/example',
+      Record<never, never>,
+      Record<never, never>,
+      | never
+    >,
   }
 
   /**
@@ -76,6 +83,12 @@ declare module 'vue-router/auto-routes' {
     'src/pages/home.vue': {
       routes:
         | '/home'
+      views:
+        | never
+    }
+    '.mono/apps/vue-remote/src/pages/module-one/example.vue': {
+      routes:
+        | '/module-one/example'
       views:
         | never
     }
