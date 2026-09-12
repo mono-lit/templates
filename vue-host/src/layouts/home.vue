@@ -40,10 +40,10 @@ watch(
        just ride the page away. `clip` suppresses horizontal overflow the same way
        without creating a scroll container. -->
   <div class="bg-white relative overflow-x-clip w-full">
-    <SharedLayoutSidebar />
+    <LayoutSidebar />
 
     <div class="flex flex-col min-h-screen" style="margin-left: var(--mono-sidebar-left-width, 0px);">
-      <SharedLayoutTopbar />
+      <LayoutTopbar />
 
       <main class="flex-1 px-3 py-6">
         <RouterView />
@@ -51,7 +51,7 @@ watch(
     </div>
 
     <Teleport to="body">
-      <SharedLayoutLogoutModal />
+      <LayoutLogoutModal />
     </Teleport>
   </div>
 </template>

@@ -12,7 +12,7 @@ import router from './router'
 import { monoJwt } from 'mono-utils/runtime'
 import { createMono } from 'mono-utils/runtime'
 import monoConfig from '../mono.config'
-import appConfig from '@mono-host/datas/config'
+import appConfig from '@vue-host/datas/appConfig.ts'
 
 const app = createApp(App)
 

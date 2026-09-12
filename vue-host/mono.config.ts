@@ -1,7 +1,7 @@
 //@unocss-include
 import { defineConfig, type MonoConfig } from 'mono-utils/config'
 import { DataSource, ODataStore, CustomStore } from 'mono-devextreme'
-import vueRemoteConfig from '@vue-root/mono.config'
+import vueRemoteConfig from '@vue-remote-root/mono.config'
 import usersSeed from './src/datas/mock/users.json'
 
 const appConfig = {
@@ -22,7 +22,7 @@ export default defineConfig({
     extends: [
         (): MonoConfig => vueRemoteConfig,
     ],
-    name: 'mono-host',
+    name: 'vue-host',
     type: 'vue',
     // This app OWNS the shared shell, so it renders its own `src/layouts` and
     // takes none from the apps it federates -- a remote's `default.vue` must not

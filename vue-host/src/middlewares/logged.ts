@@ -1,16 +1,14 @@
 import type { RouteLocationNormalized, NavigationGuardReturn } from "vue-router"
-import { monoCookie } from "mono-utils/runtime"
-import appConfig from "@mono-host/datas/config"
-
+import { monoState } from "mono-utils/runtime"
 /**
  * The login page. Already holding a session cookie => straight to /home;
  * otherwise stay — and remember where the user was heading so the mock login
  * can redirect there after success (the store reads `route.query.redirect`).
  */
 export default (to: RouteLocationNormalized, from: RouteLocationNormalized): NavigationGuardReturn => {
-  const cookie = monoCookie()
 
-  const token = cookie.get(appConfig.authCookie.jwt, true)
+  const state = monoState()
+  const token = state.cookie[String(state.config?.jwt?.token?.name)]
 
   if (token) return "/home"
 

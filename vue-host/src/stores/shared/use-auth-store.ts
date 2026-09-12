@@ -1,7 +1,7 @@
 import * as yup from "yup"
-import type { SchemaObject } from "@mono-host/types/index"
-import appConfig from "@mono-host/datas/config"
-import { createMockJwtHost } from "@mono-host/utils/mock-jwt"
+import type { SchemaObject } from "@vue-host/types/index"
+import appConfig from "@vue-host/datas/appConfig"
+import { createMockJwtHost } from "@vue-host/utils/mock-jwt"
 import { monoToken, monoCookie, monoStateReset } from 'mono-utils/runtime'
 import { monoFetchOdata, monoFetch } from 'mono-utils/fetching'
 import { MonoValidateError as ValidateError } from 'mono-utils/runtime'

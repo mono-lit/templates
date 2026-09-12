@@ -4,9 +4,9 @@ import {
 } from "vue-router"
 import { setupLayouts } from 'virtual:generated-layouts'
 import { routes as autoRoutes } from "vue-router/auto-routes"
-import authMiddleware from "@mono-host/middlewares/auth"
-import loggedMiddleware from "@mono-host/middlewares/logged"
-import errorMiddleware from "@mono-host/middlewares/error"
+import authMiddleware from "@vue-host/middlewares/auth"
+import loggedMiddleware from "@vue-host/middlewares/logged"
+import errorMiddleware from "@vue-host/middlewares/error"
 
 const routes = setupLayouts(autoRoutes) as unknown as RouteRecordRaw[]
 

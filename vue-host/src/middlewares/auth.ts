@@ -1,6 +1,5 @@
 import type { RouteLocationNormalized, NavigationGuardReturn } from "vue-router"
-import appConfig from "@mono-host/datas/config"
-import { monoCookie } from "mono-utils/runtime"
+import { monoState } from "mono-utils/runtime"
 
 
 /**
@@ -9,9 +8,9 @@ import { monoCookie } from "mono-utils/runtime"
  * present => allowed, cookie missing => back to the login page.
  */
 export default (to: RouteLocationNormalized, from: RouteLocationNormalized): NavigationGuardReturn => {
-  const cookie = monoCookie()
+  const state = monoState()
 
-  const token = cookie.get(appConfig.authCookie.jwt, true)
+  const token = state.cookie[String(state.config?.jwt?.token?.name)]
 
   if (!token) return "/"
 

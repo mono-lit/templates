@@ -1,10 +1,10 @@
 import type { RouteLocationNormalized, NavigationGuardReturn } from "vue-router"
-import { useCookies } from "@vueuse/integrations/useCookies"
-import  appConfig  from "@mono-host/datas/config"
+import { monoState } from "mono-utils/runtime"
 
 export default (to: RouteLocationNormalized, from: RouteLocationNormalized): NavigationGuardReturn => {
-  const cookies = useCookies()
-  const token = cookies.get(appConfig.authCookie.jwt)
+  const state = monoState()
+  
+  const token = state.cookie[String(state.config?.jwt?.token?.name)]
   if (!token) return "/"
   return true
 }
