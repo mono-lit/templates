@@ -1,12 +1,5 @@
-import type {
+import {
 
-    QDTO_Brand,
-} from '@mono-vue/odata/DTO/QDefault'
+
+} from '@vue-remote/types'
 import type { MonoOdataMapTypes } from 'mono-utils/runtime'
-
-export type DTO_BrandTypes = MonoOdataMapTypes<typeof QDTO_Brand>
-
-export type BrandPostTypes = {
-    Nama: string,
-    NamaBudget: string
-}

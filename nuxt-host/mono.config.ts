@@ -55,7 +55,7 @@ export default defineConfig({
         dbName: 'nuxt-host-mock',
         version: 1,
         schema: {
-            'mono-host-mock': {
+            'nuxt-host-mock': {
                 users: {
                     fields: {
                         Id: 'number|primary',
@@ -72,11 +72,11 @@ export default defineConfig({
         api: {
             monoHostRest: {
                 type: 'restful',
-                url: 'mono-host-mock',
+                url: 'nuxt-host-mock',
             },
             monoHostOData: {
                 type: 'odata',
-                url: 'mono-host-mock',
+                url: 'nuxt-host-mock',
             },
         },
         source: {

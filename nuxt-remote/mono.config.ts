@@ -46,13 +46,16 @@ export default defineConfig({
         api: {
             // Distinct keys from the host's `monoHostRest` / `monoHostOData`,
             // which merge in via `extends` and stay usable from federated pages.
+            // mono.env.ts ships EMPTY, so both fall back to the HOST's mock
+            // base-url (schemas merge through `extends` — the entries really
+            // work against the host's IndexedDB backend until real URLs land).
             monoNuxtRest: {
                 type: 'restful',
-                url: String(appEnv.MONO_NUXT_REMOTE_API_BASE_URL),
+                url: String(appEnv.MONO_NUXT_REMOTE_API_BASE_URL ?? 'nuxt-host-mock'),
             },
             monoNuxtOData: {
                 type: 'odata',
-                url: String(appEnv.MONO_NUXT_REMOTE_ODATA_BASE_URL),
+                url: String(appEnv.MONO_NUXT_REMOTE_ODATA_BASE_URL ?? 'nuxt-host-mock'),
             },
         },
         source: {

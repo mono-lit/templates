@@ -46,10 +46,10 @@ export default defineConfig({
     // Swapping to a real backend later = repoint the two `fetching.api` urls
     // below; URLs that match no mock base-url go to the network unchanged.
     mockIndexedDB: {
-        dbName: 'mono-host-mock',
+        dbName: 'vue-host-mock',
         version: 1,
         schema: {
-            'mono-host-mock': {
+            'vue-host-mock': {
                 users: {
                     fields: {
                         Id: 'number|primary',
@@ -66,11 +66,11 @@ export default defineConfig({
         api: {
             monoHostRest: {
                 type: 'restful',
-                url: 'mono-host-mock',
+                url: 'vue-host-mock',
             },
             monoHostOData: {
                 type: 'odata',
-                url: 'mono-host-mock',
+                url: 'vue-host-mock',
             },
         },
         source: {

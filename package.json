@@ -7,9 +7,12 @@
     "build": "vp build",
     "check": "vp check",
     "fmt": "vp fmt",
-    "run": "vp run"
+    "run": "vp run",
+    "test": "vp test"
   },
   "devDependencies": {
+    "mono-devextreme": "catalog:mono",
+    "mono-utils": "catalog:mono",
     "vite-plus": "^0.3.1"
   }
 }
