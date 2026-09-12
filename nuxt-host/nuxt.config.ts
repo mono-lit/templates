@@ -51,7 +51,6 @@ export default defineNuxtConfig({
     '@sentry/nuxt/module',
   ],
 
-
   // Official Sentry Nuxt SDK. Client init lives in `sentry.client.config.ts`
   // (root); browser tracing + vue-router instrumentation are auto-wired. No
   // `sentry.server.config.ts` because this app is `ssr: false` (SPA).
@@ -83,15 +82,6 @@ export default defineNuxtConfig({
     'notivue/notifications.css',
     'notivue/animations.css',
   ],
-
-  // `mono-helper/nuxt` adds `mono-helper/ui/index.css` and the `mono-`
-  // isCustomElement rule (so `<mono-*>` aren't resolved as Vue components).
-
-  // The host nests composables/stores under `*/shared/`; Nuxt (and @pinia/nuxt's
-  // storesDirs) only scan the top level + `*/index` by default, so opt the
-  // nested dirs in via globs. These paths resolve relative to srcDir (`app/`).
-  // NB: @pinia/nuxt's `storesDirs` can't cover this — it resolves each entry
-  // against `app/` and only scans one level deep — so we register stores here.
   imports: {
     dirs: ['composables', 'composables/**', 'stores', 'stores/**'],
   },
@@ -117,39 +107,10 @@ export default defineNuxtConfig({
     // define are injected by the `mono-utils/nuxt` module; the monoSsr Vite
     // plugins are injected by the `mono-helper/nuxt` module.)
     envPrefix: ['VITE_', 'MONO_'],
-    // `lit` is no longer a direct dependency here — it ships transitively via
-    // `mono-helper` (its own dependency) and `@lit-labs/ssr`. Dedupe it so
-    // mono-helper's externalized shadow build shares ONE lit instance with
-    // @lit-labs/ssr / nuxt-ssr-lit (pnpm dedupes naturally; this is a backstop).
-    resolve: {
-      dedupe: ['lit', 'lit-html', 'lit-element', '@lit/reactive-element'],
-      // Map the BARE `mono-helper` specifier (exact, not subpaths) to the
-      // side-effect-free utilities entry on the client too. Federated grid
-      // stores do `import { monoDataGrid } from 'mono-helper'`; without this the
-      // browser barrel registers the LIGHT `mono-nav`/`mono-sidebar`, colliding
-      // with the host's already-registered SHADOW builds (app/plugins/mono-
-      // shadow.ts) → `NotSupportedError: 'mono-nav' has already been defined` on
-      // /master/user and /budget/alokasi. Components are still registered via the
-      // explicit `mono-helper/ui/*` subpaths, which this anchored regex leaves
-      // untouched.
-      // alias: [{ find: /^mono-helper$/, replacement: monoHelperPureRoot }],
-    },
-    // Pre-bundle the deps that are only reached from FEDERATED routes
-    // (mono.config.ts / app.vue / the generated odata service). Without this,
-    // Vite first discovers them at runtime on the first visit to a federated
-    // page (e.g. /master/user, /budget/alokasi), triggers a mid-session dep
-    // re-optimization, bumps the optimize-deps hash, and re-fetches mono-helper's
-    // chunks under a NEW `?v=` URL. That re-evaluates `mono-helper`'s nav/sidebar
-    // modules a second time, whose `@customElement('mono-nav')` side effect then
-    // throws `'mono-nav' has already been defined` against the global registry.
-    // Including them upfront keeps the optimize-deps hash stable → no re-eval,
-    // no double define. (List comes straight from Vite's 'discovered new
-    // dependencies at runtime' hint.)
     optimizeDeps: {
       include: [
         '@odata2ts/odata-query-objects',
         '@odata2ts/odata-service',
-        'mono-devextreme',
       ],
     },
   },
@@ -168,9 +129,4 @@ export default defineNuxtConfig({
       }
     },
   },
-  // routeRules: {
-  //   '/': { prerender: true },
-  //   '/home': { prerender:true },
-  //   '/error': { prerender:true }
-  // }
 })

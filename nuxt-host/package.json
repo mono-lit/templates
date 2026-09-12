@@ -1,5 +1,5 @@
 {
-  "name": "mono-nuxt-host",
+  "name": "nuxt-host",
   "type": "module",
   "private": true,
   "scripts": {

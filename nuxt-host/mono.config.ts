@@ -31,6 +31,8 @@ export default defineConfig({
     template: 'host',
     apps: [
 
+        
+
     ],
     env,
     fetching: {

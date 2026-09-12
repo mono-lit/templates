@@ -1,5 +1,5 @@
 {
-  "name": "mono-nuxt-remote",
+  "name": "nuxt-remote",
   "type": "module",
   "private": true,
   "scripts": {

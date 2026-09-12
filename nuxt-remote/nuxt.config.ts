@@ -62,27 +62,11 @@ export default defineNuxtConfig({
   },
   vite: {
     // Keep `import.meta.env.MONO_NUXT_REMOTE_*` / `VITE_*` working in mono.config.ts.
-    // (server.fs.allow, optimizeDeps.exclude and the __MONO_CONFIG_EXPOSE__
-    // define are injected by the `mono-utils/nuxt` module; the monoSsr Vite
-    // plugins by the `mono-helper/nuxt` module.)
     envPrefix: ['VITE_', 'MONO_'],
-    resolve: {
-      // `lit` ships transitively via `mono-helper` and `@lit-labs/ssr`. Dedupe
-      // it so mono-helper's externalized shadow build shares ONE lit instance
-      // with @lit-labs/ssr / nuxt-ssr-lit (pnpm dedupes naturally; backstop).
-      dedupe: ['lit', 'lit-html', 'lit-element', '@lit/reactive-element'],
-    },
-    // Pre-bundle the deps only reached from FEDERATED code (mono.config.ts,
-    // the host's pages, the generated odata service). Without this Vite first
-    // discovers them at runtime on the first federated navigation, triggers a
-    // mid-session dep re-optimization, and re-fetches mono-helper's chunks under
-    // a new `?v=` URL — re-evaluating its `@customElement('mono-nav')` side
-    // effect and throwing `'mono-nav' has already been defined`.
     optimizeDeps: {
       include: [
         '@odata2ts/odata-query-objects',
         '@odata2ts/odata-service',
-        'mono-devextreme',
       ],
     },
   },
