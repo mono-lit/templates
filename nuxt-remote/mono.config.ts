@@ -2,8 +2,14 @@
 import { defineConfig, type MonoConfig } from 'mono-utils/config'
 import { DataSource, ODataStore, CustomStore } from 'mono-devextreme'
 import monoHostConfig from '@nuxt-host-root/mono.config'
-import appConfig from '@nuxt-remote/datas/appConfig'
 import { env, appEnv } from './mono.env'
+
+const appConfig = {
+    // The only auth cookie this template declares: the fake JWT minted at mock
+    // login. There is no refresh token — no server to refresh against.
+    jwtName: 'MONO_token',
+}
+
 
 export default defineConfig({
     name: 'nuxt-remote',

@@ -1,6 +1,5 @@
 import * as Sentry from '@sentry/nuxt'
 import { monoJwt } from 'mono-utils/runtime'
-import appConfig from '@nuxt-host/datas/config'
 
 // Sentry "extras" that need the app context: the Sentry-Pinia bridge (registered
 // on the pinia instance @pinia/nuxt created) and `setUser` from the session
@@ -17,7 +16,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   // The mock-login payload minted by `createMockJwtHost` — ID / USERNAME / NAME.
   const jwt = monoJwt().cookieDecode<{ ID?: number | string; USERNAME?: string; NAME?: string }>({
-    cookie: appConfig.authCookie.jwt,
+    cookie: 'MONO_token',
     splitCookie: true,
   })
 

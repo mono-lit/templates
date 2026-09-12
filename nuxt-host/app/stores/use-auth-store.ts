@@ -1,9 +1,9 @@
 import * as yup from "yup"
 import type { SchemaObject } from "@nuxt-host/types/index"
-import { monoToken, monoCookie, monoStateReset } from 'mono-utils/runtime'
+import { monoToken, monoCookie, monoStateReset, monoState } from 'mono-utils/runtime'
 import { monoFetchOdata, monoFetch } from 'mono-utils/fetching'
 import type { MonoValidateError as ValidateError } from 'mono-utils/runtime'
-import appConfig from '@nuxt-host/datas/config'
+
 
 export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
 
@@ -14,6 +14,7 @@ export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
   // there; read the current route off `router.currentRoute` where needed.
   const slTkn = monoToken()
   const cookie = monoCookie()
+  const state = monoState()
   const { validateAllSchema, validateSchema, notif } = useHostHelper()
 
   interface InputLogin {
@@ -120,8 +121,11 @@ export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
 
       const token = createMockJwtHost({ id: user.Id, username: user.Username, name: user.Name })
 
+        const state = monoState()
+
+
       slTkn.add({
-        name: appConfig.authCookie.jwt,
+        name: String(state.config?.jwt?.token?.name),
         value: token,
         milis: 8 * 60 * 60 * 1000,
         splitCookie: true,
@@ -146,9 +150,9 @@ export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
   let fetchPostLogout = async () => {
     loading.value.logout = true
 
-    if (cookie.get(appConfig.authCookie.jwt, true)) {
+    if (cookie.get(String(state.config?.jwt?.token?.name), true)) {
 
-      cookie.remove(appConfig.authCookie.jwt, true)
+      cookie.remove(String(state.config?.jwt?.token?.name), true)
 
       loading.value.logout = false
 
