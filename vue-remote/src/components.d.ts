@@ -12,6 +12,10 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AppLoader: typeof import('./../.mono/apps/mono-host/app/components/AppLoader.vue')['default']
+    LayoutLogoutModal: typeof import('./../.mono/apps/vue-host/src/components/Layout/LogoutModal.vue')['default']
+    LayoutProfileDropdown: typeof import('./../.mono/apps/vue-host/src/components/Layout/ProfileDropdown.vue')['default']
+    LayoutSidebar: typeof import('./../.mono/apps/vue-host/src/components/Layout/Sidebar.vue')['default']
+    LayoutTopbar: typeof import('./../.mono/apps/vue-host/src/components/Layout/Topbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SharedLayoutLogoutModal: typeof import('./../.mono/apps/mono-host/src/components/Shared/Layout/LogoutModal.vue')['default']

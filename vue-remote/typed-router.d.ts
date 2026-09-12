@@ -68,19 +68,19 @@ declare module 'vue-router/auto-routes' {
    * @internal
    */
   export interface _RouteFileInfoMap {
-    '.mono/apps/mono-host/src/pages/index.vue': {
+    '.mono/apps/vue-host/src/pages/index.vue': {
       routes:
         | '/'
       views:
         | never
     }
-    '.mono/apps/mono-host/src/pages/error.vue': {
+    '.mono/apps/vue-host/src/pages/error.vue': {
       routes:
         | '/error'
       views:
         | never
     }
-    '.mono/apps/mono-host/src/pages/home.vue': {
+    '.mono/apps/vue-host/src/pages/home.vue': {
       routes:
         | '/home'
       views:
