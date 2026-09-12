@@ -103,18 +103,18 @@ export default defineNuxtConfig({
     envPrefix: ['VITE_', 'MONO_'],
   },
 
-  hooks: {
-    // `mono.config.ts` is a root-level config file that isn't matched by any of
-    // Nuxt's generated tsconfig `include` globs (they only pick up root `*.d.ts`),
-    // so editors type-check it in an inferred project with no alias paths / Vite
-    // env types — hence 'Cannot find module '@nuxt-host/...'' and 'Property 'env'
-    // does not exist on type 'ImportMeta''. Attach it to the app project, which
-    // has the mono aliases + `import.meta.env` typing.
-    'prepare:types'(opts: { tsConfig: { include?: string[] } }) {
-      opts.tsConfig.include ||= []
-      if (!opts.tsConfig.include.includes('../mono.config.ts')) {
-        opts.tsConfig.include.push('../mono.config.ts')
-      }
-    },
-  },
+  // hooks: {
+  //   // `mono.config.ts` is a root-level config file that isn't matched by any of
+  //   // Nuxt's generated tsconfig `include` globs (they only pick up root `*.d.ts`),
+  //   // so editors type-check it in an inferred project with no alias paths / Vite
+  //   // env types — hence 'Cannot find module '@nuxt-host/...'' and 'Property 'env'
+  //   // does not exist on type 'ImportMeta''. Attach it to the app project, which
+  //   // has the mono aliases + `import.meta.env` typing.
+  //   'prepare:types'(opts: { tsConfig: { include?: string[] } }) {
+  //     opts.tsConfig.include ||= []
+  //     if (!opts.tsConfig.include.includes('../mono.config.ts')) {
+  //       opts.tsConfig.include.push('../mono.config.ts')
+  //     }
+  //   },
+  // },
 })

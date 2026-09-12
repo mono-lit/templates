@@ -36,7 +36,17 @@ export default defineNuxtConfig({
 
   // No Sentry here: the Host owns error reporting, and this app compiles INTO
   // it. Add `@sentry/nuxt` + a `sentry.client.config.ts` if you want the remote
-  // reporting under its own DSN when run standalone.
+  // reporting under its own DSN when run standalone. The cloned host still
+  // ships its Sentry plugin, so keep it out of THIS app's typecheck — it is
+  // ignored at runtime (see `ignore` above) and typechecked in the host's repo.
+  typescript: {
+    tsConfig: {
+      exclude: [
+        '../.mono/apps/*/sentry.client.config.ts',
+        '../.mono/apps/*/app/plugins/sentry.client.ts',
+      ],
+    },
+  },
   sourcemap: false,
   css: [
     // mono-skeleton styles ship in `mono-helper/ui/index.css`, added
@@ -52,7 +62,6 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['composables', 'composables/**', 'stores', 'stores/**'],
   },
-
   // Port of the host main.ts createNotivue() options.
   notivue: {
     position: 'top-right',
@@ -76,15 +85,15 @@ export default defineNuxtConfig({
     },
   },
 
-  hooks: {
-    // `mono.config.ts` is a root-level config file no Nuxt tsconfig `include`
-    // glob matches, so editors type-check it in an inferred project with no
-    // alias paths / Vite env types. Attach it to the app project instead.
-    'prepare:types'(opts: { tsConfig: { include?: string[] } }) {
-      opts.tsConfig.include ||= []
-      if (!opts.tsConfig.include.includes('../mono.config.ts')) {
-        opts.tsConfig.include.push('../mono.config.ts')
-      }
-    },
-  },
+  // hooks: {
+  //   // `mono.config.ts` is a root-level config file no Nuxt tsconfig `include`
+  //   // glob matches, so editors type-check it in an inferred project with no
+  //   // alias paths / Vite env types. Attach it to the app project instead.
+  //   'prepare:types'(opts: { tsConfig: { include?: string[] } }) {
+  //     opts.tsConfig.include ||= []
+  //     if (!opts.tsConfig.include.includes('../mono.config.ts')) {
+  //       opts.tsConfig.include.push('../mono.config.ts')
+  //     }
+  //   },
+  // },
 })
