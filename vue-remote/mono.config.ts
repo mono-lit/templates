@@ -1,7 +1,7 @@
 //@unocss-include
 import { defineConfig, type MonoConfig } from 'mono-utils/config'
 import monoHostConfig from '@vue-host-root/mono.config'
-import appConfig from '@vue-host/datas/appConfig'
+import appConfig from '@vue-remote/datas/appConfig'
 
 export default defineConfig({
     name: 'vue-remote',

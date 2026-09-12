@@ -1,8 +1,7 @@
 import * as yup from "yup"
 import type { SchemaObject } from "@vue-host/types/index"
-import appConfig from "@vue-host/datas/appConfig"
 import { createMockJwtHost } from "@vue-host/utils/mock-jwt"
-import { monoToken, monoCookie, monoStateReset } from 'mono-utils/runtime'
+import { monoToken, monoCookie, monoStateReset, monoState } from 'mono-utils/runtime'
 import { monoFetchOdata, monoFetch } from 'mono-utils/fetching'
 import { MonoValidateError as ValidateError } from 'mono-utils/runtime'
 
@@ -11,6 +10,7 @@ export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
   const route = useRoute()
   const slTkn = monoToken()
   const cookie = monoCookie()
+  const state = monoState()
   const { validateAllSchema, validateSchema, notif } = useHostHelper()
 
 
@@ -120,7 +120,7 @@ export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
       const token = createMockJwtHost({ id: user.Id, username: user.Username, name: user.Name })
 
       slTkn.add({
-        name: appConfig.authCookie.jwt,
+        name: String(state.config?.jwt?.token?.name),
         value: token,
         milis: 8 * 60 * 60 * 1000,
         splitCookie: true,
@@ -145,9 +145,9 @@ export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
   let fetchPostLogout = async () => {
     loading.value.logout = true
 
-    if (cookie.get(appConfig.authCookie.jwt, true)) {
+    if (cookie.get(String(state.config?.jwt?.token?.name), true)) {
 
-      cookie.remove(appConfig.authCookie.jwt, true)
+      cookie.remove(String(state.config?.jwt?.token?.name), true)
 
       loading.value.logout = false
 

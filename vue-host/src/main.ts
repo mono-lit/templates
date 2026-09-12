@@ -12,14 +12,14 @@ import router from './router'
 import { monoJwt } from 'mono-utils/runtime'
 import { createMono } from 'mono-utils/runtime'
 import monoConfig from '../mono.config'
-import appConfig from '@vue-host/datas/appConfig.ts'
+
 
 const app = createApp(App)
 
 if (import.meta.env.PROD && import.meta.env.VITE_SENTRY_DSN) {
 
     // The mock-login payload minted by `createMockJwtHost` — ID / USERNAME / NAME.
-    const jwt = monoJwt().cookieDecode<{ ID?: number | string; USERNAME?: string; NAME?: string }>({ cookie: appConfig.authCookie.jwt, splitCookie: true })
+    const jwt = monoJwt().cookieDecode<{ ID?: number | string; USERNAME?: string; NAME?: string }>({ cookie: 'MONO_token', splitCookie: true })
 
     const host = window.document.location.hostname
 
