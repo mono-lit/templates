@@ -1,0 +1,15 @@
+{
+  "name": "mono-templates",
+  "private": true,
+  "packageManager": "pnpm@10.7.0",
+  "scripts": {
+    "dev": "vp dev",
+    "build": "vp build",
+    "check": "vp check",
+    "fmt": "vp fmt",
+    "run": "vp run"
+  },
+  "devDependencies": {
+    "vite-plus": "^0.3.1"
+  }
+}

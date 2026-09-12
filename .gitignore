@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# pnpm
+.pnpm-store/
+
+# Vite / build output
+dist/
+.vite/
+
+# Nuxt
+.nuxt/
+.output/
+.data/
+
+# Env files (per-template .env* are the source of truth if committed inside templates)
+.env.local
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# TypeScript
+*.tsbuildinfo
+
+# Vite+
+.viteplus/
+
+# Template env files contain private tokens - each user creates their own (see README)
+.env
+
+# .npmrc contains the private registry token — each user creates their own (see README)
+.npmrc

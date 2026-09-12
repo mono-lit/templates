@@ -1,0 +1,27 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+dist
+.env
+.env.dev
+# .npmrc contains the private registry token — each user creates their own (see README)
+.npmrc
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+.mono
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files
+!.env.example
+templates
