@@ -17,7 +17,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   // which is why prerendering `/home` (→ authGuard) 500s while `/` (→ the
   // SSR-safe loggedGuard) and `/error` (pure) prerender fine. Skip on the server;
   // auth runs client-side after hydration.
-  if (import.meta.server) return
 
   const result = await runGuards(
     to as RouteLocationNormalized,

@@ -82,9 +82,6 @@ export default defineNuxtConfig({
   imports: {
     dirs: ['composables', 'composables/**', 'stores', 'stores/**'],
   },
-  dir: {
-    middleware: 'app/middleware',
-  },
 
   // Port of the host main.ts createNotivue() options.
   notivue: {

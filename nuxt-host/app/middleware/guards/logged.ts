@@ -7,7 +7,7 @@ import { monoState } from "mono-utils/runtime"
  * otherwise stay and let the user log in.
  */
 export default (to: RouteLocationNormalized, from: RouteLocationNormalized): NavigationGuardReturn => {
-   const state = monoState()
+  const state = monoState()
 
   const token = state.cookie[String(state.config?.jwt?.token?.name)]
 
