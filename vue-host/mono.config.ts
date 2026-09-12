@@ -31,7 +31,7 @@ export default defineConfig({
     template: 'host',
     apps: [
         {
-            name: 'mono-vue',
+            name: 'vue-remote',
             // Deep-folder sync (mono-utils >= 0.0.2): the URL names the FOLDER
             // — `mono sync` resolves `main` + subdirectory `vue-remote` and
             // clones just that folder into `.mono/apps/mono-vue`.

@@ -33,7 +33,7 @@ catalogs:
     # second copy makes `useNuxt()` come back empty inside a module.
     "@nuxt/kit": 4.5.0
     "@pinia/nuxt": ^1.0.1
-    "@unocss/nuxt": ^66.7.5
+    "@unocss/nuxt": 66.9.2
     "@vueuse/nuxt": 14.3.0
 
   # Build pipeline: bundler plugins and codegen tooling
@@ -42,7 +42,7 @@ catalogs:
     "@odata2ts/odata-query-objects": ^0.28.2
     "@odata2ts/odata-service": ^0.23.2
     "@odata2ts/odata2ts": ^0.40.2
-    unocss: ^66.7.5
+    unocss: 66.9.2
 
   # Dev tooling: type-checking and env helpers
   dev:

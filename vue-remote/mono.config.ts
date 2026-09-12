@@ -4,7 +4,7 @@ import monoHostConfig from '@vue-host-root/mono.config'
 import appConfig from '@vue-host/datas/appConfig'
 
 export default defineConfig({
-    name: 'mono-vue',
+    name: 'vue-remote',
     type: 'vue',
     extends: [
         // Pull the HOST's config in (cookies, jwt, mock backend, fetching.api
