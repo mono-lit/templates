@@ -2,18 +2,22 @@
 // NODE_ENV. Committed and shared so they don't go missing when a dev forgets to
 // push `.env`. SECRETS (GitHub PATs, Sentry token/DSN) stay in `.env` — never here.
 //
-// Single source of truth: imported by mono.config.ts (fetching) and
-// odata2ts.config.ts (codegen). No `@mono-host`/devextreme imports, so it resolves
-// in the bare node codegen context too. See docs: repo/env.
+// EMPTY for now: this template ships no backend — the demo runs on the mock
+// IndexedDB (see `mockIndexedDB` in mono.config.ts, urls inline). Fill it in
+// the day a real backend exists and point `fetching.api` at the values:
+//
+//   export const env = {
+//       default: {
+//           MONO_HOST_API_BASE_URL: 'https://api.example.com',
+//           MONO_HOST_ODATA_BASE_URL: 'https://api.example.com/odata',
+//       },
+//   }
 import { resolveEnv } from 'mono-utils/config'
 
 export const env = {
     default: {
-        MONO_HOST_API_BASE_URL: 'https://api.example.com',
-        MONO_HOST_ODATA_BASE_URL: 'https://api.example.com/odata',
-    },
-    // Override when dev/prod diverge (needs NODE_ENV set in the loaded .env):
-    // production: { MONO_HOST_API_BASE_URL: 'https://…', MONO_HOST_ODATA_BASE_URL: 'https://…/odata' },
+
+    }
 }
 
 /** Flattened active-environment values (`env.default` + the active NODE_ENV block). */

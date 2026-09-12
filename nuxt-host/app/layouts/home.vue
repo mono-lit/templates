@@ -54,5 +54,9 @@ watch(
       </main>
     </div>
 
+    <Teleport to="body">
+      <LayoutLogoutModal />
+    </Teleport>
+
   </div>
 </template>

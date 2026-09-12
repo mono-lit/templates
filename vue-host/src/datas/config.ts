@@ -3,26 +3,18 @@
 // the `define` that injects it at build time).
 const monoConfig = __MONO_CONFIG_EXPOSE__
 
-const use = monoConfig.fetching?.auth?.use
-
 /**
- * The two auth cookie names, resolved once from `fetching.auth.use`.
- *
- * Read `appConfig.authCookie.*` rather than `appConfig.fetching.auth.token` /
- * `.tokenRefresh`: those keys are deprecated, and they can't express which cookie goes on
- * which request — which is what mono needs in order to refresh the token for you.
- *
- * `use` also accepts a legacy string form, so narrow before reading it. Doing that here,
- * once, keeps the narrowing out of every call site.
+ * The mock-login session cookie, resolved once from `jwt.token` in
+ * mono.config.ts — the only auth cookie this template declares.
  */
+const jwtName = monoConfig.jwt?.token?.name
+
 const authCookie = {
-  /** The split JWT written at login. Also the Bearer sent ON the refresh request. */
-  jwt: typeof use === 'object' ? String(use.refreshTokenRequest) : '',
-  /** The token sent on every API request. This is what a refresh re-issues. */
-  jwtRefresh: typeof use === 'object' ? String(use.apiRequest) : '',
+    /** The fake JWT written at mock login. Its presence IS the session. */
+    jwt: typeof jwtName === 'string' ? jwtName : '',
 }
 
 export default {
-  ...monoConfig,
-  authCookie,
+    ...monoConfig,
+    authCookie,
 }

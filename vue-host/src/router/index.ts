@@ -7,7 +7,6 @@ import { routes as autoRoutes } from "vue-router/auto-routes"
 import authMiddleware from "@mono-host/middlewares/auth"
 import loggedMiddleware from "@mono-host/middlewares/logged"
 import errorMiddleware from "@mono-host/middlewares/error"
-import accessMiddleware from "@mono-host/middlewares/access"
 
 const routes = setupLayouts(autoRoutes) as unknown as RouteRecordRaw[]
 
@@ -22,11 +21,9 @@ router.beforeEach(async (to, from): Promise<NavigationGuardReturn> => {
 
   const isError = title === "Error" || p === "/error"
   const isLogin = title === "Login" || p === "/"
-  const notLogin = title !== "Login" && p !== "/"
 
   if (isError) return errorMiddleware(to, from)
   if (isLogin) return loggedMiddleware(to, from)
-  if (notLogin) return accessMiddleware(to, from)
 
   return authMiddleware(to, from)
 })

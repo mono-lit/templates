@@ -1,5 +1,11 @@
 <script setup lang="ts">
 const menuStore = useHostMenuStore()
+const fetchAuth = useAuthStore()
+
+function submitLogout() {
+    menuStore.logoutOpen = false
+    fetchAuth.fetching().postLogout()
+}
 </script>
 
 <template>
@@ -14,7 +20,8 @@ const menuStore = useHostMenuStore()
 
         <span slot="foot" class="flex justify-end gap-2">
             <mono-button variant="outline" @click="menuStore.logoutOpen = false">Batal</mono-button>
-            <mono-button variant="solid" color="danger" @click="menuStore.logoutOpen = false">Log Out</mono-button>
+            <mono-button variant="solid" color="danger" :loading.prop="fetchAuth.loading.logout"
+                @click="submitLogout">Log Out</mono-button>
         </span>
     </mono-modal>
 </template>

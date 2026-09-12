@@ -11,21 +11,16 @@ import {
   VueRouterAutoImports,
 } from 'vue-router/unplugin'
 import { unheadVueComposablesImports } from '@unhead/vue'
+import VueDevTools from 'vite-plugin-vue-devtools'
 import { monoRepo } from 'mono-utils/vite'
 
-const PORT = 2020
+const PORT = 7200
 const HTTPS = false
-
 dotenv.config()
 
 // https://vite.dev/config/
-export default defineConfig(async ({ mode }) => {
-  // One async call resolves everything: the `monoAlias` map, `mono.config.ts`
-  // (incl. its `extends` chain), the extends-active apps, and the client-exposed
-  // `__MONO_CONFIG_EXPOSE__`.
-  //   - mono.ecosystem(subs) → type-aware remote dir discovery (vue -> `src/<sub>`)
-  //   - mono.plugin          → wires resolve.alias / define / server.fs.allow / dep dedup (register LAST)
-  const mono = await monoRepo()
+export default defineConfig(async ({ mode, command }) => {
+  const mono = await monoRepo({ command })
 
   return {
     envPrefix: ['VITE_', 'MONO_'],
@@ -42,13 +37,7 @@ export default defineConfig(async ({ mode }) => {
       })
     },
     plugins: [
-      VueRouter({
-        routesFolder: [
-          { src: 'src/pages' },
-          // Federated remote pages, type-driven (vue remote -> `src/pages`).
-          ...mono.ecosystem('pages'),
-        ],
-      }),
+      VueRouter(mono.pages.options()),
       vue({
         template: {
           compilerOptions: {
@@ -62,7 +51,7 @@ export default defineConfig(async ({ mode }) => {
         force: true,
         savePath: './cert'
       }),
-      AutoImport({
+      AutoImport(mono.autoImport.options({
         imports: [
           'vue',
           'vue-router',
@@ -71,42 +60,11 @@ export default defineConfig(async ({ mode }) => {
           unheadVueComposablesImports,
           VueRouterAutoImports
         ],
-        dts: 'src/auto-imports.d.ts',
-        dirs: [
-          'src/composables',
-          'src/stores',
-          // Federated remote composables/stores, type-driven (vue -> `src/…`).
-          ...mono.ecosystem([
-            'composables/shared',
-            'stores/shared',
-            'composables',
-          ]),
-        ],
-        vueTemplate: true,
-      }),
-
-      Components({
-        extensions: ['vue'],
-        include: [/\.vue$/, /\.vue\?vue/],
-        dts: 'src/components.d.ts',
-        directoryAsNamespace: true,
-        collapseSamePrefixes: true,
-        dirs: [
-          './src/components',
-          // Federated remote components, type-driven (vue -> `src/components`).
-          ...mono.ecosystem('components'),
-        ],
-      }),
-      Layouts({
-        layoutsDirs: [
-          ...mono.ecosystem('layouts')
-        ],
-        defaultLayout: 'default'
-      }),
-
-      // ← LAST. Wires `resolve.alias`, `__MONO_CONFIG_EXPOSE__`, `server.fs.allow`
-      // and dep dedup from the single config load above.
-      mono.plugin,
-    ] as PluginOption[],
+      })),
+      Components(mono.components.options()),
+      Layouts(mono.layouts.options()),
+      VueDevTools(),
+      mono.vite(),
+    ].filter(Boolean) as PluginOption[],
   }
 })

@@ -86,7 +86,7 @@ function hasActiveDescendant(item: any, prefix = ''): boolean {
                         :id="item.url || item.title"
                         :title="item.title"
                         :icon="item.icon"
-                        :default-open="hasActiveDescendant(item) || null"
+                        :default-open="hasActiveDescendant(item) || undefined"
                         :class="{ 'is-active-ancestor': hasActiveDescendant(item) }"
                     >
                         <mono-menu-list

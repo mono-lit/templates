@@ -13,10 +13,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    SharedLayoutLogoutModal: typeof import('./components/Shared/Layout/LogoutModal.vue')['default']
-    SharedLayoutProfileDropdown: typeof import('./components/Shared/Layout/ProfileDropdown.vue')['default']
-    SharedLayoutSidebar: typeof import('./components/Shared/Layout/Sidebar.vue')['default']
-    SharedLayoutTopbar: typeof import('./components/Shared/Layout/Topbar.vue')['default']
+    LayoutLogoutModal: typeof import('./components/Layout/LogoutModal.vue')['default']
+    LayoutProfileDropdown: typeof import('./components/Layout/ProfileDropdown.vue')['default']
+    LayoutSidebar: typeof import('./components/Layout/Sidebar.vue')['default']
+    LayoutTopbar: typeof import('./components/Layout/Topbar.vue')['default']
     UtilsCookieExp: typeof import('./components/Utils/CookieExp.vue')['default']
   }
 }

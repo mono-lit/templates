@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { monoProvide, monoCookie } from 'mono-utils/runtime'
-import {monoOdataFetch } from 'mono-utils/fetching'
 
 definePage({
   meta: {
@@ -9,6 +8,7 @@ definePage({
     title: 'Example'
   }
 })
+
 const user = ref<any[]>([])
 
 monoProvide({
@@ -26,68 +26,18 @@ const kirimDataKeHost = () => {
   ]
 }
 
-const cookie = monoCookie().get('ESW_token', true)
-
-const dataBrand = ref<any[]>([])
-
-const dataPost = ref<any[]>([])
-
-let fetchingBrand = async () => {
-  const {data: getBrand } = await monoOdataFetch({
-    configBaseUrl: 'myOdata',
-    url: '/DTO_Brand', 
-    type: 'data',
-    options: {
-      key: 'Id',
-      select: ['Id', 'Nama'],
-      sort: [
-        {
-          selector: 'Id',
-          desc: true,
-        }
-      ]
-    }
-  })
-
-  dataBrand.value = getBrand
-
-}
-
-// let fetchingPost = async () => {
-//   const response = await monoFetch('/posts',  {
-//     baseUrl: 'https://jsonplaceholder.typicode.com',
-//     method: 'GET',
-//   })
-
-//   dataPost.value = response.all
-
-// }
-
+// Reads the shared login cookie — the same one the host writes, since both
+// configs name `MONO_token`.
+const cookie = monoCookie().get('MONO_token', true)
 </script>
 <template>
   <div>
-
-    <button @click="fetchingBrand()">
-      Fetching Brand
-    </button>
-
-     <!-- <button @click="fetchingPost()">
-      Fetching Post
-    </button> -->
-
-    {{ dataBrand }}
-
-    {{ dataPost }}
-
-
-  {{ cookie }}
-
     Ini di dalam kamar, update
-
 
     <button @click="kirimDataKeHost()">
       Tombolll
     </button>
 
+    <span class="text-xs text-gray-500">shared login: {{ cookie ? 'present' : 'none' }}</span>
   </div>
 </template>

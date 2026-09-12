@@ -50,6 +50,8 @@ watch(
       </main>
     </div>
 
-    <SharedLayoutLogoutModal />
+    <Teleport to="body">
+      <SharedLayoutLogoutModal />
+    </Teleport>
   </div>
 </template>

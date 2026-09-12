@@ -23,7 +23,6 @@
     "@vueuse/core": "catalog:frontend",
     "@vueuse/integrations": "catalog:frontend",
     "dotenv": "catalog:dev",
-    "jwt-decode": "catalog:frontend",
     "mono-devextreme": "catalog:mono",
     "notivue": "catalog:frontend",
     "pinia": "catalog:frontend",

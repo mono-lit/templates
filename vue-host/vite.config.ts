@@ -11,7 +11,7 @@ import UnoCSS from "unocss/vite"
 import Layouts from 'vite-plugin-vue-layouts-next'
 import dotenv from 'dotenv'
 import { unheadVueComposablesImports } from '@unhead/vue'
-// import { sentryVitePlugin } from "@sentry/vite-plugin"
+import { sentryVitePlugin } from "@sentry/vite-plugin"
 import { monoRepo } from 'mono-utils/vite'
 
 dotenv.config();
@@ -31,6 +31,13 @@ export default defineConfig(async ({ mode, command }) => {
         },
         preview: {
             port: PORT + 1,
+        },
+        build: {
+            minify: true,
+            sourcemap: Boolean(IS_SENTRY),
+            ...(mode == 'development' && {
+                outDir: 'dist-dev',
+            })
         },
         plugins: [
             VueRouter(mono.pages.options()),
@@ -56,23 +63,17 @@ export default defineConfig(async ({ mode, command }) => {
             })),
             Components(mono.components.options()),
             Layouts(mono.layouts.options()),
-            // (IS_SENTRY) && sentryVitePlugin({
-            //     org: process.env.SENTRY_ORG,
-            //     project: process.env.SENTRY_PROJECT,
-            //     authToken: process.env.SENTRY_AUTH_TOKEN,
-            //     sourcemaps: {
-            //         filesToDeleteAfterUpload: ['**/*.js.map']
-            //     }
-            // })
+            (IS_SENTRY) && sentryVitePlugin({
+                org: process.env.SENTRY_ORG,
+                project: process.env.SENTRY_PROJECT,
+                authToken: process.env.SENTRY_AUTH_TOKEN,
+                sourcemaps: {
+                    filesToDeleteAfterUpload: ['**/*.js.map']
+                }
+            }),
 
             mono.vite(),
-        ] as PluginOption[],
-        build: {
-            minify: true,
-            sourcemap: Boolean(IS_SENTRY),
-            ...(mode == 'development' && {
-                outDir: 'dist-dev',
-            })
-        },
+        ].filter(Boolean) as PluginOption[],
+
     }
 })

@@ -8,8 +8,8 @@ import 'mono-helper/ui/index.css'
 import { createNotivue } from 'notivue'
 import { createMono } from 'mono-utils/runtime'
 import monoConfig from '../mono.config'
-import 'notivue/notification.css' 
-import 'notivue/animations.css' 
+import 'notivue/notifications.css'
+import 'notivue/animations.css'
 
 const notivue = createNotivue({
     position: 'top-right',

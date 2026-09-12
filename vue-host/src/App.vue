@@ -18,9 +18,6 @@ useHead({
 
 <template>
   <main>
-   <!--
-    <UtilsCookieExp />
-   --> 
     <Notivue v-slot="item">
       <MonoNotifAction v-if="item.props.isAction" :item="item" />
       <Notifications v-else :item="item" :theme="pastelTheme" />

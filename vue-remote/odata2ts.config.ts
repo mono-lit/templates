@@ -1,16 +1,18 @@
+// OData type codegen — EMPTY placeholder. This remote ships no backend of its
+// own (everything merges in from the host via `extends`). When this app gets
+// its own OData service:
+//   1. set `sourceUrl` below (mono.env.ts is the right home for the URL),
+//   2. drop the service's `$metadata` at `src/odata/DTO/metadata.xml`,
+//   3. run `pnpm odata:gen` and import the generated `DefaultService`.
 import type { ConfigFileOptions } from "@odata2ts/odata2ts";
-import { appEnv } from './mono.env'
-
-// Base URL comes from the shared `mono.env.ts` (non-secret), not `.env`.
-const sourceUrl = String(appEnv.MONO_VUE_ODATA_BASE_URL)
 
 const config: ConfigFileOptions = {
     services: {
         DTO: {
-            sourceUrl,
+            sourceUrl: "",
             source: "src/odata/DTO/metadata.xml",
             output: "src/odata/DTO",
-        },
+        }
     }
 }
 

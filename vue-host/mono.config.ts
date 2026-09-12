@@ -1,25 +1,27 @@
 //@unocss-include
-import { monoJwt } from "mono-utils/runtime";
-import { defineConfig, JWTCompleteTokenTypes } from 'mono-utils/config'
+import { defineConfig, type MonoConfig } from 'mono-utils/config'
 import { DataSource, ODataStore, CustomStore } from 'mono-devextreme'
-import { DefaultService } from '@mono-host/odata/DTO/DefaultService'
-import { env, appEnv } from './mono.env'
-
+import vueRemoteConfig from '@vue-root/mono.config'
+import usersSeed from './src/datas/mock/users.json'
 
 const appConfig = {
+    // The only auth cookie this template declares: the fake JWT minted at mock
+    // login. There is no refresh token — no server to refresh against.
     jwtName: 'MONO_token',
-    jwtRefreshName: 'MONO_tokenRefresh',
 }
-
-// cookieDecode reads `document.cookie`, which only exists in the browser. When
-// getMonoConfig() loads this file in Node (during Vite config eval), guard so we
-// don't touch `document`. These values are only consumed in the non-PROD branch.
-const hasDocument = typeof document !== 'undefined';
-const jwtToken = hasDocument ? monoJwt().cookieDecode<JWTCompleteTokenTypes>({ cookie: appConfig.jwtName, splitCookie: true }) : null;
-const jwtRefreshToken = hasDocument ? monoJwt().cookieDecode<JWTCompleteTokenTypes>({ cookie: appConfig.jwtRefreshName }) : null;
 
 
 export default defineConfig({
+    // Activate the mono-vue remote: merges its config (menu `Module One`) into
+    // this host — and it is also the switch that turns its sidebar menu on:
+    // `use-host-menu-store` gates every synced remote on this list
+    // (`resolveExtendsAppNames`). Commenting the entry out drops the menu but
+    // keeps the synced clone under `.mono/apps/`. Thunk form for c12's extends
+    // chain — the remote extends this config back, and the lazy call is what
+    // lets that intentional cycle resolve.
+    extends: [
+        (): MonoConfig => vueRemoteConfig,
+    ],
     name: 'mono-host',
     type: 'vue',
     // This app OWNS the shared shell, so it renders its own `src/layouts` and
@@ -27,56 +29,48 @@ export default defineConfig({
     // compete with the shell's. A remote declares 'remote' (or nothing) instead.
     // Never inherited: a remote extending this config does NOT pick up 'host'.
     template: 'host',
-    extends: [
-
-    ],
     apps: [
-
+        {
+            name: 'mono-vue',
+            // Deep-folder sync (mono-utils >= 0.0.2): the URL names the FOLDER
+            // — `mono sync` resolves `main` + subdirectory `vue-remote` and
+            // clones just that folder into `.mono/apps/mono-vue`.
+            url: 'https://github.com/mono-lit/templates/tree/main/vue-remote',
+            type: 'vue'
+        }
     ],
-    env,
+    // Mock backend: this template ships with NO server. The `users` entity is
+    // the mock login's source of truth (login = push `LastLogin` onto the row,
+    // see `use-auth-store.ts`). Everything lives in the browser's IndexedDB —
+    // no port, no CORS, works offline. `mono db validate` checks the schema.
+    // Swapping to a real backend later = repoint the two `fetching.api` urls
+    // below; URLs that match no mock base-url go to the network unchanged.
+    mockIndexedDB: {
+        dbName: 'mono-host-mock',
+        version: 1,
+        schema: {
+            'mono-host-mock': {
+                users: {
+                    fields: {
+                        Id: 'number|primary',
+                        Username: 'string',
+                        Name: 'string',
+                        LastLogin: 'date',
+                    },
+                    seed: usersSeed,
+                },
+            },
+        },
+    },
     fetching: {
         api: {
             monoHostRest: {
                 type: 'restful',
-                url: String(appEnv.MONO_HOST_API_BASE_URL),
+                url: 'mono-host-mock',
             },
             monoHostOData: {
                 type: 'odata',
-                url: String(appEnv.MONO_HOST_ODATA_BASE_URL),
-                oDataService: DefaultService,
-            },
-        },
-        auth: {
-            // `use` names cookies declared in `cookie[]` below, so each one's `split`
-            // flag is inherited from there rather than restated here.
-            use: {
-                // sent on every API request
-                apiRequest: appConfig.jwtRefreshName,
-                // the login JWT — sent as the Bearer ON the refresh request itself
-                refreshTokenRequest: appConfig.jwtName,
-            },
-            // Declaring this is what turns on esw's automatic refresh: proactively before
-            // a request, and again on a 401 (which is then retried once). Without it the
-            // token is merely read from its cookie and sent.
-            requestRefreshTokenRequest: {
-                // the cookie the new token is written back to
-                name: appConfig.jwtRefreshName,
-                // where each value sits in the RESPONSE body. `milis` is the cookie
-                // LIFETIME — without it the refreshed token is never stored.
-                path: {
-                    milis: 'Expired',
-                    value: 'RefreshToken',
-                },
-                splitCookie: false,
-                fetchParams: {
-                    url: '/Auth/RefreshToken',
-                    options: {
-                        method: 'POST',
-                        // Explicit: this is a REST route, and the call that triggers the
-                        // refresh is often an OData one (whose base is the /odata root).
-                        baseUrl: String(appEnv.MONO_HOST_API_BASE_URL),
-                    },
-                },
+                url: 'mono-host-mock',
             },
         },
         source: {
@@ -90,21 +84,11 @@ export default defineConfig({
             name: appConfig.jwtName,
             split: true,
         },
-        {
-            name: appConfig.jwtRefreshName,
-        }
     ],
     jwt: {
         token: {
-            name: import.meta.env.PROD ? appConfig.jwtName : {
-                ...jwtToken,
-            },
+            name: appConfig.jwtName,
             split: true,
-        },
-        refreshToken: {
-            name: import.meta.env.PROD ? appConfig.jwtRefreshName : {
-                ...jwtRefreshToken,
-            },
         },
     },
     menu: [

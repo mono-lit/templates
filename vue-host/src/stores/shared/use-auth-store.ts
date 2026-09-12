@@ -1,207 +1,153 @@
 import * as yup from "yup"
 import type { SchemaObject } from "@mono-host/types/index"
 import appConfig from "@mono-host/datas/config"
-import { monoToken, monoCookie, monoJwt } from 'mono-utils/runtime'
-import { monoRestBaseUrl } from 'mono-utils/fetching'
-import { monoStateReset } from 'mono-utils/runtime'
+import { createMockJwtHost } from "@mono-host/utils/mock-jwt"
+import { monoToken, monoCookie, monoStateReset } from 'mono-utils/runtime'
+import { monoFetchOdata, monoFetch } from 'mono-utils/fetching'
 import { MonoValidateError as ValidateError } from 'mono-utils/runtime'
 
 export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
 
-  const router = useRouter()
   const route = useRoute()
   const slTkn = monoToken()
+  const cookie = monoCookie()
   const { validateAllSchema, validateSchema, notif } = useHostHelper()
 
 
   interface InputLogin {
     username: string;
     password: string;
-    database: string;
   }
 
-  const data = ref<any[]>([])
+  interface MockUser {
+    Id: number;
+    Username: string;
+    Name: string;
+    LastLogin?: string | null;
+  }
 
-  const group = ref<string>('')
-  const cookie = monoCookie()
-  const jwt = monoJwt()
-
-  const resetValue: (keyof InputLogin)[] = ['username', 'password', 'database']
+  const resetValue: (keyof InputLogin)[] = ['username', 'password']
   const loading = ref<{
     login: boolean;
     logout: boolean;
-    select: boolean;
-    changePassword: boolean;
-    message: boolean;
   }>({
     login: false,
-    logout: false,
-    select: false,
-    changePassword: false,
-    message: false
+    logout: false
   })
 
   const logoutModal = ref<boolean>(false)
 
-  const input = ref<InputLogin>({ username: "", password: "", database: "EJI" })
+  const input = ref<InputLogin>({ username: "", password: "" })
 
   const error = ref<ValidateError<InputLogin>>({
     username: { valid: true, message: '' },
     password: { valid: true, message: '' },
-    database: { valid: true, message: '' },
   })
 
 
   const schema = yup.object().shape<SchemaObject<InputLogin>>({
     username: yup.string().required("Harus diisi!"),
     password: yup.string().required("Harus diisi!"),
-    database: yup.string().required("Harus dipilih!"),
   });
 
 
 
   /**
-   * Refresh on demand — used by the route guards and the expiry watcher, which have to
-   * mint the refresh cookie BEFORE any API call goes out (right after login, or when the
-   * cookie has lapsed). API calls themselves no longer need this: mono now drives esw's
-   * automatic refresh from `fetching.auth.requestRefreshTokenRequest`.
+   * Mock login — no server involved. The backend is the browser's IndexedDB
+   * (`mockIndexedDB` in mono.config.ts):
    *
-   * Every parameter below comes from that same config block, so the manual and automatic
-   * paths can't drift apart. The Authorization header and `username` body are added here
-   * because sltoken's raw `fetch()` doesn't inject them — esw's automatic path does.
+   *  1. look the username up in the `users` entity,
+   *  2. push `LastLogin = now` onto that row — the write landing in IndexedDB
+   *     IS the login success (watch it change in DevTools → Application →
+   *     IndexedDB → mono-host-mock),
+   *  3. mint the fake session JWT (`ID` / `USERNAME` / `NAME` payload, see
+   *     `createMockJwtHost`) into the auth cookie and reload into the app.
+   *
+   * Any password passes — this is a template demo, not an auth service.
    */
-  let refetchRefreshToken = async ({ token: tkn }: { token?: string } = {}) => {
-
-    const token = tkn || cookie.get(appConfig.authCookie.jwt, true)
-
-    if (token) {
-
-      const decodeToken = jwt.cookieDecode<{ USER_NAME: string }>({ token: token })
-      const refreshRequest = appConfig.fetching?.auth?.requestRefreshTokenRequest
-
-      const refreshTokenFetch = await slTkn.fetch<{ Expired: number, RefreshToken: string }>({
-        name: String(refreshRequest?.name ?? appConfig.authCookie.jwtRefresh),
-        path: refreshRequest?.path ?? { milis: 'Expired', value: 'RefreshToken' },
-        splitCookie: refreshRequest?.splitCookie,
-        fetchParams: {
-          options: {
-            ...refreshRequest?.fetchParams?.options,
-            method: 'POST',
-            baseUrl: refreshRequest?.fetchParams?.options?.baseUrl ?? monoRestBaseUrl('monoHostRest'),
-            headers: {
-              Authorization: `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username: decodeToken?.USER_NAME }),
-            unauthCall: () => {
-              router.push('/')
-            }
-          },
-          url: String(refreshRequest?.fetchParams?.url ?? '/Auth/RefreshToken')
-        }
-      })
-      return refreshTokenFetch
-    }
-
-    return null
-
-  }
-
-  /**
-  * Fetching post login yang akan mengarahkan user ke halaman dashboard setelah sukses login
-  */
   let fetchPostLogin = async (): Promise<void> => {
     //validasikan semua inputan login
 
     loading.value.login = false
-    loading.value.message = false
     await validateAllSchema({ schema, input: input.value, error: error.value }, async () => {
 
       loading.value.login = true
-      loading.value.message = true
       resetValue.forEach((e) => {
         error.value[e].valid = true
         error.value[e].message = ''
       })
 
-      const tokenFetch = await slTkn.fetch({
-        name: appConfig.authCookie.jwt,
-        path: { milis: 'Expired', value: 'Token' },
-        splitCookie: true,
-        fetchParams: {
-          options: {
-            method: 'POST',
-            body: JSON.stringify({
-              username: String(input.value.username),
-              password: String(input.value.password),
-              companydb: String(input.value.database)
-            }),
-            baseUrl: monoRestBaseUrl('monoHostRest'),
-            callback: ({ message, statusCode, all }) => {
-              if (statusCode != 200) {
-                loading.value.login = false
-                loading.value.message = false
-                notif({ message: String(message) ?? 'Terjadi kesalahan, pastikan semua inputan sesuai!', type: 'error' })
-              }
-            },
-            unauthCall: async () => {
-              loading.value.login = false
-              loading.value.message = false
-              await router.push('/')
-            }
-          },
-          url: '/Auth/Login',
-        }
+      const username = String(input.value.username).trim()
+      // escape single quotes for the OData $filter literal
+      const usernameEscaped = username.toLowerCase().replace(/'/g, "''")
+
+      // `params` is the documented monoFetchOdata shape (see docs: repo/mock-api)
+      // but this mono-utils version types it narrowly — widen it back.
+      const fetchUsers = {
+        configBaseUrl: 'monoHostOData',
+        url: '/users',
+        type: 'data' as const,
+        params: {
+          $filter: `tolower(Username) eq '${usernameEscaped}'`,
+          $top: 1,
+        },
+      } as Parameters<typeof monoFetchOdata<MockUser[]>>[0]
+
+      const { data: users } = await monoFetchOdata<MockUser[]>(fetchUsers)
+
+      const user = users?.[0]
+
+      if (!user) {
+        loading.value.login = false
+        notif({ message: `Username "${username}" tidak ada di mock data!`, type: 'error' })
+        return
+      }
+
+      // The login "request": pushing the login timestamp into the mock store.
+      // Success of this write = success of the login.
+      const pushed = await monoFetch(`/users/${user.Id}`, {
+        configBaseUrl: 'monoHostRest',
+        method: 'PATCH',
+        body: JSON.stringify({ LastLogin: new Date().toISOString() }),
       })
 
-
-      if (!tokenFetch.response?.Token) {
+      if (pushed.statusCode >= 400) {
         loading.value.login = false
-        loading.value.message = false
+        notif({ message: String(pushed.message ?? 'Gagal menulis login ke mock data!'), type: 'error' })
+        return
       }
 
-      if (tokenFetch.response?.Token) {
-        loading.value.login = false
-        loading.value.message = false
-        input.value.password = ''
-        input.value.username = ''
+      const token = createMockJwtHost({ id: user.Id, username: user.Username, name: user.Name })
 
-        // Store the refresh-token cookie (ESW_tokenRefresh) right after a
-        // successful login. In esw-host this is written by the `auth.ts` route
-        // guard on first navigation to a protected page; mono-host's router
-        // guard is disabled, so we fetch + persist it here instead. Wrapped so a
-        // refresh failure never blocks the login redirect.
-        try {
-          await refetchRefreshToken({ token: tokenFetch.response?.Token })
-        } catch (e) {
-        }
+      slTkn.add({
+        name: appConfig.authCookie.jwt,
+        value: token,
+        milis: 8 * 60 * 60 * 1000,
+        splitCookie: true,
+      })
 
+      loading.value.login = false
+      input.value.password = ''
+      input.value.username = ''
 
-        const isRedirectPath = route.query.redirect ? String(route.query.redirect) : '/home'
+      const isRedirectPath = route.query.redirect ? String(route.query.redirect) : '/home'
 
-        notif({ type: 'success', message: 'Anda berhasil login!' })
-        window.location.assign(isRedirectPath)
-
-        // await router.push(isRedirectPath)
-
-
-      }
-
+      notif({ type: 'success', message: 'Anda berhasil login!' })
+      window.location.assign(isRedirectPath)
 
     })
 
   }
 
   /**
-  * Fetching post logout yang akan mengakhiri session login user
-  */
+   * Fetching post logout yang akan mengakhiri session login user
+   */
   let fetchPostLogout = async () => {
     loading.value.logout = true
 
     if (cookie.get(appConfig.authCookie.jwt, true)) {
 
       cookie.remove(appConfig.authCookie.jwt, true)
-      cookie.remove(appConfig.authCookie.jwtRefresh)
 
       loading.value.logout = false
 
@@ -215,10 +161,9 @@ export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
 
 
 
-
   /**
-  * Single validasi untuk mengeck inputan login
-  */
+   * Single validasi untuk mengeck inputan login
+   */
   let inputValidate = () => {
 
 
@@ -235,8 +180,8 @@ export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
 
 
   /**
-  * list fetching data yang tersedia di fetch auth
-  */
+   * list fetching data yang tersedia di fetch auth
+   */
   let fetching = () => {
     var obj = {
       postLogin: () => fetchPostLogin(),
@@ -248,15 +193,12 @@ export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
 
   return {
     input,
-    group,
     fetching,
     error,
-    data,
     inputValidate,
     schema,
     loading,
-    logoutModal,
-    refetchRefreshToken
+    logoutModal
   }
 })
 

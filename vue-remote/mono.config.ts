@@ -1,89 +1,46 @@
 //@unocss-include
-import { monoJwt } from "mono-utils/runtime";
-import { defineConfig, type MonoConfig, JWTCompleteTokenTypes } from 'mono-utils/config'
-import { DataSource, ODataStore, CustomStore } from 'mono-devextreme';
-import { DefaultService } from '@mono-host/odata/DTO/DefaultService'
-import monoHostConfig from '@mono-host-root/mono.config'
-
-import appConfig from '@mono-vue/datas/appConfig'
-import { env, appEnv } from './mono.env'
-
-// cookieDecode reads `document.cookie`, which only exists in the browser. When
-// getMonoConfig() loads this file in Node (during Vite config eval), guard so we
-// don't touch `document`. These values are only consumed in the non-PROD branch.
-const hasDocument = typeof document !== 'undefined';
-const jwtToken = hasDocument ? monoJwt().cookieDecode<JWTCompleteTokenTypes>({ cookie: appConfig.jwtName, splitCookie: true }) : null;
-const jwtRefreshToken = hasDocument ? monoJwt().cookieDecode<JWTCompleteTokenTypes>({ cookie: appConfig.jwtRefreshName }) : null;
+import { defineConfig, type MonoConfig } from 'mono-utils/config'
+import monoHostConfig from '@vue-host-root/mono.config'
+import appConfig from '@vue-host/datas/appConfig'
 
 export default defineConfig({
     name: 'mono-vue',
     type: 'vue',
     extends: [
+        // Pull the HOST's config in (cookies, jwt, mock backend, fetching.api
+        // `monoHostRest` / `monoHostOData`) so federated pages resolve the same
+        // endpoints. Thunk form — the host extends this config back, and the
+        // lazy call is what lets that intentional cycle resolve.
         (): MonoConfig => monoHostConfig,
     ],
     apps: [
         {
             name: 'mono-host',
-            url: "https://github.com/EJI-ICT/mono-vue-host/tree/main",
-            envToken: "MONO_VUE_GITHUB_TOKEN",
+            // Deep-folder sync (mono-utils >= 0.0.2): the URL names the FOLDER
+            // — `mono sync` resolves `main` + subdirectory `vue-host` and
+            // clones just that folder into `.mono/apps/mono-host`.
+            url: 'https://github.com/mono-lit/templates/tree/main/vue-host',
             type: 'vue'
         }
     ],
-    env,
-    fetching: {
-        api: {
-            myRest: {
-                type: 'restful',
-                url: String(appEnv.MONO_VUE_API_BASE_URL),
-            },
-            myOdata: {
-                type: 'odata',
-                url: String(appEnv.MONO_VUE_ODATA_BASE_URL),
-                oDataService: DefaultService,
-            },
-        },
-        auth: {
-            // `use` names cookies declared in `cookie[]` below, so each one's `split` flag
-            // is inherited from there. The refresh request itself (`requestRefreshTokenRequest`)
-            // is declared by the HOST and merges in via `extends` — no need to restate it.
-            //
-            // Do NOT go back to the legacy `{ token, tokenRefresh, use: 'tokenRefresh' }` form:
-            // this config is the override layer, so its string `use` would replace the host's
-            // object form and silently downgrade the host's auth.
-            use: {
-                // sent on every API request
-                apiRequest: appConfig.jwtRefreshName,
-                // the login JWT — sent as the Bearer ON the refresh request itself
-                refreshTokenRequest: appConfig.jwtName,
-            },
-        },
-        source: {
-            dataSource: DataSource,
-            oDataStore: ODataStore,
-            customStore: CustomStore,
-        }
-
-    },
+    // This remote ships NO backend of its own. Everything it needs — the mock
+    // IndexedDB schema, the `monoHostRest` / `monoHostOData` api entries and
+    // the fetching source ctors — merges in from the host via `extends`, so
+    // pages here just call `configBaseUrl: 'monoHostOData'`. Declare a
+    // `fetching.api` block of your own the day this app talks to its own
+    // service; its keys sit alongside the host's and never collide.
+    // Same cookie as the host (also merged in via `extends`): the two apps
+    // share one login — the mock JWT the host's login page writes.
     cookie: [
         {
             name: appConfig.jwtName,
             split: true,
         },
-        {
-            name: appConfig.jwtRefreshName,
-        }
     ],
     jwt: {
         token: {
-            name: import.meta.env.PROD ? appConfig.jwtName : {
-                ...jwtToken,
-            },
+            name: appConfig.jwtName,
             split: true,
-        },
-        refreshToken: {
-            name: import.meta.env.PROD ? appConfig.jwtRefreshName : {
-                ...jwtRefreshToken,
-            },
         },
     },
     menu: [

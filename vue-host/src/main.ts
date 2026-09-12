@@ -9,10 +9,8 @@ import 'notivue/animations.css'
 import { createNotivue } from 'notivue'
 import App from './App.vue'
 import router from './router'
-import {  monoJwt } from 'mono-utils/runtime'
-import { type JWTCompleteTokenTypes } from 'mono-utils/config'
+import { monoJwt } from 'mono-utils/runtime'
 import { createMono } from 'mono-utils/runtime'
-import { monoConfigureFetching } from 'mono-utils/fetching'
 import monoConfig from '../mono.config'
 import appConfig from '@mono-host/datas/config'
 
@@ -20,25 +18,13 @@ const app = createApp(App)
 
 if (import.meta.env.PROD && import.meta.env.VITE_SENTRY_DSN) {
 
-    const jwt = monoJwt().cookieDecode<JWTCompleteTokenTypes>({ cookie: appConfig.authCookie.jwt, splitCookie: true })
-
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL
-
-    function createRegexFromURL(url: string) {
-        // Escape special characters in the URL
-        const escapedURL = url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        // Create the regular expression pattern
-        const regexPattern = `^${escapedURL}`;
-        // Create the regular expression object
-        const regex = new RegExp(regexPattern);
-        return regex;
-    }
+    // The mock-login payload minted by `createMockJwtHost` — ID / USERNAME / NAME.
+    const jwt = monoJwt().cookieDecode<{ ID?: number | string; USERNAME?: string; NAME?: string }>({ cookie: appConfig.authCookie.jwt, splitCookie: true })
 
     const host = window.document.location.hostname
 
-    const id = jwt?.USER_ID;
-    const username = jwt?.NAME;
-    const email = jwt?.USER_NAME;
+    const id = jwt?.ID;
+    const username = jwt?.USERNAME || jwt?.NAME;
 
     init({
         app,
@@ -46,13 +32,11 @@ if (import.meta.env.PROD && import.meta.env.VITE_SENTRY_DSN) {
         integrations: [
             browserTracingIntegration({ router }),
             replayIntegration(),
-            // httpClientIntegration({
-            //     failedRequestStatusCodes: [[400, 599]],
-            //     failedRequestTargets: [host]
-            // })
         ],
         sendDefaultPii: true,
-        tracePropagationTargets: [host, createRegexFromURL(apiBaseUrl)],
+        // No API trace-propagation target: the mock backend lives in IndexedDB,
+        // no request ever leaves the page.
+        tracePropagationTargets: [host],
         // Performance Monitoring
         tracesSampleRate: 1.0, // Capture 100% of the transactions, reduce in production!
         // Session Replay
@@ -60,10 +44,9 @@ if (import.meta.env.PROD && import.meta.env.VITE_SENTRY_DSN) {
         replaysOnErrorSampleRate: 1.0, // If you're not already sampling the entire session, change the sample rate to 100% when sampling sessions where errors occur.
     });
 
-    if (id || username || email) {
+    if (id || username) {
         setUser({
             id: id ? String(id) : undefined,
-            email: email || undefined,
             username: username || undefined,
             ip_address: '{{auto}}'
         })
@@ -91,15 +74,6 @@ const head = createHead()
 const pinia = createPinia()
 
 pinia.use(createSentryPiniaPlugin())
-
-// Where a request lands when its token is expired and the automatic refresh
-// (fetching.auth.requestRefreshTokenRequest) couldn't save it. It lives here rather than
-// in mono.config.ts because it needs the router.
-monoConfigureFetching({
-    unauthCall: () => {
-        router.push('/')
-    },
-})
 
 app.use(createMono(monoConfig))
 app.use(router)
