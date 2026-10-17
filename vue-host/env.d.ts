@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 /// <reference types="unplugin-vue-router/client" />
 
-import type { MonoConfig } from 'mono-utils/config'
+import type { MonoConfig } from '@mono-lit/utility/config'
 
 // `__MONO_CONFIG_EXPOSE__` is injected as a compile-time global by the
 // `vite.define` in monoRepo() (the trimmed, browser-safe subset of the resolved

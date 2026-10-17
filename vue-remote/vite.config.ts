@@ -12,7 +12,7 @@ import {
 } from 'vue-router/unplugin'
 import { unheadVueComposablesImports } from '@unhead/vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
-import { monoRepo } from 'mono-utils/vite'
+import { monoRepo } from '@mono-lit/utility/vite'
 
 const PORT = 7200
 const HTTPS = false

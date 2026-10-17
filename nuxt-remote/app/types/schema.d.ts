@@ -1,1 +1,1 @@
-export {MonoSchemaObject as SchemaObject} from 'mono-utils/runtime'
+export {MonoSchemaObject as SchemaObject} from '@mono-lit/utility/runtime'

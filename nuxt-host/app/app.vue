@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Notivue, Notifications, pastelTheme } from "notivue"
-import { MonoNotifAction } from 'mono-utils/runtime'
+import { MonoNotifAction } from '@mono-lit/utility/runtime'
 
 const menuStore = useHostMenuStore()
 

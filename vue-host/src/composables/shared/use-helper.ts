@@ -1,5 +1,5 @@
 //@unocss-include
-import {useUtils} from 'mono-utils/runtime'
+import {useUtils} from '@mono-lit/utility/runtime'
 
 export const useHostHelper = () => {
 

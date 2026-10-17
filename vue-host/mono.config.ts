@@ -1,6 +1,6 @@
 //@unocss-include
-import { defineConfig, type MonoConfig } from 'mono-utils/config'
-import { DataSource, ODataStore, CustomStore } from 'mono-devextreme'
+import { defineConfig, type MonoConfig } from '@mono-lit/utility/config'
+import { DataSource, ODataStore, CustomStore } from '@mono-lit/devextreme'
 import vueRemoteConfig from '@vue-remote-root/mono.config'
 import usersSeed from './src/datas/mock/users.json'
 

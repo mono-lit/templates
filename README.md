@@ -9,17 +9,13 @@ All mono templates in one pnpm workspace (managed with Vite+ — `vp install`, `
 - Root `pnpm-workspace.yaml` — shared dependency catalogs (`internal` = mono libraries from the private registry)
 - Root `vite.config.ts` — Vite+ workspace management
 
-## Create `.npmrc` (required — contains your private token, never committed)
+## `.npmrc` (optional — no token needed)
 
-Every `.npmrc` in this repo (root and each template) is **gitignored**.
-Create the root one before installing:
+The mono libraries (`@mono-lit/helper`, `@mono-lit/utility`, `@mono-lit/devextreme`)
+are public packages on npmjs (https://www.npmjs.com/org/mono-lit), so a plain
+`pnpm install` works with no registry line and no token. The only setting
+each `.npmrc` here carries (gitignored) is the Node version pnpm should use:
 
 ```ini
 use-node-version=24.16.0
-registry=https://mono-libs.netlify.app/npm/
-//mono-libs.netlify.app/npm/:_authToken=<your-token>
 ```
-
-Each template needs the same file (see the template READMEs). Get the
-token from the repo owner — it is the `REGISTRY_DOWNLOAD_TOKEN` of the
-mono registry; installs fail with 401 without it.

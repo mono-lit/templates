@@ -11,8 +11,8 @@
     "test": "vp test"
   },
   "devDependencies": {
-    "mono-devextreme": "catalog:mono",
-    "mono-utils": "catalog:mono",
+    "@mono-lit/devextreme": "catalog:mono",
+    "@mono-lit/utility": "catalog:mono",
     "vite-plus": "^0.3.1"
   }
 }

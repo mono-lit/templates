@@ -1,5 +1,5 @@
 
-import type { SidebarMenu } from "mono-utils/config";
+import type { SidebarMenu } from "@mono-lit/utility/config";
 import { useCookies } from '@vueuse/integrations/useCookies'
 
 

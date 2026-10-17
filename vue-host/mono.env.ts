@@ -12,7 +12,7 @@
 //           MONO_HOST_ODATA_BASE_URL: 'https://api.example.com/odata',
 //       },
 //   }
-import { resolveEnv } from 'mono-utils/config'
+import { resolveEnv } from '@mono-lit/utility/config'
 
 export const env = {
     default: {

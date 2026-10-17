@@ -1,7 +1,7 @@
 import { useStorage } from "@vueuse/core";
 import staticDataSidebar  from "@vue-host/datas/menu";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
-import { resolveExtendsAppNames, type SidebarMenu, type MonoConfig } from 'mono-utils/config'
+import { resolveExtendsAppNames, type SidebarMenu, type MonoConfig } from '@mono-lit/utility/config'
 import hostMonoConfig from '../../../mono.config'
 
 

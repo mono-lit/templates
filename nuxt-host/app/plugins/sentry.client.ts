@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/nuxt'
-import { monoJwt } from 'mono-utils/runtime'
+import { monoJwt } from '@mono-lit/utility/runtime'
 
 // Sentry "extras" that need the app context: the Sentry-Pinia bridge (registered
 // on the pinia instance @pinia/nuxt created) and `setUser` from the session

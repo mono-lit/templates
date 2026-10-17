@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import 'mono-helper/ui/shadow/modal'
-import 'mono-helper/ui/shadow/button'
+import '@mono-lit/helper/ui/shadow/modal'
+import '@mono-lit/helper/ui/shadow/button'
 
 const menuStore = useHostMenuStore()
 const fetchAuth = useAuthStore()

@@ -1,7 +1,7 @@
 /**
  * Mint the fake session JWT for the mock login. It is UNSIGNED — nothing ever
  * verifies the signature (there is no auth server; the route guards only check
- * the cookie exists) — but it keeps mono-utils' `isJwt` shape
+ * the cookie exists) — but it keeps @mono-lit/utility' `isJwt` shape
  * (`<header>.<payload>.<signature>`, base64url) so `monoJwt()` / `monoState().jwt`
  * decode it like any real token.
  *
@@ -15,7 +15,7 @@ export function createMockJwtHost(
         const bytes = new TextEncoder().encode(JSON.stringify(input))
         let binary = ''
         bytes.forEach((byte) => (binary += String.fromCharCode(byte)))
-        // No padding: mono-utils' `isJwt` regex allows `=` only in the signature.
+        // No padding: @mono-lit/utility' `isJwt` regex allows `=` only in the signature.
         return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '')
     }
 

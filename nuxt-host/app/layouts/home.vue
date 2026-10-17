@@ -3,7 +3,7 @@
 // so the Lit DOM shim is installed BEFORE the element evaluates on the server.
 // Do NOT import shadow/light element modules here — a top-level <script setup>
 // import runs on the server before any shim and throws `HTMLElement is not defined`.
-import { monoInject } from 'mono-utils/runtime'
+import { monoInject } from '@mono-lit/utility/runtime'
 
 const menuStore = useHostMenuStore()
 

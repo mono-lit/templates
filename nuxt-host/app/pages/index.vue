@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import 'mono-helper/ui/shadow/card'
-import 'mono-helper/ui/shadow/input'
-import 'mono-helper/ui/shadow/button'
+import '@mono-lit/helper/ui/shadow/card'
+import '@mono-lit/helper/ui/shadow/input'
+import '@mono-lit/helper/ui/shadow/button'
 
 definePageMeta({
   layout: 'auth',

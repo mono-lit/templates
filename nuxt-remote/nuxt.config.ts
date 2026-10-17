@@ -25,8 +25,8 @@ export default defineNuxtConfig({
     port: PORT,
   },
   modules: [
-    'mono-utils/nuxt',
-    'mono-helper/nuxt',
+    '@mono-lit/utility/nuxt',
+    '@mono-lit/helper/nuxt',
 
     '@unocss/nuxt',
     '@pinia/nuxt',
@@ -49,14 +49,14 @@ export default defineNuxtConfig({
   },
   sourcemap: false,
   css: [
-    // mono-skeleton styles ship in `mono-helper/ui/index.css`, added
-    // automatically by the `mono-helper/nuxt` module.
+    // mono-skeleton styles ship in `@mono-lit/helper/ui/index.css`, added
+    // automatically by the `@mono-lit/helper/nuxt` module.
     'notivue/notifications.css',
     'notivue/animations.css',
   ],
 
   // This app's OWN composables/stores. The host's live under `*/shared/` and are
-  // registered by `mono-utils/nuxt` (which now passes the `**` glob for
+  // registered by `@mono-lit/utility/nuxt` (which now passes the `**` glob for
   // federated dirs too), so these globs only have to cover our own tree — but we
   // keep the same shape as the host so a `shared/` folder added here just works.
   imports: {
@@ -84,16 +84,4 @@ export default defineNuxtConfig({
       ],
     },
   },
-
-  // hooks: {
-  //   // `mono.config.ts` is a root-level config file no Nuxt tsconfig `include`
-  //   // glob matches, so editors type-check it in an inferred project with no
-  //   // alias paths / Vite env types. Attach it to the app project instead.
-  //   'prepare:types'(opts: { tsConfig: { include?: string[] } }) {
-  //     opts.tsConfig.include ||= []
-  //     if (!opts.tsConfig.include.includes('../mono.config.ts')) {
-  //       opts.tsConfig.include.push('../mono.config.ts')
-  //     }
-  //   },
-  // },
 })

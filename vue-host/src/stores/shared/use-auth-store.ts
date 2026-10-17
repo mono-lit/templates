@@ -1,9 +1,9 @@
 import * as yup from "yup"
 import type { SchemaObject } from "@vue-host/types/index"
 import { createMockJwtHost } from "@vue-host/utils/mock-jwt"
-import { monoToken, monoCookie, monoStateReset, monoState } from 'mono-utils/runtime'
-import { monoFetchOdata, monoFetch } from 'mono-utils/fetching'
-import { MonoValidateError as ValidateError } from 'mono-utils/runtime'
+import { monoToken, monoCookie, monoStateReset, monoState } from '@mono-lit/utility/runtime'
+import { monoFetchOdata, monoFetch } from '@mono-lit/utility/fetching'
+import { MonoValidateError as ValidateError } from '@mono-lit/utility/runtime'
 
 export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
 

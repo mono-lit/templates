@@ -7,33 +7,31 @@ trustPolicyExclude:
 
 overrides:
   nanoid@^3: 3.3.16
+  # Pin Vite for the whole tree: Nuxt itself only asks for `^8.3.4`.
+  vite: 8.3.4
 
 packages: []
 
 catalogs:
-  # Internal EJI-ICT libraries (private registry https://mono-libs.netlify.app/npm/, token in .npmrc)
+  # Internal EJI-ICT libraries — public releases on npmjs (https://www.npmjs.com/org/mono-lit); no registry or token in .npmrc
   mono:
-    mono-devextreme: ^0.0.1
-    mono-helper: ^0.0.1
-    mono-utils: ^0.0.2
+    '@mono-lit/devextreme': 0.0.2
+    '@mono-lit/helper': 0.0.4
+    '@mono-lit/utility': 0.0.3
 
   # Nuxt framework + Nuxt modules
   nuxt:
-    # EXACT, not a range. `mono-utils` is compiled against @nuxt/kit and
-    # @nuxt/schema 4.5.0, and its Nuxt module reaches into internals a patch
-    # release is free to change: it appends to `nuxt.options._layers` to
-    # register a federated Nuxt app as a native layer, which relies on Nuxt
-    # still reading `_layers` lazily on `app:resolve`. A floating `^4.5.0`
-    # silently put a FRESH install on 4.5.2 while an existing lockfile stayed
-    # on 4.5.0 - two checkouts of one template running different Nuxt.
-    # Bump this and mono-utils devDependencies together.
-    nuxt: 4.5.0
-    # Build-time module API. Same version as Nuxt so pnpm dedupes to one copy:
-    # @nuxt/kit keeps the active Nuxt instance in a module-level global, so a
-    # second copy makes `useNuxt()` come back empty inside a module.
-    "@nuxt/kit": 4.5.0
-    "@pinia/nuxt": ^1.0.1
-    "@unocss/nuxt": 66.9.2
+    # EXACT, not a range. `@mono-lit/utility`'s Nuxt module reaches into internals a
+    # patch release is free to change: it appends to `nuxt.options._layers` to
+    # register a federated Nuxt app as a native layer, which relies on Nuxt still
+    # reading `_layers` lazily on `app:resolve`. A floating range would put a FRESH
+    # install on a newer patch while an existing lockfile stays put - two checkouts
+    # of one template running different Nuxt. @nuxt/kit / @nuxt/schema need no pin
+    # or override: @mono-lit/* depend on `^4.6.2` themselves, so keep `nuxt` on the
+    # newest 4.6.x patch and pnpm resolves ONE kit for Nuxt and the libraries.
+    nuxt: 4.6.2
+    "@pinia/nuxt": 1.0.3
+    "@unocss/nuxt": 66.11.0
     "@vueuse/nuxt": 14.3.0
 
   # Build pipeline: bundler plugins and codegen tooling
@@ -42,7 +40,7 @@ catalogs:
     "@odata2ts/odata-query-objects": ^0.28.2
     "@odata2ts/odata-service": ^0.23.2
     "@odata2ts/odata2ts": ^0.40.2
-    unocss: 66.9.2
+    unocss: 66.11.0
 
   # Dev tooling: type-checking and env helpers
   dev:
@@ -58,21 +56,21 @@ catalogs:
     # to compileScript" then "ts.findConfigFile is not a function". Revert only
     # when compiler-sfc/vue-tsc officially support the native port.
     typescript: ~6.0.3
-    vue-tsc: ^3.3.7
+    vue-tsc: ^3.3.13
     taze: ^19.14.1
 
   # Frontend runtime: shipped to the browser bundle
   frontend:
-    "@sentry/nuxt": ^10.66.0
+    "@sentry/nuxt": ^11.8.0
     "@unhead/vue": 3.1.3
     "@vueuse/core": 14.3.0
     "@vueuse/integrations": 14.3.0
     jwt-decode: ^4.0.0
     notivue: ^2.4.5
-    pinia: 3.0.4
+    pinia: 4.1.0
     universal-cookie: ^8.1.2
-    vue: 3.5.24
-    vue-router: ^5.2.0
+    vue: 3.5.44
+    vue-router: 5.4.0
     yup: 1.7.1
     
   # Type definitions

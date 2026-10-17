@@ -1,6 +1,6 @@
 ﻿//@unocss-include
 
-import type { SidebarMenu } from "mono-utils/config";
+import type { SidebarMenu } from "@mono-lit/utility/config";
 
 const dataSidebar: SidebarMenu[] = [
     {

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Notivue, Notifications, pastelTheme } from 'notivue'
-import { MonoNotifAction, monoProvide } from 'mono-utils/runtime'
-import { resolveMonoConfig } from 'mono-utils/config'
+import { MonoNotifAction, monoProvide } from '@mono-lit/utility/runtime'
+import { resolveMonoConfig } from '@mono-lit/utility/config'
 import config from '../mono.config'
 
 // `useHostMenuStore` is the HOST's store, auto-imported from the federated

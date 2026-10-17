@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import 'mono-helper/ui/card'
-import 'mono-helper/ui/input'
-import 'mono-helper/ui/button'
+import '@mono-lit/helper/ui/card'
+import '@mono-lit/helper/ui/input'
+import '@mono-lit/helper/ui/button'
 
 definePage({
   meta: {

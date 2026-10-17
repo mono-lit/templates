@@ -1,15 +1,15 @@
 ﻿<script setup lang="ts">
-import 'mono-helper/ui/sidebar'
-import 'mono-helper/ui/menu'
-import 'mono-helper/ui/nav'
-import 'mono-helper/ui/card'
-import 'mono-helper/ui/modal'
-import 'mono-helper/ui/button'
-import 'mono-helper/ui/chip'
-import 'mono-helper/ui/input'
-import 'mono-helper/ui/dropdown'
+import '@mono-lit/helper/ui/sidebar'
+import '@mono-lit/helper/ui/menu'
+import '@mono-lit/helper/ui/nav'
+import '@mono-lit/helper/ui/card'
+import '@mono-lit/helper/ui/modal'
+import '@mono-lit/helper/ui/button'
+import '@mono-lit/helper/ui/chip'
+import '@mono-lit/helper/ui/input'
+import '@mono-lit/helper/ui/dropdown'
 
-import { monoInject } from 'mono-utils/runtime'
+import { monoInject } from '@mono-lit/utility/runtime'
 
 const menuStore = useHostMenuStore()
 

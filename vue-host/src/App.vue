@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import { Notivue, Notifications, pastelTheme } from "notivue"
-import { MonoNotifAction } from 'mono-utils/runtime'
+import { MonoNotifAction } from '@mono-lit/utility/runtime'
 
 const menuStore = useHostMenuStore()
 

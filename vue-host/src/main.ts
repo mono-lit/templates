@@ -3,14 +3,14 @@ import { createPinia } from 'pinia'
 import { createHead } from '@unhead/vue/client'
 import {createSentryPiniaPlugin, setUser, init, browserTracingIntegration, replayIntegration} from "@sentry/vue"
 import 'virtual:uno.css'
-import 'mono-helper/ui/index.css'
+import '@mono-lit/helper/ui/index.css'
 import 'notivue/notifications.css'
 import 'notivue/animations.css'
 import { createNotivue } from 'notivue'
 import App from './App.vue'
 import router from './router'
-import { monoJwt } from 'mono-utils/runtime'
-import { createMono } from 'mono-utils/runtime'
+import { monoJwt } from '@mono-lit/utility/runtime'
+import { createMono } from '@mono-lit/utility/runtime'
 import monoConfig from '../mono.config'
 
 
@@ -33,7 +33,8 @@ if (import.meta.env.PROD && import.meta.env.VITE_SENTRY_DSN) {
             browserTracingIntegration({ router }),
             replayIntegration(),
         ],
-        sendDefaultPii: true,
+        // v11 removed `sendDefaultPii`; its replacement `dataCollection` already defaults to
+        // collecting user info (incl. IP), cookies and headers — what `sendDefaultPii: true` did.
         // No API trace-propagation target: the mock backend lives in IndexedDB,
         // no request ever leaves the page.
         tracePropagationTargets: [host],

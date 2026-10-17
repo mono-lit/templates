@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import 'mono-helper/ui/shadow/sidebar'
-import 'mono-helper/ui/menu'
-import type { MenuItem } from 'mono-helper/ui/menu'
-import type { SidebarMenu } from 'mono-utils/config'
+import '@mono-lit/helper/ui/shadow/sidebar'
+import '@mono-lit/helper/ui/menu'
+import type { MenuItem } from '@mono-lit/helper/ui/menu'
+import type { SidebarMenu } from '@mono-lit/utility/config'
 
 const menuStore = useHostMenuStore()
 

@@ -1,6 +1,6 @@
 //@unocss-include
-import { defineConfig, type MonoConfig } from 'mono-utils/config'
-import { DataSource, ODataStore, CustomStore } from 'mono-devextreme'
+import { defineConfig, type MonoConfig } from '@mono-lit/utility/config'
+import { DataSource, ODataStore, CustomStore } from '@mono-lit/devextreme'
 import nuxtRemoteConfig from '@nuxt-remote-root/mono.config'
 import usersSeed from './app/datas/mock/users.json'
 
@@ -37,7 +37,7 @@ export default defineConfig({
     apps: [
         {
             name: 'nuxt-remote',
-            // Deep-folder sync (mono-utils >= 0.0.2): the URL names the FOLDER
+            // Deep-folder sync (@mono-lit/utility): the URL names the FOLDER
             // — `mono sync` resolves `main` + subdirectory `nuxt-remote` and
             // clones just that folder into `.mono/apps/nuxt-remote`.
             url: 'https://github.com/mono-lit/templates/tree/main/nuxt-remote',

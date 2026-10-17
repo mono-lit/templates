@@ -12,7 +12,7 @@ import Layouts from 'vite-plugin-vue-layouts-next'
 import dotenv from 'dotenv'
 import { unheadVueComposablesImports } from '@unhead/vue'
 import { sentryVitePlugin } from "@sentry/vite-plugin"
-import { monoRepo } from 'mono-utils/vite'
+import { monoRepo } from '@mono-lit/utility/vite'
 
 dotenv.config();
 

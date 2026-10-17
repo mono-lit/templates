@@ -1,13 +1,13 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 // import { fileURLToPath } from 'node:url'
 
-// Side-effect-free `mono-helper` root: the package's `node` entry exports the
+// Side-effect-free `@mono-lit/helper` root: the package's `node` entry exports the
 // pure data utilities (monoDataGrid, theme helpers, …) WITHOUT importing any
 // custom-element module. The browser `import` entry (dist/index.js) instead
 // re-exports every component, whose `@customElement('mono-nav')` decorators
 // register tags as an import side effect. See the alias below.
 // const monoHelperPureRoot = fileURLToPath(
-//   new URL('./node_modules/mono-helper/dist/index.node.js', import.meta.url),
+//   new URL('./node_modules/@mono-lit/helper/dist/index.node.js', import.meta.url),
 // )
 
 // Dev-server port. Hardcoded here (dev-only knob) rather than read from `.env`.
@@ -15,13 +15,13 @@ const PORT = 7100
 
 export default defineNuxtConfig({
   ssr: true, // prerender in prod, dev server is SPA (no SSR)
-  // Shared `mono` key: `utils` -> mono-utils/nuxt, `helper` -> mono-helper/nuxt
+  // Shared `mono` key: `utils` -> @mono-lit/utility/nuxt, `helper` -> @mono-lit/helper/nuxt
   // (the latter registers monoSsr() + the base css + the `mono-` isCustomElement).
   mono: {
     utils: {},
-    // SSR wrapping is now AUTOMATIC: `mono-helper/nuxt` auto-installs nuxt-ssr-lit
-    // (optional peer) and wraps a `<mono-*>` in <LitWrapper> when the .vue file
-    // imports its shadow build (`mono-helper/ui/shadow/<c>`); everything else
+    // SSR wrapping is now AUTOMATIC: `@mono-lit/helper/nuxt` installs its built-in Lit SSR
+    // bridge (nothing to add to the app) and wraps a `<mono-*>` in <LitWrapper> when the .vue file
+    // imports its shadow build (`@mono-lit/helper/ui/shadow/<c>`); everything else
     // stays client-only. No `litElementPrefix` / `exclude` lists to maintain.
     // (Use `helper: { shadow: ['mono-x'] }` only for tags registered globally in
     // a plugin rather than imported in the using SFC.)
@@ -35,11 +35,11 @@ export default defineNuxtConfig({
   },
   spaLoadingTemplate: 'spa-loading-template.html',
   modules: [
-    // `mono-helper/nuxt` auto-installs `nuxt-ssr-lit` (optional peer) and drives
-    // the SSR wrap from each .vue file's `mono-helper/ui/shadow/<c>` imports — no
-    // manual `nuxt-ssr-lit` entry or `litElementPrefix` list needed.
-    'mono-utils/nuxt',
-    'mono-helper/nuxt',
+    // `@mono-lit/helper/nuxt` brings its own Lit SSR bridge and drives the SSR wrap
+    // from each .vue file's `@mono-lit/helper/ui/shadow/<c>` imports — no `nuxt-ssr-lit`
+    // module entry or `litElementPrefix` list needed.
+    '@mono-lit/utility/nuxt',
+    '@mono-lit/helper/nuxt',
 
     '@unocss/nuxt',
     '@pinia/nuxt',
@@ -74,8 +74,8 @@ export default defineNuxtConfig({
       },
   sourcemap: false,
   css: [
-    // mono-skeleton styles now ship in `mono-helper/ui/index.css`
-    // (added automatically by the `mono-helper/nuxt` module).
+    // mono-skeleton styles now ship in `@mono-lit/helper/ui/index.css`
+    // (added automatically by the `@mono-lit/helper/nuxt` module).
     'notivue/notifications.css',
     'notivue/animations.css',
   ],
@@ -98,8 +98,8 @@ export default defineNuxtConfig({
   vite: {
     // Keep `import.meta.env.MONO_HOST_*` / `VITE_*` working in mono.config.ts.
     // (server.fs.allow, optimizeDeps.exclude and the __MONO_CONFIG_EXPOSE__
-    // define are injected by the `mono-utils/nuxt` module; the monoSsr Vite
-    // plugins are injected by the `mono-helper/nuxt` module.)
+    // define are injected by the `@mono-lit/utility/nuxt` module; the monoSsr Vite
+    // plugins are injected by the `@mono-lit/helper/nuxt` module.)
     envPrefix: ['VITE_', 'MONO_'],
   },
 

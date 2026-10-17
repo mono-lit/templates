@@ -1,5 +1,5 @@
 //@unocss-include
-import { defineConfig, type MonoConfig } from 'mono-utils/config'
+import { defineConfig, type MonoConfig } from '@mono-lit/utility/config'
 import monoHostConfig from '@vue-host-root/mono.config'
 
 const appConfig = {

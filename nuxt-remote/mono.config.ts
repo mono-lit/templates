@@ -1,6 +1,6 @@
 //@unocss-include
-import { defineConfig, type MonoConfig } from 'mono-utils/config'
-import { DataSource, ODataStore, CustomStore } from 'mono-devextreme'
+import { defineConfig, type MonoConfig } from '@mono-lit/utility/config'
+import { DataSource, ODataStore, CustomStore } from '@mono-lit/devextreme'
 import monoHostConfig from '@nuxt-host-root/mono.config'
 import { env, appEnv } from './mono.env'
 
@@ -17,7 +17,7 @@ export default defineConfig({
     // `monoAlias` can read it statically, before the config is loaded.
     type: 'nuxt',
     // This app CONSUMES the shared shell rather than owning it. Read by the
-    // `mono-utils/nuxt` module: it merges the host's `layouts/` (the chrome),
+    // `@mono-lit/utility/nuxt` module: it merges the host's `layouts/` (the chrome),
     // `middleware/` (the auth guards) and `plugins/` on top of this app's own
     // pages. A file we ship ourselves always wins — see `app/plugins/mono.ts`.
     //

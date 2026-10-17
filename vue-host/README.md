@@ -20,16 +20,13 @@ NODE_ENV="development"
 MONO_HOST_GITHUB_TOKEN=
 ```
 
-## Create `.npmrc` (required — contains your private token, never committed)
+## `.npmrc` (optional — no token needed)
 
-The `.npmrc` in this folder is **gitignored**. Create it yourself:
+The mono libraries (`@mono-lit/helper`, `@mono-lit/utility`, `@mono-lit/devextreme`)
+are public packages on npmjs (https://www.npmjs.com/org/mono-lit), so a plain
+`pnpm install` works with no registry line and no token. The only setting
+this folder's `.npmrc` carries (gitignored) is the Node version pnpm should use:
 
 ```ini
 use-node-version=24.16.0
-registry=https://mono-libs.netlify.app/npm/
-//mono-libs.netlify.app/npm/:_authToken=<your-token>
 ```
-
-Get the token from the repo owner — it is the `REGISTRY_DOWNLOAD_TOKEN` of
-the mono registry. Without it, installing the private `mono-*` packages
-fails with 401.

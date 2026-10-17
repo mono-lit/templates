@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import 'mono-helper/ui/shadow/nav'
-import 'mono-helper/ui/input'
-import { monoState } from 'mono-utils/runtime'
+import '@mono-lit/helper/ui/shadow/nav'
+import '@mono-lit/helper/ui/input'
+import { monoState } from '@mono-lit/utility/runtime'
 
 const menuStore = useHostMenuStore()
 

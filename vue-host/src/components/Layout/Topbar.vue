@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { monoState } from 'mono-utils/runtime'
+import { monoState } from '@mono-lit/utility/runtime'
 
 const menuStore = useHostMenuStore()
 

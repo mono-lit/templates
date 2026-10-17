@@ -1,8 +1,8 @@
 import * as yup from "yup"
 import type { SchemaObject } from "@nuxt-host/types/index"
-import { monoToken, monoCookie, monoStateReset, monoState } from 'mono-utils/runtime'
-import { monoFetchOdata, monoFetch } from 'mono-utils/fetching'
-import type { MonoValidateError as ValidateError } from 'mono-utils/runtime'
+import { monoToken, monoCookie, monoStateReset, monoState } from '@mono-lit/utility/runtime'
+import { monoFetchOdata, monoFetch } from '@mono-lit/utility/fetching'
+import type { MonoValidateError as ValidateError } from '@mono-lit/utility/runtime'
 
 
 export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
@@ -84,7 +84,7 @@ export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
       const usernameEscaped = username.toLowerCase().replace(/'/g, "''")
 
       // `params` is the documented monoFetchOdata shape (see docs: repo/mock-api)
-      // but this mono-utils version types it narrowly — widen it back.
+      // but this @mono-lit/utility version types it narrowly — widen it back.
       const fetchUsers = {
         configBaseUrl: 'monoHostOData',
         url: '/users',

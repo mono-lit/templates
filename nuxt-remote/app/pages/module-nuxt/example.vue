@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { monoCookie } from 'mono-utils/runtime'
+import { monoCookie } from '@mono-lit/utility/runtime'
 
 // `home` is a HOST-owned layout (the host's `app/layouts/home.vue`), merged in
 // because `mono.config.ts` declares `template: 'remote'`. This app ships no

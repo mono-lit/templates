@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { Notivue, Notification } from 'notivue'
 import config from '../mono.config'
-import { monoProvide } from 'mono-utils/runtime'
-import { resolveMonoConfig } from 'mono-utils/config'
+import { monoProvide } from '@mono-lit/utility/runtime'
+import { resolveMonoConfig } from '@mono-lit/utility/config'
 // const FloatMenu = defineAsyncComponent(() => import('./components/Utils/FedsMenu.vue'))
 
 const sidebar = ref<any[]>([])

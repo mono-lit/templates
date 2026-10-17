@@ -18,6 +18,16 @@ export default defineConfig({
   test: {
     include: ['tests/**/*.spec.ts'],
     environment: 'node',
+    // The templates' mono.config.ts import @mono-lit/devextreme, which imports
+    // DevExtreme subpaths like `devextreme/data/data_source`. Those are folders
+    // with their own package.json (`module`/`main`) — Vite resolves them, but plain
+    // Node ESM refuses folder imports (ERR_UNSUPPORTED_DIR_IMPORT). Let Vite resolve
+    // both packages, exactly as the apps' own builds do.
+    server: {
+      deps: {
+        inline: ['@mono-lit/devextreme', 'devextreme'],
+      },
+    },
   },
   resolve: {
     alias: {

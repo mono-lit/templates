@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { monoProvide, monoCookie } from 'mono-utils/runtime'
+import { monoProvide, monoCookie } from '@mono-lit/utility/runtime'
 
 definePage({
   meta: {

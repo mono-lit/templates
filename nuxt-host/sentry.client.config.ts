@@ -14,7 +14,8 @@ const dsn = import.meta.env.VITE_SENTRY_DSN
 if (import.meta.env.VITE_SENTRY_ENABLED === 'true' && dsn) {
   Sentry.init({
     dsn,
-    sendDefaultPii: true,
+    // v11 removed `sendDefaultPii`; its replacement `dataCollection` already defaults to
+    // collecting user info (incl. IP), cookies and headers — what `sendDefaultPii: true` did.
     integrations: [Sentry.replayIntegration()],
     tracePropagationTargets: [
       window.location.hostname,

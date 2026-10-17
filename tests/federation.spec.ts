@@ -1,7 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, expect, it } from 'vite-plus/test'
-import { resolveExtendsAppNames, type MonoConfig } from 'mono-utils/config'
+import { resolveExtendsAppNames, type MonoConfig } from '@mono-lit/utility/config'
 
 import nuxtHostConfig from '../nuxt-host/mono.config'
 import nuxtRemoteConfig from '../nuxt-remote/mono.config'

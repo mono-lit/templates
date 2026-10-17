@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, NavigationGuardReturn } from "vue-router"
-import { monoState } from "mono-utils/runtime"
+import { monoState } from "@mono-lit/utility/runtime"
 /**
  * The login page. Already holding a session cookie => straight to /home;
  * otherwise stay — and remember where the user was heading so the mock login

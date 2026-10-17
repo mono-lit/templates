@@ -1,7 +1,7 @@
 // Non-secret, environment-specific values (API base URLs, etc.), keyed by
 // NODE_ENV. Committed and shared so they don't go missing when a dev forgets to
 // push `.env`. SECRETS (GitHub PATs, Sentry token/DSN) stay in `.env` — never here.
-import { resolveEnv } from 'mono-utils/config'
+import { resolveEnv } from '@mono-lit/utility/config'
 
 export const env = {
     default: {

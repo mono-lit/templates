@@ -11,7 +11,7 @@ import { runGuards } from "@nuxt-host/middleware/run-guards"
  * to" into `true` (allow), so `navigateTo()` here can't loop.
  */
 export default defineNuxtRouteMiddleware(async (to, from) => {
-  // The guards read auth from `document.cookie` via mono-utils (monoToken /
+  // The guards read auth from `document.cookie` via @mono-lit/utility (monoToken /
   // monoCookie / monoState), which only exists in the browser. On the server —
   // including SSR and **prerendering** — that throws (`document is not defined`),
   // which is why prerendering `/home` (→ authGuard) 500s while `/` (→ the

@@ -1,5 +1,5 @@
 import type { RouteLocationNormalized, NavigationGuardReturn } from "vue-router"
-import { monoState } from "mono-utils/runtime"
+import { monoState } from "@mono-lit/utility/runtime"
 
 /**
  * Protected pages. The mock session is just the fake JWT cookie written at

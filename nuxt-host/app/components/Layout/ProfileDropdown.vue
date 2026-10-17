@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import 'mono-helper/ui/dropdown'
-import { monoState } from 'mono-utils/runtime'
+import '@mono-lit/helper/ui/dropdown'
+import { monoState } from '@mono-lit/utility/runtime'
 
 const menuStore = useHostMenuStore()
 
