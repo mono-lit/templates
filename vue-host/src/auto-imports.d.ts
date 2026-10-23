@@ -201,6 +201,7 @@ declare global {
   const useHead: typeof import('@unhead/vue').useHead
   const useHeadSafe: typeof import('@unhead/vue').useHeadSafe
   const useHelperMonoVue: typeof import('../.mono/apps/vue-remote/src/composables/use-helper').useHelperMonoVue
+  const useHostColorMode: typeof import('./composables/use-host-color-mode').useHostColorMode
   const useHostHelper: typeof import('./composables/shared/use-helper').useHostHelper
   const useHostMenuStore: typeof import('./stores/shared/use-host-menu-store').useHostMenuStore
   const useId: typeof import('vue').useId
@@ -529,6 +530,7 @@ declare module 'vue' {
     readonly useHead: UnwrapRef<typeof import('@unhead/vue')['useHead']>
     readonly useHeadSafe: UnwrapRef<typeof import('@unhead/vue')['useHeadSafe']>
     readonly useHelperMonoVue: UnwrapRef<typeof import('../.mono/apps/vue-remote/src/composables/use-helper')['useHelperMonoVue']>
+    readonly useHostColorMode: UnwrapRef<typeof import('./composables/use-host-color-mode')['useHostColorMode']>
     readonly useHostHelper: UnwrapRef<typeof import('./composables/shared/use-helper')['useHostHelper']>
     readonly useHostMenuStore: UnwrapRef<typeof import('./stores/shared/use-host-menu-store')['useHostMenuStore']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>

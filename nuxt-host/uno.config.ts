@@ -1,5 +1,6 @@
 import { defineConfig, presetIcons, presetWebFonts, presetWind4 } from "unocss";
 import { fileURLToPath } from "node:url";
+import { resolveFederatedRoots } from "@mono-lit/utility/config/node";
 
 // Federated remotes live OUTSIDE the Nuxt srcDir, under `.mono/apps/` at the PROJECT
 // root. Nuxt sets Vite's `root` to srcDir (`app/`), and UnoCSS resolves
@@ -10,16 +11,24 @@ import { fileURLToPath } from "node:url";
 // every federated utility class into `uno.css` upfront, so a client-only route like
 // `/flow` isn't unstyled on first paint — UnoCSS's transform pipeline would otherwise
 // only extract them on-demand.
-const monoApps = fileURLToPath(new URL("./.mono/apps", import.meta.url)).replace(/\\/g, "/");
+//
+// Every federated root: the `.mono/apps` clones AND the `apps[].path` siblings (a
+// mini remote read in place from a sibling checkout), which a `.mono/apps` glob
+// cannot see.
+const federatedRoots = resolveFederatedRoots({ dirname: fileURLToPath(new URL(".", import.meta.url)) })
+    .map((r) => r.root.replace(/\\/g, "/"));
+const escapeRe = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export default defineConfig({
     content: {
         filesystem: [
-            `${monoApps}/*/src/**/*.{js,ts,vue,html}`,
-            `${monoApps}/*/app/**/*.{js,ts,vue,html}`,
-            // Each remote's `mono.config.ts` carries the menu `icon` classes
-            // (e.g. `i-mdi-arrow-decision-outline`) rendered in the host sidebar.
-            `${monoApps}/*/mono.config.ts`,
+            ...federatedRoots.flatMap((root) => [
+                `${root}/src/**/*.{js,ts,vue,html}`,
+                `${root}/app/**/*.{js,ts,vue,html}`,
+                `${root}/mono.config.ts`,
+            ]),
+            // (Each remote's `mono.config.ts` above carries the menu `icon` classes,
+            // e.g. `i-mdi-arrow-decision-outline`, rendered in the host sidebar.)
         ],
         // The filesystem scan above still runs each file through UnoCSS's `filter`,
         // which only admits a file if its code has `//@unocss-include` OR its id matches
@@ -34,6 +43,8 @@ export default defineConfig({
             include: [
                 /\.(vue|svelte|[jt]sx|vine.ts|mdx?|astro|elm|php|phtml|marko|html)($|\?)/,
                 /[\\/]\.mono[\\/]apps[\\/].*\.(ts|js)($|\?)/,
+                // …and the same for `apps[].path` siblings outside the project.
+                ...federatedRoots.map((root) => new RegExp(`^${escapeRe(root)}/.*\\.(ts|js)($|\\?)`, "i")),
             ],
         },
     },

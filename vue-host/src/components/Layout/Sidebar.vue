@@ -1,6 +1,15 @@
 <script setup lang="ts">
-//@unocss-include
+import '@mono-lit/helper/ui/sidebar'
+import '@mono-lit/helper/ui/input'
+import '@mono-lit/helper/ui/menu'
+import type { MenuItem } from '@mono-lit/helper/ui/menu'
+import type { SidebarMenu } from '@mono-lit/utility/config'
+import { useHostColorMode } from '../../composables/use-host-color-mode'
+
 const menuStore = useHostMenuStore()
+// A black panel in both modes: Basecoat's `dark` colour in light mode; in dark mode `dark` turns
+// light grey, and the near-black `surface` takes over.
+const { isDark } = useHostColorMode()
 
 function joinUrl(parent: string | undefined, child: string | undefined): string {
     const p = parent || ''
@@ -12,10 +21,10 @@ function joinUrl(parent: string | undefined, child: string | undefined): string 
     return `${head}/${tail}`
 }
 
-function hasActiveDescendant(item: any, prefix = ''): boolean {
+function hasActiveDescendant(item: SidebarMenu, prefix = ''): boolean {
     if (!item?.items?.length) return false
     const itemFullUrl = joinUrl(prefix, item.url)
-    return item.items.some((child: any) => {
+    return item.items.some((child) => {
         const childFullUrl = joinUrl(itemFullUrl, child.url)
         return (
             childFullUrl === menuStore.activeMenu ||
@@ -23,110 +32,88 @@ function hasActiveDescendant(item: any, prefix = ''): boolean {
         )
     })
 }
+
+/** The menu search: a row stays when its title matches, a group when any row under it does. */
+function filterMenu(list: SidebarMenu[] | undefined, query: string): SidebarMenu[] {
+    if (!query) return list ?? []
+    return (list ?? []).flatMap((m) => {
+        if (m.title?.toLowerCase().includes(query)) return [m]
+        const items = filterMenu(m.items, query)
+        return items.length ? [{ ...m, items }] : []
+    })
+}
+
+/**
+ * `SidebarMenu` (config shape: `url` + `items`) -> `MenuItem` (component shape:
+ * `id`/`href` + `type` + `items`), with every `url` resolved to the full path its
+ * ancestors imply. The tree goes to ONE `<mono-menu-list :items.prop>`: the data
+ * path renders any depth with no DOM capture to race Vue's hydration.
+ */
+function toMenuItems(list: SidebarMenu[] | undefined, prefix = '', searching = false): MenuItem[] {
+    return (list ?? []).map((m) => {
+        const full = joinUrl(prefix, m.url)
+        const children = m.items?.length ? toMenuItems(m.items, full, searching) : []
+
+        if (children.length) {
+            return {
+                id: full || m.title,
+                type: 'group',
+                title: m.title,
+                subtitle: m.subtitle,
+                icon: m.icon,
+                items: children,
+                // Open around the active row, and around every match while searching.
+                defaultOpen: searching || hasActiveDescendant(m, prefix),
+            } satisfies MenuItem
+        }
+
+        return {
+            id: full || m.title,
+            type: 'item',
+            title: m.title,
+            subtitle: m.subtitle,
+            icon: m.icon,
+            href: full,
+        } satisfies MenuItem
+    })
+}
+
+const query = computed(() => menuStore.search.trim().toLowerCase())
+const menuItems = computed<MenuItem[]>(() => toMenuItems(filterMenu(menuStore.menuList, query.value), '', !!query.value))
 </script>
 
 <template>
-    <mono-sidebar
-        :mode="menuStore.sidebarMode"
-        :width="menuStore.sidebarWidth"
-        :rail-width="64"
-        :expand-on-hover="!menuStore.isMobile"
-        :rail="menuStore.railProp"
-        color="surface"
-        :model-value="menuStore.sidebarOpen"
-        @mno-change="menuStore.onSidebarChange"
-    >
-        <div
-            slot="header"
-            class="brand-header relative w-full flex items-center gap-2.5 px-3 py-2.5 overflow-hidden bg-gradient-to-br from-[#0f3060] via-[#2563a8] to-[#4a9fd4] rounded-md"
-        >
-            <div
-                class="relative z-1 w-10 h-10 rounded-lg bg-white border border-white/50 shadow-[0_2px_8px_rgba(0,0,0,.16)] flex items-center justify-center text-[#2563a8] text-[1rem] font-black flex-shrink-0"
-            >EJI</div>
-            <div class="mono-sidebar-label relative z-1 leading-tight flex-1 min-w-0">
-                <div class="text-white text-[.95rem] font-extrabold tracking-[.02em] truncate">Eka Jaya</div>
-                <div class="text-white/70 text-[.6rem] font-medium uppercase tracking-[.13em] mt-0.5 truncate">Beauty Mgmt</div>
-            </div>
-
-            <button
-                v-if="!menuStore.isMobile"
-                type="button"
-                :aria-label="menuStore.rail ? 'Expand sidebar' : 'Collapse sidebar'"
-                :title="menuStore.rail ? 'Expand sidebar' : 'Collapse sidebar'"
-                class="mono-sidebar-label rail-chevron relative z-1 flex-shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-md bg-white/18 border border-white/28 text-white cursor-pointer transition-colors backdrop-blur-sm hover:bg-white/28 hover:border-white/45"
-                @click="menuStore.toggleRail"
-            >
-                <div
-                    v-if="menuStore.rail"
-                    class="i-mdi-chevron-right w-4 h-4 text-white"
-                ></div>
-                <div
-                    v-else
-                    class="i-mdi-chevron-left w-4 h-4 text-white"
-                ></div>
-            </button>
-
-            <span
-                class="mono-sidebar-label absolute -right-4 -top-4 w-20 h-20 rounded-full bg-white/8 pointer-events-none"
-            ></span>
+    <mono-sidebar :color="isDark ? 'surface' : 'dark'" density="compact" :mode="menuStore.sidebarMode" :width="menuStore.sidebarWidth"
+        :rail-width="64" :rail="menuStore.railProp" :expand-on-hover="!menuStore.isMobile"
+        :model-value="menuStore.sidebarOpen" @mno-change="menuStore.onSidebarChange">
+        <div slot="header" class="w-full flex items-center justify-center gap-3 min-w-0">
+            <!-- The only thing in the collapsed rail's header. -->
+            <LayoutLogo class="size-8 shrink-0" />
+            <span class="mono-sidebar-label font-bold text-base truncate flex-1">NoCompany</span>
+            <!-- Hidden in the collapsed rail. The label class sits on a wrapper with no display of its own:
+                 on the button, its `grid` would override the rail's hiding. A plain button, so it takes the
+                 panel's own ink (light on the black panel). -->
+            <span class="mono-sidebar-label">
+                <button type="button" class="size-8 shrink-0 grid place-items-center rounded-[var(--radius)] cursor-pointer bg-transparent border-0 text-inherit hover:bg-white/10"
+                    :aria-label="menuStore.isMobile ? 'Close menu' : (menuStore.rail ? 'Expand menu' : 'Collapse menu')"
+                    @click="menuStore.isMobile ? (menuStore.mobileOpen = false) : menuStore.toggleRail()">
+                    <span class="text-lg" :class="menuStore.isMobile ? 'i-mdi-close' : (menuStore.rail ? 'i-mdi-arrow-expand-right' : 'i-mdi-arrow-collapse-left')" />
+                </button>
+            </span>
         </div>
 
-        <mono-menu
-            :model-value="menuStore.activeMenu"
-            @mno-click="menuStore.onMenuClick"
-        >
-            <div slot="body">
-                <template
-                    v-for="item in menuStore.menuList"
-                    :key="item.url || item.title"
-                >
-                    <mono-menu-list
-                        v-if="item.items && item.items.length"
-                        type="group"
-                        :id="item.url || item.title"
-                        :title="item.title"
-                        :icon="item.icon"
-                        :default-open="hasActiveDescendant(item) || undefined"
-                        :class="{ 'is-active-ancestor': hasActiveDescendant(item) }"
-                    >
-                        <mono-menu-list
-                            v-for="child in item.items"
-                            :key="child.url || child.title"
-                            type="children"
-                            :id="joinUrl(item.url, child.url) || child.title"
-                            :title="child.title"
-                            :icon="child.icon"
-                            :href="joinUrl(item.url, child.url)"
-                        ></mono-menu-list>
-                    </mono-menu-list>
-                    <mono-menu-list
-                        v-else
-                        type="children"
-                        :id="item.url || item.title"
-                        :title="item.title"
-                        :icon="item.icon"
-                        :href="item.url"
-                    ></mono-menu-list>
-                </template>
-            </div>
-        </mono-menu>
+        <div class="flex flex-col gap-2 min-h-0">
+            <mono-input class="mono-sidebar-label" size="sm" clearable placeholder="Search menu..."
+                :model-value="menuStore.search" @mno-input="menuStore.search = $event.detail.modelValue ?? ''"
+                @mno-clear="menuStore.search = ''">
+                <span slot="prefix" class="i-mdi-magnify" />
+            </mono-input>
+
+            <mono-menu :model-value="menuStore.activeMenu" @mno-click="menuStore.onMenuClick">
+                <div slot="body">
+                    <mono-menu-list :items.prop="menuItems"></mono-menu-list>
+                </div>
+            </mono-menu>
+        </div>
     </mono-sidebar>
 </template>
-
-<style>
-mono-menu-list.is-active-ancestor > .mono-menu-group > .mono-menu-group-header {
-    color: var(--menu-accent, currentColor);
-    background: rgba(var(--menu-accent-rgb, 37 99 235), 0.08);
-}
-
-mono-menu-list.is-active-ancestor > .mono-menu-group > .mono-menu-group-header .mono-menu-title {
-    font-weight: 600;
-    color: var(--menu-accent, currentColor);
-}
-
-mono-menu-list.is-active-ancestor > .mono-menu-group > .mono-menu-group-header .mono-menu-icon {
-    color: var(--menu-accent, currentColor);
-}
-</style>
-
-

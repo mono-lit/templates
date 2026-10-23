@@ -1,0 +1,19 @@
+{
+  "name": "nuxt-lith-mini",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.7.0",
+  "scripts": {
+    "dev": "vp run --filter nuxt-host dev",
+    "dev:prod": "vp run --filter nuxt-host dev:prod",
+    "build": "vp run --filter nuxt-host build",
+    "build:dev": "vp run --filter nuxt-host build:dev",
+    "build:prod": "vp run --filter nuxt-host build:prod",
+    "preview:dev": "vp run --filter nuxt-host preview:dev",
+    "preview:prod": "vp run --filter nuxt-host preview:prod",
+    "mono:prepare": "vp run -r mono:prepare"
+  },
+  "devDependencies": {
+    "vite-plus": "1.4.0"
+  }
+}

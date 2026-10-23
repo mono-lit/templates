@@ -1,0 +1,11 @@
+node_modules/
+.pnpm-store/
+*.log
+*.local
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.viteplus/
+# Only the Node version lives here; optional (see README).
+.npmrc

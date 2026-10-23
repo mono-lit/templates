@@ -3,12 +3,14 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="icon" href="/src/assets/img/logo.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MONO</title>
+  <title>NoCompany</title>
+  <!-- A remembered dark mode, applied before first paint (composables/use-host-color-mode.ts). -->
+  <script>try{if(localStorage.getItem('MONO_colorMode')==='dark')document.documentElement.classList.add('dark')}catch(e){}</script>
 </head>
 
-<body class="bg-white">
+<!-- The theme, for good: Basecoat colours (light + dark values) on the Vega flavor. -->
+<body class="theme-color-basecoat theme-vega">
   <div id="app"></div>
   <script type="module" src="/src/main.ts"></script>
 </body>

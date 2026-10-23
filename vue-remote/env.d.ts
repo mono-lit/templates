@@ -1,6 +1,8 @@
 // env.d.ts
 /// <reference types="vite/client" />
 /// <reference types="unplugin-vue-router/client" />
+// The host's menu store (borrowed through `extends`) imports virtual:mono-apps.
+/// <reference types="@mono-lit/utility/virtual-mono-apps" />
 
 import type { MonoConfig } from '@mono-lit/utility/config'
 

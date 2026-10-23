@@ -33,7 +33,7 @@ watch(
        content-driven it never scrolls, so the nav would have no scroll range and
        just ride the page away. `clip` suppresses horizontal overflow the same way
        without creating a scroll container. -->
-  <div class="bg-white relative overflow-x-clip w-full">
+  <div class="bg-[var(--background)] text-[var(--foreground)] relative overflow-x-clip w-full">
     <LayoutSidebar />
 
     <!--
@@ -49,16 +49,9 @@ watch(
     <div class="flex flex-col min-h-screen" style="margin-left: var(--mono-sidebar-left-width, 64px);">
       <LayoutTopbar />
 
-      <main class="flex-1 px-3 py-6">
+      <main class="flex-1 p-3">
         <slot />
       </main>
     </div>
-
-    <ClientOnly>
-      <Teleport to="body">
-        <LayoutLogoutModal />
-      </Teleport>
-    </ClientOnly>
-
   </div>
 </template>

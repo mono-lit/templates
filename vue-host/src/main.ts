@@ -4,6 +4,7 @@ import { createHead } from '@unhead/vue/client'
 import {createSentryPiniaPlugin, setUser, init, browserTracingIntegration, replayIntegration} from "@sentry/vue"
 import 'virtual:uno.css'
 import '@mono-lit/helper/ui/index.css'
+import '@mono-lit/helper/ui/theme/vega.css'
 import 'notivue/notifications.css'
 import 'notivue/animations.css'
 import { createNotivue } from 'notivue'

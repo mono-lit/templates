@@ -10,12 +10,16 @@
     "postinstall": "mono sync && mono prepare && nuxt prepare",
     "dev": "mono prepare && pnpm run env:dev -- nuxt dev",
     "dev:h": "mono prepare && pnpm run env:dev -- nuxt dev --host",
+    "dev:prod": "mono prepare && pnpm run env:prod -- nuxt dev",
     "build": "pnpm run env:prod -- nuxt build",
     "build:dev": "pnpm run env:dev -- nuxt build",
+    "build:prod": "pnpm run env:prod -- nuxt build",
     "generate": "pnpm run env:prod -- nuxt generate",
     "generate:dev": "pnpm run env:dev -- nuxt generate",
+    "generate:prod": "pnpm run env:prod -- nuxt generate",
     "preview": "pnpm run env:prod -- nuxt preview",
     "preview:dev": "pnpm run env:dev -- nuxt preview",
+    "preview:prod": "pnpm run env:prod -- nuxt preview",
     "mono:sync": "dotenv -e .env.dev -- mono sync && mono prepare"
   },
   "dependencies": {

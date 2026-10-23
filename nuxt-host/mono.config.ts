@@ -2,6 +2,7 @@
 import { defineConfig, type MonoConfig } from '@mono-lit/utility/config'
 import { DataSource, ODataStore, CustomStore } from '@mono-lit/devextreme'
 import nuxtRemoteConfig from '@nuxt-remote-root/mono.config'
+import nuxtRemoteMiniConfig from '@nuxt-remote-mini-root/mono.config'
 import usersSeed from './app/datas/mock/users.json'
 
 const appConfig = {
@@ -21,6 +22,7 @@ export default defineConfig({
     // lets that intentional cycle resolve.
     extends: [
         (): MonoConfig => nuxtRemoteConfig,
+        (): MonoConfig => nuxtRemoteMiniConfig,
     ],
     name: 'nuxt-host',
     // This host is a Nuxt app (source under `app/`). Declared above `apps` so
@@ -43,7 +45,20 @@ export default defineConfig({
             url: 'https://github.com/mono-lit/templates/tree/main/nuxt-remote',
             type: 'nuxt',
             template: 'remote',
-        }
+        },
+        {
+            // A MINI remote: source only (no package.json / nuxt.config / env).
+            // This host installs, builds and prepares it. Same two ways in as
+            // any remote:
+            //  - `url`  — `mono sync` clones it into `.mono/apps/nuxt-remote-mini`.
+            //  - `path` — read in place from a sibling checkout for live work:
+            //    `path: '../nuxt-remote-mini'` (keep `url` as the fallback).
+            //    `mono prepare` then links its node_modules to this host's and
+            //    writes its `.mono/tsconfig.json`.
+            name: 'nuxt-remote-mini',
+            url: 'https://github.com/mono-lit/templates/tree/main/nuxt-remote-mini',
+            type: 'nuxt',
+        },
     ],
     // Mock backend: this template ships with NO server. The `users` entity is
     // the mock login's source of truth (login = push `LastLogin` onto the row,

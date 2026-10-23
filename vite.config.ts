@@ -41,6 +41,11 @@ export default defineConfig({
       '@vue-host': dir('./vue-host/src'),
       '@vue-remote-root': dir('./vue-remote'),
       '@vue-remote': dir('./vue-remote/src'),
+      // mini remotes (source only — see each folder's README)
+      '@nuxt-remote-mini-root': dir('./nuxt-remote-mini'),
+      '@nuxt-remote-mini': dir('./nuxt-remote-mini/app'),
+      '@vue-remote-mini-root': dir('./vue-remote-mini'),
+      '@vue-remote-mini': dir('./vue-remote-mini/src'),
     },
   },
 })

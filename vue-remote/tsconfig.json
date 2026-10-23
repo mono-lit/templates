@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "rootDir": ".",
     "target": "ES2024",
     "useDefineForClassFields": true,
     "module": "ESNext",
@@ -29,7 +28,12 @@
   },
   "vueCompilerOptions": {
     "plugins": [
-      "vue-router/volar/sfc-typed-router",
+      {
+        "name": "vue-router/volar/sfc-typed-router",
+        "options": {
+          "rootDir": "."
+        }
+      },
       "vue-router/volar/sfc-route-blocks"
     ]
   },

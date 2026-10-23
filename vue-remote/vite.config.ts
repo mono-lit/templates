@@ -14,7 +14,8 @@ import { unheadVueComposablesImports } from '@unhead/vue'
 import VueDevTools from 'vite-plugin-vue-devtools'
 import { monoRepo } from '@mono-lit/utility/vite'
 
-const PORT = 7200
+// Dev-server port: `PORT` from the loaded .env / .env.dev (hosts 7100, remotes 7101).
+const PORT = Number(process.env.PORT) || 7101
 const HTTPS = false
 dotenv.config()
 
@@ -28,7 +29,7 @@ export default defineConfig(async ({ mode, command }) => {
       port: PORT,
     },
     preview: {
-      port: PORT + 1,
+      port: PORT,
     },
     build: {
       minify: true,

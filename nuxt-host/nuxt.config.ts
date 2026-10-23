@@ -10,8 +10,8 @@
 //   new URL('./node_modules/@mono-lit/helper/dist/index.node.js', import.meta.url),
 // )
 
-// Dev-server port. Hardcoded here (dev-only knob) rather than read from `.env`.
-const PORT = 7100
+// Dev-server port: `PORT` from the loaded .env / .env.dev (hosts 7100, remotes 7101).
+const PORT = Number(process.env.PORT) || 7100
 
 export default defineNuxtConfig({
   ssr: true, // prerender in prod, dev server is SPA (no SSR)
@@ -34,6 +34,13 @@ export default defineNuxtConfig({
     port: PORT,
   },
   spaLoadingTemplate: 'spa-loading-template.html',
+  app: {
+    head: {
+      // The theme, for good: Basecoat colours (light + dark values) on the Vega flavor.
+      // Dark mode is only `dark` on <html> (composables/use-host-color-mode.ts).
+      bodyAttrs: { class: 'theme-color-basecoat theme-vega' },
+    },
+  },
   modules: [
     // `@mono-lit/helper/nuxt` brings its own Lit SSR bridge and drives the SSR wrap
     // from each .vue file's `@mono-lit/helper/ui/shadow/<c>` imports — no `nuxt-ssr-lit`
@@ -74,8 +81,10 @@ export default defineNuxtConfig({
       },
   sourcemap: false,
   css: [
-    // mono-skeleton styles now ship in `@mono-lit/helper/ui/index.css`
-    // (added automatically by the `@mono-lit/helper/nuxt` module).
+    // mono's base, then the Vega flavor. Listed here so Vega loads after the base
+    // (`@mono-lit/helper/nuxt` only adds the base when it is missing from this list).
+    '@mono-lit/helper/ui/index.css',
+    '@mono-lit/helper/ui/theme/vega.css',
     'notivue/notifications.css',
     'notivue/animations.css',
   ],
@@ -101,6 +110,12 @@ export default defineNuxtConfig({
     // define are injected by the `@mono-lit/utility/nuxt` module; the monoSsr Vite
     // plugins are injected by the `@mono-lit/helper/nuxt` module.)
     envPrefix: ['VITE_', 'MONO_'],
+    ssr: {
+      // @mono-lit/devextreme imports DevExtreme folders (`devextreme/data/data_source`),
+      // which Node's ESM loader rejects (ERR_UNSUPPORTED_DIR_IMPORT) when SSR
+      // externalizes them. Bundling both lets Vite resolve the folder imports.
+      noExternal: ['@mono-lit/devextreme', 'devextreme'],
+    },
   },
 
   // hooks: {

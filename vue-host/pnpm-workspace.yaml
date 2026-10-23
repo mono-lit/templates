@@ -6,11 +6,11 @@ packages:
   - 'mono/apps/*'
 
 catalogs:
-  # Internal EJI-ICT libraries — public releases on npmjs (https://www.npmjs.com/org/mono-lit); no registry or token in .npmrc
+  # The mono libraries — public releases on npmjs (https://www.npmjs.com/org/mono-lit); no registry or token in .npmrc
   mono:
     '@mono-lit/devextreme': 0.0.2
-    '@mono-lit/helper': 0.0.4
-    '@mono-lit/utility': 0.0.3
+    '@mono-lit/helper': 0.0.6
+    '@mono-lit/utility': 0.0.5
 
   # Build pipeline: Vite, bundler plugins and codegen tooling
   build:

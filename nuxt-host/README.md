@@ -1,24 +1,18 @@
 # mono-nuxt-host
 
-Create `.env` and `.env.dev` in this folder before installing/running:
+## Env files and scripts
 
-**`.env`**
+`.env`, `.env.dev` and `.env.example` are committed and share the same keys in
+the same order; only the values differ. Never put a real secret in them.
 
-```ini
-NODE_ENV="production"
-MONO_NUXT_HOST_GITHUB_TOKEN=
-VITE_SENTRY_ENABLED=
-VITE_SENTRY_DSN=
-SENTRY_AUTH_TOKEN=
-```
-
-**`.env.dev`**
-
-```ini
-NODE_ENV="development"
-VITE_SENTRY_ENABLED="false"
-MONO_NUXT_HOST_GITHUB_TOKEN=
-```
+| Script | Env file | Runs |
+|---|---|---|
+| `pnpm dev` | `.env.dev` | dev server |
+| `pnpm dev:prod` | `.env` | dev server with production env |
+| `pnpm build:dev` | `.env.dev` | build |
+| `pnpm build` / `pnpm build:prod` | `.env` | production build |
+| `pnpm preview:dev` / `pnpm preview:prod` | `.env.dev` / `.env` | preview the build |
+| `pnpm generate:dev` / `pnpm generate:prod` | `.env.dev` / `.env` | static generate |
 
 ## `.npmrc` (optional — no token needed)
 
@@ -28,5 +22,5 @@ are public packages on npmjs (https://www.npmjs.com/org/mono-lit), so a plain
 this folder's `.npmrc` carries (gitignored) is the Node version pnpm should use:
 
 ```ini
-use-node-version=24.16.0
+use-node-version=24.22.1
 ```

@@ -3,6 +3,7 @@ import staticDataSidebar  from "@nuxt-host/datas/menu";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { resolveExtendsAppNames, type SidebarMenu, type MonoConfig } from '@mono-lit/utility/config'
 import hostMonoConfig from '@nuxt-host-root/mono.config'
+import monoApps from 'virtual:mono-apps'
 
 
 export const useHostMenuStore = defineStore("use-host-menu-store", () => {
@@ -15,7 +16,6 @@ export const useHostMenuStore = defineStore("use-host-menu-store", () => {
   const activeMenu = computed(() => route.path);
   const mobileOpen = ref(false);
   const profileOpen = ref(false);
-  const logoutOpen = ref(false);
   const search = ref("");
 
   const breakpoints = useBreakpoints(breakpointsTailwind);
@@ -67,17 +67,10 @@ export const useHostMenuStore = defineStore("use-host-menu-store", () => {
       return true;
     }
 
-    const modules = import.meta.glob<{ default: unknown }>(
-      "../../.mono/apps/**/mono.config.ts",
-      { eager: false }
-    )
-
-
-    const allModules = {
-      ...modules
-    }
-
-    const loaders = Object.entries(allModules).map(async ([file, load]) => {
+    // One lazy import per federated app's mono.config — a `.mono/apps` clone or
+    // an `apps[].path` sibling (a mini remote read in place) alike. A glob over
+    // `.mono/apps` could only see the clones.
+    const loaders = Object.values(monoApps).map(async (load) => {
       try {
         const mod = await load()
         const cfg = (mod as any)?.default ?? mod
@@ -206,7 +199,6 @@ export const useHostMenuStore = defineStore("use-host-menu-store", () => {
     activeMenu,
     mobileOpen,
     profileOpen,
-    logoutOpen,
     search,
     isMobile,
     sidebarMode,

@@ -2,16 +2,19 @@
 import { RouterView } from 'vue-router'
 import { Notivue, Notifications, pastelTheme } from "notivue"
 import { MonoNotifAction } from '@mono-lit/utility/runtime'
+import { useHostColorMode } from './composables/use-host-color-mode'
 
 const menuStore = useHostMenuStore()
 
+// Light / dark, remembered in localStorage (`MONO_colorMode`).
+useHostColorMode()
 
 useHead({
   title: () => {
     if (menuStore.pageTitle) {
-      return `MONO :: ${menuStore.pageTitle}`
+      return `NoCompany :: ${menuStore.pageTitle}`
     }
-    return 'MONO'
+    return 'NoCompany'
   }
 })
 </script>

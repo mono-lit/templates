@@ -1,0 +1,4 @@
+[
+    { "Id": 1, "Username": "admin", "Name": "Administrator", "LastLogin": "2026-01-01T00:00:00.000Z" },
+    { "Id": 2, "Username": "demo", "Name": "Demo User", "LastLogin": "2026-01-01T00:00:00.000Z" }
+]

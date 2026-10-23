@@ -1,0 +1,29 @@
+import * as Sentry from '@sentry/nuxt'
+
+// Client-side Sentry init for the @sentry/nuxt module. Runs very early in the
+// browser (before the Nuxt app). Gated on an explicit `VITE_SENTRY_ENABLED`
+// flag (NOT `import.meta.env.PROD`): `nuxt build` is always a production build,
+// so `PROD` is `true` for `build:dev` too — only the loaded env file differs.
+// The flag lives in `.env` (prod) and is absent from `.env.dev`, so `build:dev`
+// skips Sentry. `browserTracingIntegration` is added automatically by
+// @sentry/nuxt and wired to the Nuxt vue-router, so we don't pass one manually.
+// No API trace-propagation target: the mock backend lives in IndexedDB, no
+// request ever leaves the page.
+const dsn = import.meta.env.VITE_SENTRY_DSN
+
+if (import.meta.env.VITE_SENTRY_ENABLED === 'true' && dsn) {
+  Sentry.init({
+    dsn,
+    // v11 removed `sendDefaultPii`; its replacement `dataCollection` already defaults to
+    // collecting user info (incl. IP), cookies and headers — what `sendDefaultPii: true` did.
+    integrations: [Sentry.replayIntegration()],
+    tracePropagationTargets: [
+      window.location.hostname,
+    ],
+    // Performance Monitoring
+    tracesSampleRate: 1.0,
+    // Session Replay
+    replaysSessionSampleRate: 0.1,
+    replaysOnErrorSampleRate: 1.0,
+  })
+}

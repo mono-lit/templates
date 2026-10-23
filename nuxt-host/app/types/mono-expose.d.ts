@@ -1,3 +1,6 @@
+/// <reference types="@mono-lit/utility/virtual-mono-apps" />
+// `virtual:mono-apps` (the host menu store) — every federated app's mono.config.
+
 import type { MonoConfig } from '@mono-lit/utility/config'
 
 // `__MONO_CONFIG_EXPOSE__` is injected as a compile-time global by the

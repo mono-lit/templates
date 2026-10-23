@@ -1,0 +1,140 @@
+<!--
+  Nuxt SPA loading template (used because `spaLoadingTemplate: true` in nuxt.config).
+  Shown in #__nuxt before the client app hydrates / for client-only routes.
+  Frosted-glass look matching app/components/AppLoader.vue. Self-contained (inline CSS).
+-->
+<div class="mono-spa" role="status" aria-live="polite" aria-label="Loading">
+  <style>
+    .mono-spa {
+      --brand: #2563eb;
+      --brand-2: #4f46e5;
+      --fg: #0f172a;
+      --muted: #475569;
+      --track: rgba(37, 99, 235, 0.16);
+
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--fg);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      z-index: 2147483647;
+      -webkit-font-smoothing: antialiased;
+
+      /* frosted glass: translucent white + blur the content behind */
+      background: rgba(255, 255, 255, 0.4);
+      -webkit-backdrop-filter: blur(10px) saturate(135%);
+      backdrop-filter: blur(10px) saturate(135%);
+      animation: mono-fade-in 0.35s ease both;
+    }
+
+    .mono-spa__card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 22px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 8px 30px rgba(2, 6, 23, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      -webkit-backdrop-filter: blur(16px) saturate(160%);
+      backdrop-filter: blur(16px) saturate(160%);
+    }
+
+    .mono-spa__bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      overflow: hidden;
+      background: var(--track);
+    }
+    .mono-spa__bar::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 40%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      animation: mono-slide 1.15s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    }
+
+    .mono-spa__ring {
+      position: relative;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: conic-gradient(from 90deg, transparent 0%, var(--brand) 78%, var(--brand-2) 100%);
+      -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+      mask: radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 3px));
+      animation: mono-spin 0.95s linear infinite;
+    }
+
+    .mono-spa__dot {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mono-spa__dot span {
+      width: 10px;
+      height: 10px;
+      border-radius: 4px;
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      animation: mono-pulse 1.4s ease-in-out infinite;
+    }
+
+    .mono-spa__text {
+      text-align: center;
+      display: grid;
+      gap: 3px;
+    }
+    .mono-spa__title { font-size: 13px; font-weight: 600; letter-spacing: 0.2px; }
+    .mono-spa__subtitle {
+      font-size: 11px;
+      color: var(--muted);
+      animation: mono-breathe 1.8s ease-in-out infinite;
+    }
+
+    @keyframes mono-spin { to { transform: rotate(360deg); } }
+    @keyframes mono-fade-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes mono-pulse {
+      0%, 100% { transform: scale(0.82); opacity: 0.65; }
+      50%      { transform: scale(1);    opacity: 1; }
+    }
+    @keyframes mono-breathe { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+    @keyframes mono-slide {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(320%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mono-spa,
+      .mono-spa__ring,
+      .mono-spa__dot span,
+      .mono-spa__subtitle,
+      .mono-spa__bar::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+      }
+      .mono-spa__bar::after { width: 100%; }
+    }
+  </style>
+
+  <div class="mono-spa__bar" aria-hidden="true"></div>
+
+  <div class="mono-spa__card">
+    <div class="mono-spa__ring" aria-hidden="true">
+      <div class="mono-spa__dot"><span></span></div>
+    </div>
+    <div class="mono-spa__text">
+      <div class="mono-spa__title">Loading your workspace</div>
+      <div class="mono-spa__subtitle">Just a moment…</div>
+    </div>
+  </div>
+</div>

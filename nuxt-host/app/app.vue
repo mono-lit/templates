@@ -1,17 +1,28 @@
 <script setup lang="ts">
 import { Notivue, Notifications, pastelTheme } from "notivue"
 import { MonoNotifAction } from '@mono-lit/utility/runtime'
+import { useHostColorMode } from './composables/use-host-color-mode'
 
 const menuStore = useHostMenuStore()
 
+// Light / dark, remembered in localStorage (`MONO_colorMode`).
+useHostColorMode()
 
 useHead({
   title: () => {
     if (menuStore.pageTitle) {
-      return `MONO :: ${menuStore.pageTitle}`
+      return `NoCompany :: ${menuStore.pageTitle}`
     }
-    return 'MONO'
-  }
+    return 'NoCompany'
+  },
+  // A remembered dark mode, applied before first paint: the server cannot read localStorage,
+  // so without this a dark reload would paint light first.
+  script: [
+    {
+      key: 'mono-color-mode-boot',
+      innerHTML: `try{if(localStorage.getItem('MONO_colorMode')==='dark')document.documentElement.classList.add('dark')}catch(e){}`,
+    },
+  ],
 })
 
 // Full-screen splash: rendered on the server (visible on first paint) and

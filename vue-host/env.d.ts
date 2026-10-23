@@ -1,5 +1,6 @@
 /// <reference types="vite/client" />
 /// <reference types="unplugin-vue-router/client" />
+/// <reference types="@mono-lit/utility/virtual-mono-apps" />
 
 import type { MonoConfig } from '@mono-lit/utility/config'
 

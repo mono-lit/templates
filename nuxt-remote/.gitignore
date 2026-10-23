@@ -5,8 +5,6 @@
 .nitro
 .cache
 dist
-.env
-.env.dev
 # .npmrc contains the private registry token — each user creates their own (see README)
 .npmrc
 
@@ -22,6 +20,7 @@ logs
 .fleet
 .idea
 
-# Local env files
+# Local env files (secrets go in *.local)
+*.local
 !.env.example
 templates

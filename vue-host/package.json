@@ -11,10 +11,13 @@
     "postinstall": "mono prepare",
     "dev": "mono prepare && pnpm run env:dev -- vite",
     "dev:h": "mono prepare && pnpm run env:dev -- vite --host",
+    "dev:prod": "mono prepare && pnpm run env:prod -- vite --mode production",
     "build": "pnpm run env:prod -- vue-tsc && pnpm run env:prod -- vite build --emptyOutDir",
     "build:dev": "pnpm run env:dev -- vue-tsc && pnpm run env:dev -- vite build --mode development --emptyOutDir",
+    "build:prod": "pnpm run env:prod -- vue-tsc && pnpm run env:prod -- vite build --emptyOutDir",
     "preview": "pnpm run env:prod -- vite preview",
     "preview:dev": "pnpm run env:dev -- vite preview --outDir dist-dev --mode development",
+    "preview:prod": "pnpm run env:prod -- vite preview",
     "odata:gen": "dotenv -e .env.dev odata2ts",
     "mono:sync": "dotenv -e .env.dev -- mono sync && mono prepare"
   },

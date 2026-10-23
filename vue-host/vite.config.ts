@@ -18,8 +18,8 @@ dotenv.config();
 
 const IS_SENTRY = Boolean(process.env.VITE_SENTRY_DSN)
 
-// Dev-server port. Hardcoded here (dev-only knob) rather than read from `.env`.
-const PORT = 7100
+// Dev-server port: `PORT` from the loaded .env / .env.dev (hosts 7100, remotes 7101).
+const PORT = Number(process.env.PORT) || 7100
 
 export default defineConfig(async ({ mode, command }) => {
     const mono = await monoRepo({ command })
@@ -30,7 +30,7 @@ export default defineConfig(async ({ mode, command }) => {
             port: PORT,
         },
         preview: {
-            port: PORT + 1,
+            port: PORT,
         },
         build: {
             minify: true,

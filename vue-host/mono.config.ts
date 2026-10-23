@@ -2,6 +2,7 @@
 import { defineConfig, type MonoConfig } from '@mono-lit/utility/config'
 import { DataSource, ODataStore, CustomStore } from '@mono-lit/devextreme'
 import vueRemoteConfig from '@vue-remote-root/mono.config'
+import vueRemoteMiniConfig from '@vue-remote-mini-root/mono.config'
 import usersSeed from './src/datas/mock/users.json'
 
 const appConfig = {
@@ -21,6 +22,7 @@ export default defineConfig({
     // lets that intentional cycle resolve.
     extends: [
         (): MonoConfig => vueRemoteConfig,
+        (): MonoConfig => vueRemoteMiniConfig,
     ],
     name: 'vue-host',
     type: 'vue',
@@ -37,7 +39,20 @@ export default defineConfig({
             // clones just that folder into `.mono/apps/mono-vue`.
             url: 'https://github.com/mono-lit/templates/tree/main/vue-remote',
             type: 'vue'
-        }
+        },
+        {
+            // A MINI remote: source only (no package.json / vite.config / env).
+            // This host installs, builds and prepares it. Same two ways in as
+            // any remote:
+            //  - `url`  — `mono sync` clones it into `.mono/apps/vue-remote-mini`.
+            //  - `path` — read in place from a sibling checkout for live work:
+            //    `path: '../vue-remote-mini'` (keep `url` as the fallback).
+            //    `mono prepare` then links its node_modules to this host's and
+            //    writes its `.mono/tsconfig.json`.
+            name: 'vue-remote-mini',
+            url: 'https://github.com/mono-lit/templates/tree/main/vue-remote-mini',
+            type: 'vue'
+        },
     ],
     // Mock backend: this template ships with NO server. The `users` entity is
     // the mock login's source of truth (login = push `LastLogin` onto the row,

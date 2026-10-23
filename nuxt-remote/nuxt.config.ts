@@ -5,9 +5,9 @@ declare module 'nuxt/schema' {
   }
 }
 
-// Dev-server port. Hardcoded here (dev-only knob) rather than read from `.env`.
+// Dev-server port: `PORT` from the loaded .env / .env.dev (hosts 7100, remotes 7101).
 // Deliberately NOT the host's 7100, so both can run side by side.
-const PORT = 7200
+const PORT = Number(process.env.PORT) || 7101
 
 export default defineNuxtConfig({
   ignore: [

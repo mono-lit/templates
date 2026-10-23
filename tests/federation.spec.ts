@@ -7,6 +7,8 @@ import nuxtHostConfig from '../nuxt-host/mono.config'
 import nuxtRemoteConfig from '../nuxt-remote/mono.config'
 import vueHostConfig from '../vue-host/mono.config'
 import vueRemoteConfig from '../vue-remote/mono.config'
+import nuxtRemoteMiniConfig from '../nuxt-remote-mini/mono.config'
+import vueRemoteMiniConfig from '../vue-remote-mini/mono.config'
 
 /** The monorepo every template syncs its federated partner from (deep-folder refs). */
 const REPO_BASE = 'https://github.com/mono-lit/templates/tree/main'
@@ -169,5 +171,100 @@ describe('cross-template invariants', () => {
     expect(a).toBeTruthy()
     expect(b).toBeTruthy()
     expect(a).not.toBe(b)
+  })
+})
+
+/**
+ * Mini remotes: source only. The HOST installs, builds, prepares and serves
+ * them, so anything that would let one run (or drift) on its own must be absent.
+ */
+interface MiniPair {
+  kind: 'nuxt' | 'vue'
+  host: { config: MonoConfig; dir: string }
+  mini: { config: MonoConfig; dir: string; srcDir: 'app' | 'src' }
+  full: MonoConfig
+}
+
+const miniPairs: MiniPair[] = [
+  {
+    kind: 'nuxt',
+    host: { config: nuxtHostConfig, dir: 'nuxt-host' },
+    mini: { config: nuxtRemoteMiniConfig, dir: 'nuxt-remote-mini', srcDir: 'app' },
+    full: nuxtRemoteConfig,
+  },
+  {
+    kind: 'vue',
+    host: { config: vueHostConfig, dir: 'vue-host' },
+    mini: { config: vueRemoteMiniConfig, dir: 'vue-remote-mini', srcDir: 'src' },
+    full: vueRemoteConfig,
+  },
+]
+
+/** Files a mini must NOT carry — each is the host's job. */
+const HOST_OWNED = [
+  'package.json',
+  'pnpm-lock.yaml',
+  'pnpm-workspace.yaml',
+  'nuxt.config.ts',
+  'vite.config.ts',
+  'uno.config.ts',
+  'index.html',
+  'mono.env.ts',
+  'odata2ts.config.ts',
+  '.env',
+  '.env.dev',
+  '.env.example',
+  'public',
+  'app/app.vue',
+  'app/plugins',
+  'app/layouts',
+  'src/main.ts',
+  'src/App.vue',
+  'src/router.ts',
+  'src/layouts',
+]
+
+const menuUrls = (config: MonoConfig) => (config.menu ?? []).map((m) => m.url)
+
+describe.each(miniPairs)('$kind mini: $host.dir ← $mini.dir', ({ host, mini, full }) => {
+  it('is a source-only remote of the same type', () => {
+    expect(mini.config.name).toBe(mini.dir)
+    expect(mini.config.type).toBe(host.config.type)
+    expect(mini.config.template).toBe('remote')
+    expect(existsSync(`${root}${mini.dir}/${mini.srcDir}/pages`)).toBe(true)
+  })
+
+  it('ships none of the files the host owns', () => {
+    const present = HOST_OWNED.filter((f) => existsSync(`${root}${mini.dir}/${f}`))
+    expect(present, `${mini.dir} must not carry host-owned files`).toEqual([])
+  })
+
+  it('gitignores what the host’s `mono prepare` generates in it', () => {
+    // node_modules (link to the host's), .mono/ and the editor tsconfig.json are
+    // all host-generated. A COMMITTED tsconfig extending a not-yet-generated
+    // .mono/tsconfig.json would fail every Vite transform of the mini's files.
+    const ignore = readFileSync(`${root}${mini.dir}/.gitignore`, 'utf8')
+    expect(ignore).toMatch(/^node_modules$/m)
+    expect(ignore).toMatch(/^\.mono$/m)
+    expect(ignore).toMatch(/^tsconfig\.json$/m)
+  })
+
+  it('is controlled by the host: listed in apps[] with a deep-folder URL and activated via extends', () => {
+    const entry = appEntry(host.config, mini.dir)
+    expect(entry, `host apps[] must list mini "${mini.dir}"`).toBeTruthy()
+    expect(entry!.url).toBe(`${REPO_BASE}/${mini.dir}`)
+    expect(entry!.type).toBe(mini.config.type)
+    expect(resolveExtendsAppNames(host.config)).toContain(mini.dir)
+  })
+
+  it('does not point back at the host (no apps[] / extends of its own)', () => {
+    expect(mini.config.apps ?? []).toEqual([])
+    expect(mini.config.extends).toBeUndefined()
+  })
+
+  it('menu does not collide with the full remote', () => {
+    const own = menuUrls(mini.config)
+    expect(own.length).toBeGreaterThan(0)
+    for (const url of own) expect(menuUrls(full)).not.toContain(url)
   })
 })

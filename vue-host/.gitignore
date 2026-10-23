@@ -17,8 +17,6 @@ dist-ssr
 coverage
 *.local
 .mono
-.env
-.env.dev
 # .npmrc contains the private registry token — each user creates their own (see README)
 .npmrc
 

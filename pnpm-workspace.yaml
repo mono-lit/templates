@@ -6,9 +6,7 @@ packages:
 
 # Catalogs — the single source of truth for shared dependency versions
 # across all templates (templates reference these as "catalog:<name>").
-# The 'internal' catalog serves the mono libraries from the private
-# registry https://mono-libs.netlify.app/npm/ (see root .npmrc) —
-# previously these were git+token installs.
+# The 'mono' catalog pins the public @mono-lit/* packages on npmjs.
 catalogs:
   build:
     '@odata2ts/http-client-api': ^0.6.3
@@ -48,8 +46,8 @@ catalogs:
     yup: 1.7.1
   mono:
     '@mono-lit/devextreme': 0.0.2
-    '@mono-lit/helper': 0.0.4
-    '@mono-lit/utility': 0.0.3
+    '@mono-lit/helper': 0.0.6
+    '@mono-lit/utility': 0.0.5
   nuxt:
     '@pinia/nuxt': 1.0.3
     '@unocss/nuxt': 66.11.0

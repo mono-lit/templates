@@ -1,0 +1,29 @@
+<script setup lang="ts">
+import { monoCookie } from '@mono-lit/utility/runtime'
+
+// `home` is the HOST's layout. A mini ships no layouts, plugins or app.vue —
+// everything around this page comes from the host it runs in.
+definePageMeta({
+  layout: 'home',
+  title: 'Example',
+})
+
+const { appName } = useNuxtMiniHelper()
+
+// The shared login cookie, written by the host's login page.
+const token = monoCookie().get('MONO_token', true)
+</script>
+
+<template>
+  <div class="flex flex-col gap-4">
+    <h1 class="text-xl font-semibold">Module Nuxt Mini — Example</h1>
+
+    <p class="text-sm text-gray-600">
+      This page lives in <code>nuxt-remote-mini/app/pages/</code> — a source-only
+      remote. It is installed, built and served by the host
+      (<code>{{ appName }}</code> is its own composable, auto-imported by the host).
+    </p>
+
+    <span class="text-xs text-gray-500">shared login: {{ token ? 'present' : 'none' }}</span>
+  </div>
+</template>
