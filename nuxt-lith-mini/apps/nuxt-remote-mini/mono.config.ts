@@ -11,10 +11,23 @@ export default defineConfig({
     type: 'nuxt',
     // Consumes the host's shell (layouts, auth guards).
     template: 'remote',
-    // Federates nothing itself (a mini is never anyone's host).
-    apps: [],
-    // No `extends` / `apps[]` back to the host: the host is the controller and
-    // already merges this config through ITS `extends`. The host's cookies, jwt
+    apps: [
+        {
+            // The host this mini belongs to, by its GitHub url — the same wiring a
+            // full remote declares. The host only prepares a mini that names it here
+            // (links node_modules, writes the tsconfig): declared on both sides,
+            // never assumed. A mono-lith adds `path: '../nuxt-host'` beside the url.
+            name: 'nuxt-host',
+            // Mono-lith: read in place from the sibling folder (`path` wins whenever
+            // ../nuxt-host exists). `url` is the fallback once this app is lifted out.
+            path: '../nuxt-host',
+            url: 'https://github.com/mono-lit/templates/tree/main/nuxt-host',
+            type: 'nuxt',
+            template: 'host',
+        },
+    ],
+    // No `extends` back to the host: the host is the controller and already
+    // merges this config through ITS `extends`. The host's cookies, jwt
     // and `fetching.api` entries (`monoHostRest` / `monoHostOData`) are the ones
     // in effect, so pages here just use them.
     //

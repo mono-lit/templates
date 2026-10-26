@@ -61,11 +61,11 @@ catalogs:
       specifier: 0.0.2
       version: 0.0.2
     '@mono-lit/helper':
-      specifier: 0.0.4
-      version: 0.0.4
+      specifier: 0.0.6
+      version: 0.0.6
     '@mono-lit/utility':
-      specifier: 0.0.3
-      version: 0.0.3
+      specifier: 0.0.6
+      version: 0.0.6
   nuxt:
     '@pinia/nuxt':
       specifier: 1.0.3
@@ -134,10 +134,10 @@ importers:
         version: 2.2.527
       '@mono-lit/helper':
         specifier: catalog:mono
-        version: 0.0.4(@mono-lit/utility@0.0.3(4be396e8c08700614109410c37ee136c))(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.14)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.14)(rollup@4.63.2)(vite@8.3.4(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.30)))(vite@8.3.4(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.44(typescript@6.0.3))
+        version: 0.0.6(@mono-lit/utility@0.0.6(1b236c92b2b5d544bba6fd78263f0ab2))(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.14)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.14)(rollup@4.63.2)(vite@8.3.4(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.30)))(vite@8.3.4(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.44(typescript@6.0.3))
       '@mono-lit/utility':
         specifier: catalog:mono
-        version: 0.0.3(4be396e8c08700614109410c37ee136c)
+        version: 0.0.6(1b236c92b2b5d544bba6fd78263f0ab2)
       '@pinia/nuxt':
         specifier: catalog:nuxt
         version: 1.0.3(@nuxt/schema@4.6.2)(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(oxc-parser@0.134.0)(pinia@4.1.0(@vue/devtools-api@8.2.1)(typescript@6.0.3)(vue@3.5.44(typescript@6.0.3)))(rolldown@1.2.14)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.14)(rollup@4.63.2)(vite@8.3.4(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.30)))
@@ -575,8 +575,8 @@ packages:
   '@mono-lit/devextreme@0.0.2':
     resolution: {integrity: sha512-+49a8horfiq8MFscoSkQ8FquS/XUGTUHvrmB7HGtkd845H+dFjrMRF/mwNXvVH5d+mB/dooEuhvZErS368J1FA==}
 
-  '@mono-lit/helper@0.0.4':
-    resolution: {integrity: sha512-tCSTejIyWzkVsbqwdBuzK3UJDjqlCSSLWRyAdif+KUtafe0EvgMGcYSF6h+mXRGTSjOU2QTNixjtUW36wcEvdg==}
+  '@mono-lit/helper@0.0.6':
+    resolution: {integrity: sha512-IkLSN74PQ9WzSG+c7emdpycWBo/EB69YKUD2KUWieqVd4tDzTMAL+eKP85Cfq6G5dlpZEXh8I4eYHXCGqGN3cw==}
     peerDependencies:
       '@aejkatappaja/phantom-ui': ^1.6.0
       '@floating-ui/core': ^1.7.0
@@ -610,8 +610,8 @@ packages:
       vue:
         optional: true
 
-  '@mono-lit/utility@0.0.3':
-    resolution: {integrity: sha512-0RTCIdXF6vDdQZvkOxr9XOgZERQiIQ1fMnyAnEDM1D+5VquxhKixS7pqXf0rBEMixy471A6ASB61PjJ5WJebaA==}
+  '@mono-lit/utility@0.0.6':
+    resolution: {integrity: sha512-y8eQB+BD0DQh1ko3URE8vpC0L8u12m+hwmR/CQgZq3fc6s2m/7p3ARNuZmJvP+Q8REB+roL91n4qQAQgBkfSSg==}
     hasBin: true
     peerDependencies:
       '@mono-lit/devextreme': ^0.0.2
@@ -622,6 +622,7 @@ packages:
       h3: ^1.15.1
       jwt-decode: ^4.0.0
       notivue: ^2.4.5
+      valibot: ^1.0.0
       vue: 3.5.44
       vue-router: 5.4.0
       yup: ^1.7.1
@@ -631,6 +632,8 @@ packages:
       h3:
         optional: true
       notivue:
+        optional: true
+      valibot:
         optional: true
       yup:
         optional: true
@@ -5071,7 +5074,7 @@ snapshots:
     dependencies:
       devextreme: 25.1.6
 
-  '@mono-lit/helper@0.0.4(@mono-lit/utility@0.0.3(4be396e8c08700614109410c37ee136c))(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.14)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.14)(rollup@4.63.2)(vite@8.3.4(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.30)))(vite@8.3.4(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.44(typescript@6.0.3))':
+  '@mono-lit/helper@0.0.6(@mono-lit/utility@0.0.6(1b236c92b2b5d544bba6fd78263f0ab2))(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.14)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.14)(rollup@4.63.2)(vite@8.3.4(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.30)))(vite@8.3.4(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(vue@3.5.44(typescript@6.0.3))':
     dependencies:
       '@lit-labs/ssr': 3.2.2
       '@lit-labs/ssr-client': 1.1.8
@@ -5091,7 +5094,7 @@ snapshots:
       remark-gfm: 4.0.1
       unist-util-visit: 5.1.0
     optionalDependencies:
-      '@mono-lit/utility': 0.0.3(4be396e8c08700614109410c37ee136c)
+      '@mono-lit/utility': 0.0.6(1b236c92b2b5d544bba6fd78263f0ab2)
       vite: 8.3.4(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1)
       vue: 3.5.44(typescript@6.0.3)
     transitivePeerDependencies:
@@ -5105,7 +5108,7 @@ snapshots:
       - supports-color
       - unplugin
 
-  '@mono-lit/utility@0.0.3(4be396e8c08700614109410c37ee136c)':
+  '@mono-lit/utility@0.0.6(1b236c92b2b5d544bba6fd78263f0ab2)':
     dependencies:
       '@mono-lit/devextreme': 0.0.2
       '@nuxt/kit': 4.6.2(@nuxt/schema@4.6.2)(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.14)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.14)(rollup@4.63.2)(vite@8.3.4(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.30)))
@@ -5125,6 +5128,7 @@ snapshots:
     optionalDependencies:
       h3: 1.15.11
       notivue: 2.4.5(@nuxt/kit@4.6.2(@nuxt/schema@4.6.2)(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@1.4.3)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.14)(unplugin@3.4.0(esbuild@0.28.2)(rolldown@1.2.14)(rollup@4.63.2)(vite@8.3.4(@types/node@26.5.1)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.51.2)(yaml@2.9.1))(webpack@5.110.3(esbuild@0.28.2)(lightningcss@1.33.0)(postcss@8.5.30))))(@nuxt/schema@4.6.2)(defu@6.1.7)
+      valibot: 1.5.0(typescript@6.0.3)
       yup: 1.7.1
     transitivePeerDependencies:
       - '@azure/app-configuration'

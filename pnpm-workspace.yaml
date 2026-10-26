@@ -47,7 +47,7 @@ catalogs:
   mono:
     '@mono-lit/devextreme': 0.0.2
     '@mono-lit/helper': 0.0.6
-    '@mono-lit/utility': 0.0.5
+    '@mono-lit/utility': 0.0.6
   nuxt:
     '@pinia/nuxt': 1.0.3
     '@unocss/nuxt': 66.11.0

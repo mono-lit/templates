@@ -105,7 +105,7 @@ const menuItems = computed<MenuItem[]>(() => toMenuItems(filterMenu(menuStore.me
         <div class="flex flex-col gap-2 min-h-0">
             <mono-input class="mono-sidebar-label" client-skeleton-count="1" client-skeleton-type="row"
                 client-skeleton-bar="w-full h-8" size="sm" clearable placeholder="Search menu..."
-                :model-value="menuStore.search" @mno-input="menuStore.search = $event.detail.modelValue ?? ''"
+                :model-value="menuStore.search" @mno-input="menuStore.search = String($event.detail.modelValue ?? '')"
                 @mno-clear="menuStore.search = ''">
                 <span slot="prefix" class="i-mdi-magnify" />
             </mono-input>

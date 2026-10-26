@@ -257,8 +257,16 @@ describe.each(miniPairs)('$kind mini: $host.dir ← $mini.dir', ({ host, mini, f
     expect(resolveExtendsAppNames(host.config)).toContain(mini.dir)
   })
 
-  it('does not point back at the host (no apps[] / extends of its own)', () => {
-    expect(mini.config.apps ?? []).toEqual([])
+  it('names its host back by deep-folder URL (the host prepares only a mini that does)', () => {
+    expect(mini.config.apps).toHaveLength(1)
+    const back = appEntry(mini.config, host.dir)
+    expect(back, `mini apps[] must name host "${host.dir}"`).toBeTruthy()
+    expect(back!.url).toBe(`${REPO_BASE}/${host.dir}`)
+    expect(back!.path, 'templates wire by url; only a mono-lith adds path').toBeUndefined()
+    expect(back!.type).toBe(host.config.type)
+  })
+
+  it('does not extend the host (the host is the controller)', () => {
     expect(mini.config.extends).toBeUndefined()
   })
 

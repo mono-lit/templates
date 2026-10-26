@@ -16,7 +16,7 @@ vue-lith-mini/
 ├── vite.config.ts        # vite-plus root config
 └── apps/
     ├── vue-host/          # template: 'host', apps: [{ name: 'vue-remote-mini', path: '../vue-remote-mini' }]
-    └── vue-remote-mini/   # source only: no package.json, adopted by the host
+    └── vue-remote-mini/   # source only (no package.json), apps: [{ name: 'vue-host', path: '../vue-host' }]
 ```
 
 ## Running it

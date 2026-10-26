@@ -17,7 +17,7 @@ catalogs:
   mono:
     '@mono-lit/devextreme': 0.0.2
     '@mono-lit/helper': 0.0.6
-    '@mono-lit/utility': 0.0.5
+    '@mono-lit/utility': 0.0.6
 
   # Nuxt framework + Nuxt modules
   nuxt:

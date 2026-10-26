@@ -15,7 +15,7 @@
 // What changes on the way in (see https://mono-libs.netlify.app/lith/getting-started):
 // - the host lists only this lith's remote, by `path` (the `url` stays as the
 //   fallback for an app lifted out of the lith), and extends only that remote;
-// - a full remote names the host back by `path`;
+// - the remote (full or mini) names the host back by `path` next to its `url`;
 // - per-app pnpm-lock.yaml / pnpm-workspace.yaml are dropped: the lith root is
 //   the one workspace and the one install, so every sibling shares one Vue.
 import { execFileSync } from 'node:child_process'
@@ -253,7 +253,7 @@ ${lith.name}/
 ├── vite.config.ts        # vite-plus root config
 └── apps/
     ├── ${h}/${' '.repeat(Math.max(1, 18 - h.length))}# template: 'host', apps: [{ name: '${r}', path: '../${r}' }]
-    └── ${r}/${' '.repeat(Math.max(1, 18 - r.length))}# ${mini ? 'source only: no package.json, adopted by the host' : `template: 'remote', apps: [{ name: '${h}', path: '../${h}' }]`}
+    └── ${r}/${' '.repeat(Math.max(1, 18 - r.length))}# ${mini ? 'source only (no package.json), ' : `template: 'remote', `}apps: [{ name: '${h}', path: '../${h}' }]
 \`\`\`
 
 ## Running it
@@ -289,7 +289,8 @@ for (const lith of LITHS) {
   syncApp(lith.host, dir)
   syncApp(lith.remote, dir)
   patchHost(path.join(dir, 'apps', lith.host, 'mono.config.ts'), lith)
-  if (!isMini(lith.remote)) patchRemote(path.join(dir, 'apps', lith.remote, 'mono.config.ts'), lith)
+  // Full remote or mini alike: the remote's url entry for its host gains the path.
+  patchRemote(path.join(dir, 'apps', lith.remote, 'mono.config.ts'), lith)
 
   fs.writeFileSync(path.join(dir, 'package.json'), JSON.stringify(rootPackage(lith), null, 2) + '\n')
   fs.writeFileSync(path.join(dir, 'pnpm-workspace.yaml'), rootWorkspace())

@@ -8,7 +8,8 @@ builds, prepares and serves it, using its own dependencies, config and shell.
 What lives here:
 
 - `mono.config.ts`: `name`, `type`, `template: 'remote'` and the `menu` ("Module Nuxt Mini").
-  It has no `extends` and no `apps[]` pointing back at the host, because the host is the controller.
+  `apps[]` names its host, `nuxt-host`, by GitHub url: the host only prepares a mini that names it.
+  No `extends` back to the host, because the host is the controller.
 - `app/`: pages, components, composables, stores and types. Composables are auto-imported by
   the host, so give them names the host doesn't already use (see `app/composables/`).
 

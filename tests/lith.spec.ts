@@ -57,7 +57,7 @@ describe.each(liths)('$name', (lith) => {
     expect(hostConfig).toContain(`@${lith.remote}-root/mono.config`)
   })
 
-  it.runIf(!lith.remote.endsWith('-mini'))('the remote names the host back by path', () => {
+  it('the remote (full or mini) names the host back by path', () => {
     const remoteConfig = read(appsDir, lith.remote, 'mono.config.ts')
     expect(remoteConfig).toContain(`path: '../${lith.host}',`)
   })

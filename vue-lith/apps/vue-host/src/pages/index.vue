@@ -35,7 +35,7 @@ const submit = () => fetchAuth.fetching().postLogin()
               placeholder="Username" autocomplete="username" :model-value="fetchAuth.input.username"
               :validation-state="fetchAuth.error.username.valid ? 'default' : 'invalid'"
               :error-message="fetchAuth.error.username.message"
-              @mno-input="fetchAuth.input.username = $event.detail.modelValue"
+              @mno-input="fetchAuth.input.username = String($event.detail.modelValue ?? '')"
               @mno-change="fetchAuth.inputValidate().login('username')" />
 
             <mono-input id="login-input-password" :type="showPwd ? 'text' : 'password'" variant="underlined"
@@ -43,7 +43,7 @@ const submit = () => fetchAuth.fetching().postLogin()
               :model-value="fetchAuth.input.password"
               :validation-state="fetchAuth.error.password.valid ? 'default' : 'invalid'"
               :error-message="fetchAuth.error.password.message"
-              @mno-input="fetchAuth.input.password = $event.detail.modelValue"
+              @mno-input="fetchAuth.input.password = String($event.detail.modelValue ?? '')"
               @mno-change="fetchAuth.inputValidate().login('password')">
               <button slot="suffix" type="button" class="grid place-items-center cursor-pointer"
                 :aria-label="showPwd ? 'Hide password' : 'Show password'" @click="showPwd = !showPwd">

@@ -16,7 +16,7 @@ nuxt-lith-mini/
 ├── vite.config.ts        # vite-plus root config
 └── apps/
     ├── nuxt-host/         # template: 'host', apps: [{ name: 'nuxt-remote-mini', path: '../nuxt-remote-mini' }]
-    └── nuxt-remote-mini/  # source only: no package.json, adopted by the host
+    └── nuxt-remote-mini/  # source only (no package.json), apps: [{ name: 'nuxt-host', path: '../nuxt-host' }]
 ```
 
 ## Running it

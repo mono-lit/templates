@@ -12,10 +12,20 @@ export default defineConfig({
     type: 'vue',
     // Consumes the host's shell (layouts).
     template: 'remote',
-    // Federates nothing itself (a mini is never anyone's host).
-    apps: [],
-    // No `extends` / `apps[]` back to the host: the host is the controller and
-    // already merges this config through ITS `extends`. The host's cookies, jwt
+    apps: [
+        {
+            // The host this mini belongs to, by its GitHub url — the same wiring a
+            // full remote declares. The host only prepares a mini that names it here
+            // (links node_modules, writes the tsconfig): declared on both sides,
+            // never assumed. A mono-lith adds `path: '../vue-host'` beside the url.
+            name: 'vue-host',
+            url: 'https://github.com/mono-lit/templates/tree/main/vue-host',
+            type: 'vue',
+            template: 'host',
+        },
+    ],
+    // No `extends` back to the host: the host is the controller and already
+    // merges this config through ITS `extends`. The host's cookies, jwt
     // and `fetching.api` entries (`monoHostRest` / `monoHostOData`) are the ones
     // in effect, so pages here just use them.
     //

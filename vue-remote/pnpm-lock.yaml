@@ -100,11 +100,11 @@ catalogs:
       specifier: 0.0.2
       version: 0.0.2
     '@mono-lit/helper':
-      specifier: 0.0.4
-      version: 0.0.4
+      specifier: 0.0.6
+      version: 0.0.6
     '@mono-lit/utility':
-      specifier: 0.0.3
-      version: 0.0.3
+      specifier: 0.0.6
+      version: 0.0.6
   types:
     '@types/node':
       specifier: ^25.9.2
@@ -156,10 +156,10 @@ importers:
         version: 2.2.527
       '@mono-lit/helper':
         specifier: catalog:mono
-        version: 0.0.4(@mono-lit/utility@0.0.3(2a1c2930c0c162983f0c07b927db9b38))(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.14)(unplugin@3.4.0(rolldown@1.2.14)(vite@8.3.4(@types/node@25.9.6)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.4(@types/node@25.9.6)(jiti@2.7.0)(yaml@2.9.1))(vue@3.5.44(typescript@6.0.3))
+        version: 0.0.6(@mono-lit/utility@0.0.6(a4f0b78ecb305f5d9efbe681951636f3))(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.14)(unplugin@3.4.0(rolldown@1.2.14)(vite@8.3.4(@types/node@25.9.6)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.4(@types/node@25.9.6)(jiti@2.7.0)(yaml@2.9.1))(vue@3.5.44(typescript@6.0.3))
       '@mono-lit/utility':
         specifier: catalog:mono
-        version: 0.0.3(2a1c2930c0c162983f0c07b927db9b38)
+        version: 0.0.6(a4f0b78ecb305f5d9efbe681951636f3)
       '@odata2ts/http-client-api':
         specifier: catalog:build
         version: 0.6.8
@@ -462,8 +462,8 @@ packages:
   '@mono-lit/devextreme@0.0.2':
     resolution: {integrity: sha512-+49a8horfiq8MFscoSkQ8FquS/XUGTUHvrmB7HGtkd845H+dFjrMRF/mwNXvVH5d+mB/dooEuhvZErS368J1FA==}
 
-  '@mono-lit/helper@0.0.4':
-    resolution: {integrity: sha512-tCSTejIyWzkVsbqwdBuzK3UJDjqlCSSLWRyAdif+KUtafe0EvgMGcYSF6h+mXRGTSjOU2QTNixjtUW36wcEvdg==}
+  '@mono-lit/helper@0.0.6':
+    resolution: {integrity: sha512-IkLSN74PQ9WzSG+c7emdpycWBo/EB69YKUD2KUWieqVd4tDzTMAL+eKP85Cfq6G5dlpZEXh8I4eYHXCGqGN3cw==}
     peerDependencies:
       '@aejkatappaja/phantom-ui': ^1.6.0
       '@floating-ui/core': ^1.7.0
@@ -497,8 +497,8 @@ packages:
       vue:
         optional: true
 
-  '@mono-lit/utility@0.0.3':
-    resolution: {integrity: sha512-0RTCIdXF6vDdQZvkOxr9XOgZERQiIQ1fMnyAnEDM1D+5VquxhKixS7pqXf0rBEMixy471A6ASB61PjJ5WJebaA==}
+  '@mono-lit/utility@0.0.6':
+    resolution: {integrity: sha512-y8eQB+BD0DQh1ko3URE8vpC0L8u12m+hwmR/CQgZq3fc6s2m/7p3ARNuZmJvP+Q8REB+roL91n4qQAQgBkfSSg==}
     hasBin: true
     peerDependencies:
       '@mono-lit/devextreme': ^0.0.2
@@ -509,6 +509,7 @@ packages:
       h3: ^1.15.1
       jwt-decode: ^4.0.0
       notivue: ^2.4.5
+      valibot: ^1.0.0
       vue: 3.5.44
       vue-router: 5.4.0
       yup: ^1.7.1
@@ -518,6 +519,8 @@ packages:
       h3:
         optional: true
       notivue:
+        optional: true
+      valibot:
         optional: true
       yup:
         optional: true
@@ -2231,10 +2234,6 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  lru-cache@11.5.2:
-    resolution: {integrity: sha512-4pfM1Ff0x50o0tQwb5ucw/RzNyD0/YJME6IVcStalZuMWxdt3sR3huStTtxz4PUmvZfRguvDejasvQ2kifR11g==}
-    engines: {node: 20 || >=22}
-
   lru-cache@11.5.3:
     resolution: {integrity: sha512-U4N8FgzmWxc8k1VH8Kr6lQg18U7Fjvby6wXHVRX/ZZ7IwWbRMgrRbP0Wrb5q5NVinryp4SQampHKdvtecItxUg==}
     engines: {node: 20 || >=22}
@@ -3379,7 +3378,7 @@ snapshots:
 
   '@antfu/install-pkg@2.0.1':
     dependencies:
-      package-manager-detector: 1.8.0
+      package-manager-detector: 1.9.0
       tinyexec: 1.3.1
 
   '@antfu/ni@30.5.0':
@@ -3713,7 +3712,7 @@ snapshots:
     dependencies:
       devextreme: 25.1.6
 
-  '@mono-lit/helper@0.0.4(@mono-lit/utility@0.0.3(2a1c2930c0c162983f0c07b927db9b38))(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.14)(unplugin@3.4.0(rolldown@1.2.14)(vite@8.3.4(@types/node@25.9.6)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.4(@types/node@25.9.6)(jiti@2.7.0)(yaml@2.9.1))(vue@3.5.44(typescript@6.0.3))':
+  '@mono-lit/helper@0.0.6(@mono-lit/utility@0.0.6(a4f0b78ecb305f5d9efbe681951636f3))(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.14)(unplugin@3.4.0(rolldown@1.2.14)(vite@8.3.4(@types/node@25.9.6)(jiti@2.7.0)(yaml@2.9.1)))(vite@8.3.4(@types/node@25.9.6)(jiti@2.7.0)(yaml@2.9.1))(vue@3.5.44(typescript@6.0.3))':
     dependencies:
       '@lit-labs/ssr': 3.2.2
       '@lit-labs/ssr-client': 1.1.8
@@ -3733,7 +3732,7 @@ snapshots:
       remark-gfm: 4.0.1
       unist-util-visit: 5.1.0
     optionalDependencies:
-      '@mono-lit/utility': 0.0.3(2a1c2930c0c162983f0c07b927db9b38)
+      '@mono-lit/utility': 0.0.6(a4f0b78ecb305f5d9efbe681951636f3)
       vite: 8.3.4(@types/node@25.9.6)(jiti@2.7.0)(yaml@2.9.1)
       vue: 3.5.44(typescript@6.0.3)
     transitivePeerDependencies:
@@ -3747,7 +3746,7 @@ snapshots:
       - supports-color
       - unplugin
 
-  '@mono-lit/utility@0.0.3(2a1c2930c0c162983f0c07b927db9b38)':
+  '@mono-lit/utility@0.0.6(a4f0b78ecb305f5d9efbe681951636f3)':
     dependencies:
       '@mono-lit/devextreme': 0.0.2
       '@nuxt/kit': 4.6.2(@nuxt/schema@4.6.2)(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@0.30.21)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.14)(unplugin@3.4.0(rolldown@1.2.14)(vite@8.3.4(@types/node@25.9.6)(jiti@2.7.0)(yaml@2.9.1)))
@@ -3767,6 +3766,7 @@ snapshots:
     optionalDependencies:
       h3: 1.15.11
       notivue: 2.4.5(@nuxt/kit@4.6.2(@nuxt/schema@4.6.2)(confbox@0.3.1)(dotenv@17.4.2)(giget@3.3.1)(jiti@2.7.0)(magic-string@0.30.21)(mlly@1.8.2)(oxc-parser@0.134.0)(rolldown@1.2.14)(unplugin@3.4.0(rolldown@1.2.14)(vite@8.3.4(@types/node@25.9.6)(jiti@2.7.0)(yaml@2.9.1))))(@nuxt/schema@4.6.2)(defu@6.1.7)
+      valibot: 1.5.0(typescript@6.0.3)
       yup: 1.7.1
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -4530,7 +4530,7 @@ snapshots:
       '@babel/helper-module-imports': 7.29.7
       '@babel/helper-plugin-utils': 7.29.7
       '@babel/parser': 7.29.8
-      '@vue/compiler-sfc': 3.5.42
+      '@vue/compiler-sfc': 3.5.44
     transitivePeerDependencies:
       - supports-color
 
@@ -4776,7 +4776,7 @@ snapshots:
     dependencies:
       confbox: 0.2.4
       defu: 6.1.7
-      exsolve: 1.1.1
+      exsolve: 1.1.3
       pathe: 2.0.3
       pkg-types: 2.3.3
       rc9: 3.1.0
@@ -5416,8 +5416,6 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lru-cache@11.5.2: {}
-
   lru-cache@11.5.3: {}
 
   lru-cache@5.1.1:
@@ -6009,7 +6007,7 @@ snapshots:
   pkg-types@2.3.1:
     dependencies:
       confbox: 0.2.4
-      exsolve: 1.1.1
+      exsolve: 1.1.3
       pathe: 2.0.3
 
   pkg-types@2.3.3:
@@ -6512,7 +6510,7 @@ snapshots:
       chokidar: 5.0.0
       destr: 2.0.5
       h3: 1.15.11
-      lru-cache: 11.5.2
+      lru-cache: 11.5.3
       node-fetch-native: 1.6.7
       ofetch: 1.5.1
       ufo: 1.6.4

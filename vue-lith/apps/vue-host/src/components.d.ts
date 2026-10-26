@@ -11,7 +11,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    LayoutLogoutModal: typeof import('./components/Layout/LogoutModal.vue')['default']
+    LayoutLogo: typeof import('./components/Layout/Logo.vue')['default']
     LayoutProfileDropdown: typeof import('./components/Layout/ProfileDropdown.vue')['default']
     LayoutSidebar: typeof import('./components/Layout/Sidebar.vue')['default']
     LayoutTopbar: typeof import('./components/Layout/Topbar.vue')['default']
