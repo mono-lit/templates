@@ -76,6 +76,6 @@
   "devDependencies": {
     "@mono-lit/devextreme": "catalog:mono",
     "@mono-lit/utility": "catalog:mono",
-    "vite-plus": "^0.3.1"
+    "vite-plus": "^1.6.0"
   }
 }

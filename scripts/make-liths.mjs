@@ -163,7 +163,12 @@ trustPolicyExclude:
 overrides:
   nanoid@^3: 3.3.16
   # Pin Vite for the whole tree: Nuxt itself only asks for \`^8.3.4\`.
-  vite: 8.3.4
+  vite: 8.3.8
+  # ONE Nuxt kit/schema for the whole tree. @mono-lit/* ask for \`^4.6.2\`, which pnpm may
+  # satisfy with an older copy beside nuxt's own; two schemas resolve devServer.host to {}
+  # and \`nuxt dev\` crashes (options.hostname.toLowerCase is not a function). Keep = catalog nuxt.
+  '@nuxt/kit': 4.6.4
+  '@nuxt/schema': 4.6.4
 
 packages:
   - apps/*

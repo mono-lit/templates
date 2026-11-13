@@ -8,7 +8,12 @@ trustPolicyExclude:
 overrides:
   nanoid@^3: 3.3.16
   # Pin Vite for the whole tree: Nuxt itself only asks for `^8.3.4`.
-  vite: 8.3.4
+  vite: 8.3.8
+  # ONE Nuxt kit/schema for the whole tree. @mono-lit/* ask for `^4.6.2`, which pnpm may
+  # satisfy with an older copy beside nuxt's own; two schemas resolve devServer.host to {}
+  # and `nuxt dev` crashes (options.hostname.toLowerCase is not a function). Keep = catalog nuxt.
+  '@nuxt/kit': 4.6.4
+  '@nuxt/schema': 4.6.4
 
 packages: []
 
@@ -16,7 +21,7 @@ catalogs:
   # The mono libraries — public releases on npmjs (https://www.npmjs.com/org/mono-lit); no registry or token in .npmrc
   mono:
     '@mono-lit/devextreme': 0.0.2
-    '@mono-lit/helper': 0.0.6
+    '@mono-lit/helper': 0.0.10
     '@mono-lit/utility': 0.0.6
 
   # Nuxt framework + Nuxt modules
@@ -29,24 +34,24 @@ catalogs:
     # of one template running different Nuxt. @nuxt/kit / @nuxt/schema need no pin
     # or override: @mono-lit/* depend on `^4.6.2` themselves, so keep `nuxt` on the
     # newest 4.6.x patch and pnpm resolves ONE kit for Nuxt and the libraries.
-    nuxt: 4.6.2
+    nuxt: 4.6.4
     "@pinia/nuxt": 1.0.3
-    "@unocss/nuxt": 66.11.0
-    "@vueuse/nuxt": 14.3.0
+    "@unocss/nuxt": 66.12.0
+    "@vueuse/nuxt": 15.0.0
 
   # Build pipeline: bundler plugins and codegen tooling
   build:
-    "@odata2ts/http-client-api": ^0.6.5
-    "@odata2ts/odata-query-objects": ^0.28.2
-    "@odata2ts/odata-service": ^0.23.2
-    "@odata2ts/odata2ts": ^0.40.2
-    unocss: 66.11.0
+    "@odata2ts/http-client-api": ^0.7.1
+    "@odata2ts/odata-query-objects": ^0.32.0
+    "@odata2ts/odata-service": ^0.28.0
+    "@odata2ts/odata2ts": ^0.45.0
+    unocss: 66.12.0
 
   # Dev tooling: type-checking and env helpers
   dev:
-    "@iconify/json": ^2.2.501
-    dotenv: ^17.4.2
-    dotenv-cli: ^11.0.0
+    "@iconify/json": ^2.2.556
+    dotenv: ^18.0.10
+    dotenv-cli: ^11.1.0
     # Stay on the classic (JS-based) TypeScript. 7.0.x is the native Go port,
     # which drops the programmatic compiler API (`findConfigFile`, `sys`,
     # `parseJsonConfigFileContent`) that `@vue/compiler-sfc` needs to resolve
@@ -55,26 +60,26 @@ catalogs:
     # to type-check. On 7.0.2 the /flow build fails with "No fs option provided
     # to compileScript" then "ts.findConfigFile is not a function". Revert only
     # when compiler-sfc/vue-tsc officially support the native port.
-    typescript: ~6.0.3
-    vue-tsc: ^3.3.13
-    taze: ^19.14.1
+    typescript: ~7.0.2
+    vue-tsc: ^3.3.14
+    taze: ^21.3.0
 
   # Frontend runtime: shipped to the browser bundle
   frontend:
-    "@unhead/vue": 3.1.3
-    "@vueuse/core": 14.3.0
-    "@vueuse/integrations": 14.3.0
+    "@unhead/vue": 3.4.3
+    "@vueuse/core": 15.0.0
+    "@vueuse/integrations": 15.0.0
     jwt-decode: ^4.0.0
     notivue: ^2.4.5
     pinia: 4.1.0
     universal-cookie: ^8.1.2
-    vue: 3.5.44
-    vue-router: 5.4.0
+    vue: 3.5.45
+    vue-router: 5.5.0
     yup: 1.7.1
 
   # Type definitions
   types:
-    "@types/node": ^26.1.1
+    "@types/node": ^26.6.6
 
 onlyBuiltDependencies:
   - esbuild

@@ -30,9 +30,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
 
-  devServer: {
-    port: PORT,
-  },
+  devServer: { port: PORT, host: 'localhost' },
   spaLoadingTemplate: 'spa-loading-template.html',
   app: {
     head: {
