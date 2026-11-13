@@ -21,8 +21,8 @@ catalogs:
   # The mono libraries — public releases on npmjs (https://www.npmjs.com/org/mono-lit); no registry or token in .npmrc
   mono:
     '@mono-lit/devextreme': 0.0.2
-    '@mono-lit/helper': 0.0.10
-    '@mono-lit/utility': 0.0.6
+    '@mono-lit/helper': 0.1.0
+    '@mono-lit/utility': 0.1.0
 
   # Nuxt framework + Nuxt modules
   nuxt:
