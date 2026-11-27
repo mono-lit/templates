@@ -37,16 +37,17 @@ watch(
     <LayoutSidebar />
 
     <!--
-      `--mono-sidebar-left-width` is written by the sidebar element's client-side
-      `_writeLayoutVar()` AFTER it connects/hydrates — it is a no-op during SSR.
-      The `.mono-sidebar-panel` is `position: fixed` (out of flow), so on a fresh
-      load/reload the panel paints over this content until that JS runs. The 64px
-      fallback matches the server-rendered default (desktop rail mode, collapsed →
-      rail-width 64) so the very first paint already reserves the rail's space and
-      the fixed sidebar no longer stacks on top of the page. JS then refines it
-      (268 when expanded, 0 for mobile temporary).
+      `mono-sidebar-push` marks this as the layout content: the sidebar (@mono-lit/helper
+      >= 0.1.6) publishes the width it pushes as `--mono-sidebar-left-push` on THIS element
+      only (268 expanded, 64 rail, 0 for mobile temporary). It no longer writes
+      `--mono-sidebar-left-width` on <html> unless `publish-root-width` is set — reading
+      that one left the margin stuck on its fallback, so an expanded sidebar covered the page.
+      The variable is written from client JS only (a no-op during SSR). The
+      `.mono-sidebar-panel` is `position: fixed` (out of flow), so the 64px fallback matches
+      the server-rendered default (desktop rail mode, collapsed → rail-width 64) and the very
+      first paint already reserves the rail's space; JS then refines it.
     -->
-    <div class="flex flex-col min-h-screen" style="margin-left: var(--mono-sidebar-left-width, 64px);">
+    <div class="mono-host-main flex flex-col min-h-screen" mono-sidebar-push>
       <LayoutTopbar />
 
       <main class="flex-1 p-3">
@@ -55,3 +56,10 @@ watch(
     </div>
   </div>
 </template>
+
+<style scoped>
+.mono-host-main {
+  margin-left: var(--mono-sidebar-left-push, 64px);
+  transition: margin-left 0.2s ease;
+}
+</style>

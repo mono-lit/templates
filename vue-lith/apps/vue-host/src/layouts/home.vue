@@ -42,7 +42,14 @@ watch(
   <div class="bg-[var(--background)] text-[var(--foreground)] relative overflow-x-clip w-full">
     <LayoutSidebar />
 
-    <div class="flex flex-col min-h-screen" style="margin-left: var(--mono-sidebar-left-width, 0px);">
+    <!--
+      `mono-sidebar-push` marks this as the layout content: the sidebar (@mono-lit/helper
+      >= 0.1.6) publishes the width it pushes as `--mono-sidebar-left-push` on THIS element
+      only (268 expanded, 64 rail, 0 for mobile temporary). It no longer writes
+      `--mono-sidebar-left-width` on <html> unless `publish-root-width` is set — reading
+      that one left the margin stuck on its fallback, so an expanded sidebar covered the page.
+    -->
+    <div class="mono-host-main flex flex-col min-h-screen" mono-sidebar-push>
       <LayoutTopbar />
 
       <main class="flex-1 p-3">
@@ -51,3 +58,10 @@ watch(
     </div>
   </div>
 </template>
+
+<style scoped>
+.mono-host-main {
+  margin-left: var(--mono-sidebar-left-push, 0px);
+  transition: margin-left 0.2s ease;
+}
+</style>

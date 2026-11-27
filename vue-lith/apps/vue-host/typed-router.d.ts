@@ -96,7 +96,7 @@ declare module 'vue-router/auto-routes' {
       pathParamNames:
         | never
     }
-    '../vue-remote/src/pages/module-one/example.vue': {
+    '.mono/apps/vue-remote/src/pages/module-one/example.vue': {
       routes:
         | '/module-one/example'
       views:

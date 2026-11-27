@@ -52,9 +52,9 @@ declare module 'vue-router/auto-routes' {
       Record<never, never>,
       | never
     >,
-    '/module-vue-mini/example': RouteRecordInfo<
-      '/module-vue-mini/example',
-      '/module-vue-mini/example',
+    '/module-one/example': RouteRecordInfo<
+      '/module-one/example',
+      '/module-one/example',
       Record<never, never>,
       Record<never, never>,
       | never
@@ -96,9 +96,9 @@ declare module 'vue-router/auto-routes' {
       pathParamNames:
         | never
     }
-    '../vue-remote-mini/src/pages/module-vue-mini/example.vue': {
+    '.mono/apps/vue-remote/src/pages/module-one/example.vue': {
       routes:
-        | '/module-vue-mini/example'
+        | '/module-one/example'
       views:
         | never
       pathParamNames:

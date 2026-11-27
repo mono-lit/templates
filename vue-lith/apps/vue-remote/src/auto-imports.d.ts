@@ -153,7 +153,7 @@ declare global {
   const useAsyncQueue: typeof import('@vueuse/core').useAsyncQueue
   const useAsyncState: typeof import('@vueuse/core').useAsyncState
   const useAttrs: typeof import('vue').useAttrs
-  const useAuthStore: typeof import('../../vue-host/src/stores/shared/use-auth-store').useAuthStore
+  const useAuthStore: typeof import('../.mono/apps/vue-host/src/stores/shared/use-auth-store').useAuthStore
   const useBase64: typeof import('@vueuse/core').useBase64
   const useBattery: typeof import('@vueuse/core').useBattery
   const useBluetooth: typeof import('@vueuse/core').useBluetooth
@@ -214,9 +214,8 @@ declare global {
   const useHeadSafe: typeof import('@unhead/vue').useHeadSafe
   const useHelper: typeof import('../.apps/mono-host/src/composables/use-helper').useHelper
   const useHelperMonoVue: typeof import('./composables/use-helper').useHelperMonoVue
-  const useHostColorMode: typeof import('../../vue-host/src/composables/use-host-color-mode').useHostColorMode
-  const useHostHelper: typeof import('../../vue-host/src/composables/shared/use-helper').useHostHelper
-  const useHostMenuStore: typeof import('../../vue-host/src/stores/shared/use-host-menu-store').useHostMenuStore
+  const useHostHelper: typeof import('../.mono/apps/vue-host/src/composables/shared/use-helper').useHostHelper
+  const useHostMenuStore: typeof import('../.mono/apps/vue-host/src/stores/shared/use-host-menu-store').useHostMenuStore
   const useId: typeof import('vue').useId
   const useIdle: typeof import('@vueuse/core').useIdle
   const useImage: typeof import('@vueuse/core').useImage
@@ -272,7 +271,7 @@ declare global {
   const useRefHistory: typeof import('@vueuse/core').useRefHistory
   const useResizeObserver: typeof import('@vueuse/core').useResizeObserver
   const useRoute: typeof import('vue-router').useRoute
-  const useRouteStack: typeof import('../../vue-host/src/composables/use-last-route-history').useRouteStack
+  const useRouteStack: typeof import('../.mono/apps/vue-host/src/composables/use-last-route-history').useRouteStack
   const useRouter: typeof import('vue-router').useRouter
   const useSSRWidth: typeof import('@vueuse/core').useSSRWidth
   const useScreenOrientation: typeof import('@vueuse/core').useScreenOrientation
@@ -319,7 +318,7 @@ declare global {
   const useTryCatchDatasource: typeof import('./composables/use-fetch-helper').useTryCatchDatasource
   const useUrlSearchParams: typeof import('@vueuse/core').useUrlSearchParams
   const useUserMedia: typeof import('@vueuse/core').useUserMedia
-  const useUtilsHost: typeof import('../../vue-host/src/composables/use-utils').useUtilsHost
+  const useUtilsHost: typeof import('../.mono/apps/vue-host/src/composables/use-utils').useUtilsHost
   const useUtilsMaster: typeof import('./composables/use-utils').useUtilsMaster
   const useVModel: typeof import('@vueuse/core').useVModel
   const useVModels: typeof import('@vueuse/core').useVModels
@@ -466,7 +465,6 @@ declare module 'vue' {
     readonly storeToRefs: UnwrapRef<typeof import('pinia')['storeToRefs']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
-    readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
     readonly throttledRef: UnwrapRef<typeof import('@vueuse/core')['throttledRef']>
     readonly throttledWatch: UnwrapRef<typeof import('@vueuse/core')['throttledWatch']>
     readonly toRaw: UnwrapRef<typeof import('vue')['toRaw']>
@@ -500,7 +498,7 @@ declare module 'vue' {
     readonly useAsyncQueue: UnwrapRef<typeof import('@vueuse/core')['useAsyncQueue']>
     readonly useAsyncState: UnwrapRef<typeof import('@vueuse/core')['useAsyncState']>
     readonly useAttrs: UnwrapRef<typeof import('vue')['useAttrs']>
-    readonly useAuthStore: UnwrapRef<typeof import('../../vue-host/src/stores/shared/use-auth-store')['useAuthStore']>
+    readonly useAuthStore: UnwrapRef<typeof import('../.mono/apps/vue-host/src/stores/shared/use-auth-store')['useAuthStore']>
     readonly useBase64: UnwrapRef<typeof import('@vueuse/core')['useBase64']>
     readonly useBattery: UnwrapRef<typeof import('@vueuse/core')['useBattery']>
     readonly useBluetooth: UnwrapRef<typeof import('@vueuse/core')['useBluetooth']>
@@ -537,6 +535,7 @@ declare module 'vue' {
     readonly useElementBounding: UnwrapRef<typeof import('@vueuse/core')['useElementBounding']>
     readonly useElementByPoint: UnwrapRef<typeof import('@vueuse/core')['useElementByPoint']>
     readonly useElementHover: UnwrapRef<typeof import('@vueuse/core')['useElementHover']>
+    readonly useElementOverflow: UnwrapRef<typeof import('@vueuse/core')['useElementOverflow']>
     readonly useElementSize: UnwrapRef<typeof import('@vueuse/core')['useElementSize']>
     readonly useElementVisibility: UnwrapRef<typeof import('@vueuse/core')['useElementVisibility']>
     readonly useEventBus: UnwrapRef<typeof import('@vueuse/core')['useEventBus']>
@@ -556,9 +555,8 @@ declare module 'vue' {
     readonly useHead: UnwrapRef<typeof import('@unhead/vue')['useHead']>
     readonly useHeadSafe: UnwrapRef<typeof import('@unhead/vue')['useHeadSafe']>
     readonly useHelperMonoVue: UnwrapRef<typeof import('./composables/use-helper')['useHelperMonoVue']>
-    readonly useHostColorMode: UnwrapRef<typeof import('../../vue-host/src/composables/use-host-color-mode')['useHostColorMode']>
-    readonly useHostHelper: UnwrapRef<typeof import('../../vue-host/src/composables/shared/use-helper')['useHostHelper']>
-    readonly useHostMenuStore: UnwrapRef<typeof import('../../vue-host/src/stores/shared/use-host-menu-store')['useHostMenuStore']>
+    readonly useHostHelper: UnwrapRef<typeof import('../.mono/apps/vue-host/src/composables/shared/use-helper')['useHostHelper']>
+    readonly useHostMenuStore: UnwrapRef<typeof import('../.mono/apps/vue-host/src/stores/shared/use-host-menu-store')['useHostMenuStore']>
     readonly useId: UnwrapRef<typeof import('vue')['useId']>
     readonly useIdle: UnwrapRef<typeof import('@vueuse/core')['useIdle']>
     readonly useImage: UnwrapRef<typeof import('@vueuse/core')['useImage']>
@@ -569,6 +567,7 @@ declare module 'vue' {
     readonly useKeyModifier: UnwrapRef<typeof import('@vueuse/core')['useKeyModifier']>
     readonly useLastChanged: UnwrapRef<typeof import('@vueuse/core')['useLastChanged']>
     readonly useLink: UnwrapRef<typeof import('vue-router')['useLink']>
+    readonly useLiveAnnouncer: UnwrapRef<typeof import('@vueuse/core')['useLiveAnnouncer']>
     readonly useLocalStorage: UnwrapRef<typeof import('@vueuse/core')['useLocalStorage']>
     readonly useMagicKeys: UnwrapRef<typeof import('@vueuse/core')['useMagicKeys']>
     readonly useManualRefHistory: UnwrapRef<typeof import('@vueuse/core')['useManualRefHistory']>
@@ -607,7 +606,7 @@ declare module 'vue' {
     readonly useRefHistory: UnwrapRef<typeof import('@vueuse/core')['useRefHistory']>
     readonly useResizeObserver: UnwrapRef<typeof import('@vueuse/core')['useResizeObserver']>
     readonly useRoute: UnwrapRef<typeof import('vue-router')['useRoute']>
-    readonly useRouteStack: UnwrapRef<typeof import('../../vue-host/src/composables/use-last-route-history')['useRouteStack']>
+    readonly useRouteStack: UnwrapRef<typeof import('../.mono/apps/vue-host/src/composables/use-last-route-history')['useRouteStack']>
     readonly useRouter: UnwrapRef<typeof import('vue-router')['useRouter']>
     readonly useSSRWidth: UnwrapRef<typeof import('@vueuse/core')['useSSRWidth']>
     readonly useScreenOrientation: UnwrapRef<typeof import('@vueuse/core')['useScreenOrientation']>
@@ -630,6 +629,7 @@ declare module 'vue' {
     readonly useSwipe: UnwrapRef<typeof import('@vueuse/core')['useSwipe']>
     readonly useTemplateRef: UnwrapRef<typeof import('vue')['useTemplateRef']>
     readonly useTemplateRefsList: UnwrapRef<typeof import('@vueuse/core')['useTemplateRefsList']>
+    readonly useTemporalNow: UnwrapRef<typeof import('@vueuse/core')['useTemporalNow']>
     readonly useTextDirection: UnwrapRef<typeof import('@vueuse/core')['useTextDirection']>
     readonly useTextSelection: UnwrapRef<typeof import('@vueuse/core')['useTextSelection']>
     readonly useTextareaAutosize: UnwrapRef<typeof import('@vueuse/core')['useTextareaAutosize']>
@@ -649,13 +649,14 @@ declare module 'vue' {
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>
     readonly useUserMedia: UnwrapRef<typeof import('@vueuse/core')['useUserMedia']>
-    readonly useUtilsHost: UnwrapRef<typeof import('../../vue-host/src/composables/use-utils')['useUtilsHost']>
+    readonly useUtilsHost: UnwrapRef<typeof import('../.mono/apps/vue-host/src/composables/use-utils')['useUtilsHost']>
     readonly useUtilsMaster: UnwrapRef<typeof import('./composables/use-utils')['useUtilsMaster']>
     readonly useVModel: UnwrapRef<typeof import('@vueuse/core')['useVModel']>
     readonly useVModels: UnwrapRef<typeof import('@vueuse/core')['useVModels']>
     readonly useVibrate: UnwrapRef<typeof import('@vueuse/core')['useVibrate']>
     readonly useVirtualList: UnwrapRef<typeof import('@vueuse/core')['useVirtualList']>
     readonly useWakeLock: UnwrapRef<typeof import('@vueuse/core')['useWakeLock']>
+    readonly useWebMCP: UnwrapRef<typeof import('@vueuse/core')['useWebMCP']>
     readonly useWebNotification: UnwrapRef<typeof import('@vueuse/core')['useWebNotification']>
     readonly useWebSocket: UnwrapRef<typeof import('@vueuse/core')['useWebSocket']>
     readonly useWebWorker: UnwrapRef<typeof import('@vueuse/core')['useWebWorker']>
