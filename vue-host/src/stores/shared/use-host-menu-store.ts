@@ -51,8 +51,18 @@ export const useHostMenuStore = defineStore("use-host-menu-store", () => {
     if (href !== route.path) router.push(href);
     if (isMobile.value) mobileOpen.value = false;
   };
+  // Collapsing is clicked from INSIDE the sidebar, so the pointer is still over it and
+  // `expand-on-hover` would keep the panel hover-expanded until the pointer leaves.
+  // Switch hover-expand off on collapse so it drops to the rail at once; the sidebar's
+  // `pointerleave` (releaseHoverSuppression) turns it back on for the next hover.
+  const hoverSuppressed = ref(false);
+  const expandOnHover = computed(() => !isMobile.value && !hoverSuppressed.value);
   const toggleRail = () => {
     rail.value = !rail.value;
+    hoverSuppressed.value = rail.value;
+  };
+  const releaseHoverSuppression = () => {
+    hoverSuppressed.value = false;
   };
   const openMobile = () => {
     mobileOpen.value = true;
@@ -209,6 +219,8 @@ export const useHostMenuStore = defineStore("use-host-menu-store", () => {
     onSidebarChange,
     onMenuClick,
     toggleRail,
+    expandOnHover,
+    releaseHoverSuppression,
     openMobile,
     additionalMenu
   };

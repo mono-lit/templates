@@ -84,8 +84,9 @@ const menuItems = computed<MenuItem[]>(() => toMenuItems(filterMenu(menuStore.me
 
 <template>
     <mono-shadow-sidebar :color="isDark ? 'surface' : 'dark'" density="compact" :mode="menuStore.sidebarMode" :width="menuStore.sidebarWidth"
-        :rail-width="64" :rail="menuStore.railProp" :expand-on-hover="!menuStore.isMobile"
-        :model-value="menuStore.sidebarOpen" @mno-change="menuStore.onSidebarChange">
+        :rail-width="64" :rail="menuStore.railProp" :expand-on-hover="menuStore.expandOnHover"
+        :model-value="menuStore.sidebarOpen" @mno-change="menuStore.onSidebarChange"
+        @pointerleave="menuStore.releaseHoverSuppression">
         <div slot="header" class="w-full flex items-center justify-center gap-3 min-w-0">
             <!-- The only thing in the collapsed rail's header. -->
             <LayoutLogo class="size-8 shrink-0" />
