@@ -1,5 +1,4 @@
-import * as yup from "yup"
-import type { SchemaObject } from "@nuxt-host/types/index"
+import * as v from "valibot"
 import { monoToken, monoCookie, monoStateReset, monoState } from '@mono-lit/utility/runtime'
 import { monoFetchOdata, monoFetch } from '@mono-lit/utility/fetching'
 import type { MonoValidateError as ValidateError } from '@mono-lit/utility/runtime'
@@ -48,10 +47,12 @@ export const useAuthStore = defineStore('use-auth-store-mono-host', () => {
   })
 
 
-  const schema = yup.object().shape<SchemaObject<InputLogin>>({
-    username: yup.string().required("Harus diisi!"),
-    password: yup.string().required("Harus diisi!"),
-  });
+  // Valibot (Standard Schema) — validateAllSchema / validateSchema take it as-is.
+  // The message on v.string() covers null/undefined; nonEmpty covers ''.
+  const schema = v.object({
+    username: v.pipe(v.string("Harus diisi!"), v.nonEmpty("Harus diisi!")),
+    password: v.pipe(v.string("Harus diisi!"), v.nonEmpty("Harus diisi!")),
+  }) satisfies v.GenericSchema<InputLogin>;
 
 
   /**

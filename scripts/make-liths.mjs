@@ -24,7 +24,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const VITE_PLUS = '1.4.0'
+const VITE_PLUS = '1.8.0'
 
 const LITHS = [
   { name: 'nuxt-lith', host: 'nuxt-host', remote: 'nuxt-remote', type: 'nuxt' },
@@ -148,7 +148,10 @@ function rootWorkspace() {
   // Catalogs come from the template root (the single source of truth); the
   // install settings are the ones the template folders carry.
   const src = fs.readFileSync(path.join(root, 'pnpm-workspace.yaml'), 'utf8').replace(/\r\n/g, '\n')
-  const catalogs = src.slice(src.indexOf('catalogs:'))
+  // `catalogs:` up to the next top-level block (allowBuilds and its comment follow it).
+  const from = src.indexOf('catalogs:')
+  const next = src.slice(from).search(/\n(?:#[^\n]*\n)*[A-Za-z]/)
+  const catalogs = next === -1 ? src.slice(from) : src.slice(from, from + next)
   return `# Mono-lith root workspace: the ONLY workspace file and the only lockfile.
 # One install here hoists every shared dependency to one store, so the host
 # compiling a sibling's files resolves the SAME vue / pinia / @mono-lit/helper
@@ -158,30 +161,41 @@ shellEmulator: true
 trustPolicy: no-downgrade
 
 trustPolicyExclude:
+  # seroval@1.7.2 (via nuxt -> @nuxt/vite-builder) was published with weaker provenance than an
+  # earlier release, which no-downgrade blocks as a possible takeover. Exempted by exact version only.
+  - seroval@1.7.2
+  # Old 2023 release, published before npm provenance existed; newer semver releases have it.
   - semver@6.3.1
+  # vite-plus ${VITE_PLUS}'s type-aware lint backend (pinned exactly by vite-plus). An earlier
+  # \`0.0.0-bootstrap.0\` placeholder was a staged publish, which pnpm ranks higher, so each real
+  # release reads as a "downgrade" (oxc-project/tsrs#945). Move this pin with vite-plus.
+  - tsrs@7.1.0-beta.tsrs4
+
+# Release-age gate disabled: any version installs as soon as it is published.
+minimumReleaseAge: 0
 
 overrides:
   nanoid@^3: 3.3.16
   # Pin Vite for the whole tree: Nuxt itself only asks for \`^8.3.4\`.
   vite: 8.3.8
-  # ONE Nuxt kit/schema for the whole tree. @mono-lit/* ask for \`^4.6.2\`, which pnpm may
+  # ONE Nuxt kit/schema for the whole tree. @mono-lit/* ask for a \`^4.x\` range, which pnpm may
   # satisfy with an older copy beside nuxt's own; two schemas resolve devServer.host to {}
-  # and \`nuxt dev\` crashes (options.hostname.toLowerCase is not a function). Keep = catalog nuxt.
-  '@nuxt/kit': 4.6.4
-  '@nuxt/schema': 4.6.4
+  # and \`nuxt dev\` crashes (options.hostname.toLowerCase is not a function).
+  # Points at the \`nuxt\` catalog, so bumping nuxt there moves these too.
+  '@nuxt/kit': 'catalog:nuxt'
+  '@nuxt/schema': 'catalog:nuxt'
 
 packages:
   - apps/*
 
 ${catalogs.trimEnd()}
 
-onlyBuiltDependencies:
-  - esbuild
-
+# pnpm 12 replaced \`onlyBuiltDependencies\` with \`allowBuilds\`: every package with an install
+# script must be listed, true = run it, false = skip it silently.
 allowBuilds:
   '@sentry/cli': false
   core-js: false
-  esbuild: false
+  esbuild: true
   inferno: false
 `
 }
@@ -207,7 +221,7 @@ function rootPackage(lith) {
     name: lith.name,
     private: true,
     type: 'module',
-    packageManager: 'pnpm@10.7.0',
+    packageManager: 'pnpm@12.18.0',
     scripts,
     devDependencies: { 'vite-plus': VITE_PLUS },
   }

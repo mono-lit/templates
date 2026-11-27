@@ -2,7 +2,7 @@
   "name": "vue-lith",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.7.0",
+  "packageManager": "pnpm@12.18.0",
   "scripts": {
     "dev": "vp run --filter vue-host dev",
     "dev:prod": "vp run --filter vue-host dev:prod",
@@ -16,6 +16,6 @@
     "mono:prepare": "vp run -r mono:prepare"
   },
   "devDependencies": {
-    "vite-plus": "1.4.0"
+    "vite-plus": "1.8.0"
   }
 }

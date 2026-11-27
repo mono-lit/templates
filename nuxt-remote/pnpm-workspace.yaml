@@ -3,17 +3,29 @@ shellEmulator: true
 trustPolicy: no-downgrade
 
 trustPolicyExclude:
+  # seroval@1.7.2 (via nuxt -> @nuxt/vite-builder) was published with weaker provenance than an
+  # earlier release, which no-downgrade blocks as a possible takeover. Exempted by exact version only.
+  - seroval@1.7.2
+  # Old 2023 release, published before npm provenance existed; newer semver releases have it.
   - semver@6.3.1
+  # vite-plus 1.8.0's type-aware lint backend (pinned exactly by vite-plus). An earlier
+  # `0.0.0-bootstrap.0` placeholder was a staged publish, which pnpm ranks higher, so each real
+  # release reads as a "downgrade" (oxc-project/tsrs#945). Move this pin with vite-plus.
+  - tsrs@7.1.0-beta.tsrs4
+
+# Release-age gate disabled: any version installs as soon as it is published.
+minimumReleaseAge: 0
 
 overrides:
   nanoid@^3: 3.3.16
   # Pin Vite for the whole tree: Nuxt itself only asks for `^8.3.4`.
   vite: 8.3.8
-  # ONE Nuxt kit/schema for the whole tree. @mono-lit/* ask for `^4.6.2`, which pnpm may
+  # ONE Nuxt kit/schema for the whole tree. @mono-lit/* ask for a `^4.x` range, which pnpm may
   # satisfy with an older copy beside nuxt's own; two schemas resolve devServer.host to {}
-  # and `nuxt dev` crashes (options.hostname.toLowerCase is not a function). Keep = catalog nuxt.
-  '@nuxt/kit': 4.6.4
-  '@nuxt/schema': 4.6.4
+  # and `nuxt dev` crashes (options.hostname.toLowerCase is not a function).
+  # Points at the `nuxt` catalog, so bumping nuxt there moves these too.
+  '@nuxt/kit': 'catalog:nuxt'
+  '@nuxt/schema': 'catalog:nuxt'
 
 packages: []
 
@@ -21,7 +33,7 @@ catalogs:
   # The mono libraries — public releases on npmjs (https://www.npmjs.com/org/mono-lit); no registry or token in .npmrc
   mono:
     '@mono-lit/devextreme': 0.0.2
-    '@mono-lit/helper': 0.1.0
+    '@mono-lit/helper': 0.1.6
     '@mono-lit/utility': 0.1.0
 
   # Nuxt framework + Nuxt modules
@@ -31,13 +43,14 @@ catalogs:
     # register a federated Nuxt app as a native layer, which relies on Nuxt still
     # reading `_layers` lazily on `app:resolve`. A floating range would put a FRESH
     # install on a newer patch while an existing lockfile stays put - two checkouts
-    # of one template running different Nuxt. @nuxt/kit / @nuxt/schema need no pin
-    # or override: @mono-lit/* depend on `^4.6.2` themselves, so keep `nuxt` on the
-    # newest 4.6.x patch and pnpm resolves ONE kit for Nuxt and the libraries.
-    nuxt: 4.6.4
+    # of one template running different Nuxt. @nuxt/kit / @nuxt/schema are pinned
+    # beside it: they are overridden to this catalog, so bump all three together.
+    nuxt: 4.7.0
+    '@nuxt/kit': 4.7.0
+    '@nuxt/schema': 4.7.0
     "@pinia/nuxt": 1.0.3
-    "@unocss/nuxt": 66.12.0
-    "@vueuse/nuxt": 15.0.0
+    "@unocss/nuxt": 66.13.0
+    "@vueuse/nuxt": 15.1.0
 
   # Build pipeline: bundler plugins and codegen tooling
   build:
@@ -45,7 +58,7 @@ catalogs:
     "@odata2ts/odata-query-objects": ^0.32.0
     "@odata2ts/odata-service": ^0.28.0
     "@odata2ts/odata2ts": ^0.45.0
-    unocss: 66.12.0
+    unocss: 66.13.0
 
   # Dev tooling: type-checking and env helpers
   dev:
@@ -67,24 +80,23 @@ catalogs:
   # Frontend runtime: shipped to the browser bundle
   frontend:
     "@unhead/vue": 3.4.3
-    "@vueuse/core": 15.0.0
-    "@vueuse/integrations": 15.0.0
+    "@vueuse/core": 15.1.0
+    "@vueuse/integrations": 15.1.0
     jwt-decode: ^4.0.0
     notivue: ^2.4.5
     pinia: 4.1.0
     universal-cookie: ^8.1.2
-    vue: 3.5.45
-    vue-router: 5.5.0
-    yup: 1.7.1
+    vue: 3.5.46
+    vue-router: 5.5.1
+    valibot: 1.5.0
 
   # Type definitions
   types:
     "@types/node": ^26.6.6
 
-onlyBuiltDependencies:
-  - esbuild
-
+# pnpm 12 replaced `onlyBuiltDependencies` with `allowBuilds`: every package with an install
+# script must be listed, true = run it, false = skip it silently.
 allowBuilds:
   core-js: false
-  esbuild: false
+  esbuild: true
   inferno: false

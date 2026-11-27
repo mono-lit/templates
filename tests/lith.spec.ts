@@ -72,7 +72,7 @@ describe.each(liths)('$name', (lith) => {
 
   it('runs through Vite+ from the root', () => {
     const pkg = JSON.parse(read(lith.name, 'package.json'))
-    expect(pkg.devDependencies['vite-plus']).toBe('1.4.0')
+    expect(pkg.devDependencies['vite-plus']).toBe('1.8.0')
     expect(pkg.scripts.dev).toBe(`vp run --filter ${lith.host} dev`)
     expect(pkg.scripts.build).toBe(`vp run --filter ${lith.host} build`)
   })

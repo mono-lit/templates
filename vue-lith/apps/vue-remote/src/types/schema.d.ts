@@ -1,6 +1,5 @@
 
 export type {
     MonoValidateErrorSingle as ValidateErrorSingle,
-    MonoValidateError as ValidateErrorComplex,
-    MonoSchemaObject as SchemaObject
+    MonoValidateError as ValidateErrorComplex
 } from '@mono-lit/utility/runtime'

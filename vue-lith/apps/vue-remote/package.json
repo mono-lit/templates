@@ -32,7 +32,7 @@
     "universal-cookie": "catalog:frontend",
     "vue": "catalog:frontend",
     "vue-router": "catalog:frontend",
-    "yup": "catalog:frontend"
+    "valibot": "catalog:frontend"
   },
   "devDependencies": {
     "@iconify/json": "catalog:dev",
